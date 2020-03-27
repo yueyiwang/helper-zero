@@ -13,7 +13,6 @@
 
 `pip install pipenv`
 
-#### Start up a shell
 `pipenv shell` 
 Press Ctrl-D to exit out of shell. Make sure to always start up a shell before coding in python.
 
