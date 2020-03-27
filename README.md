@@ -1,17 +1,19 @@
 # helper-zero
 
-Setup steps
+## Setup steps
 
-Clone Repo
+### Clone Repo
+
 `git clone https://github.com/sonia-y/helper-zero.git`
 
 `cd helper-zero`
 
-Backend-related setup
+### Backend-related setup
+`cd backend`
 
 `pip install pipenv`
 
-Start up a shell
+#### Start up a shell
 `pipenv shell` 
 Press Ctrl-D to exit out of shell. Make sure to always start up a shell before coding in python.
 
@@ -21,7 +23,9 @@ Press Ctrl-D to exit out of shell. Make sure to always start up a shell before c
 
 If you run `http://localhost:8000/api/organizations/` you should be able to see a UI where you can can directly POST/PUT/DELETE `organization` objects
 
-Frontend-related setup
+### Frontend-related setup
+
+`cd frontend`
 
 `brew install yarn` if you don't have yarn
 
@@ -32,5 +36,5 @@ Frontend-related setup
 If you go to `http://localhost:3000` you should be able to see the app!
 
 
-Other
+### Other
 When you make changes to the `model.py` file, make sure to run migrations by running `python manage.py makemigrations helper_zero`
