@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   container: {
     display: "flex",
     flexDirection: "column",
@@ -15,7 +15,6 @@ export default function HomePage() {
   return (
     <div style={styles.container}>
       <h1>SPREAD HELP</h1>
-
       <Button variant="outlined" onClick={() => history.push("/organizations")}>
         View organizations
       </Button>
