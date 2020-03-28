@@ -5,7 +5,8 @@ class User(models.Model):
   phone = models.CharField(max_length=120, null=True)
   email = models.EmailField(null=True)
   zipcode = models.CharField(blank=True, null=True, max_length=120)
-  lat_lon = models.CharField(blank=True, null=True, max_length=120)
+  lat = models.CharField(blank=True, null=True, max_length=120)
+  lon = models.CharField(blank=True, null=True, max_length=120)
 
   def _str_(self):
     return self.name
@@ -23,7 +24,8 @@ class Organization(models.Model):
                       null=True,
                      )
   zipcode = models.CharField(blank=True, null=True, max_length=120)
-  lat_lon = models.CharField(blank=True, null=True, max_length=120)
+  lat = models.CharField(blank=True, null=True, max_length=120)
+  lon = models.CharField(blank=True, null=True, max_length=120)
 
   def _str_(self):
     return self.name
