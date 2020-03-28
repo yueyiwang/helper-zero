@@ -75,8 +75,8 @@ def _paginate_results(org_search_results, offset):
     paginator = Paginator(org_search_results, 20)  # Show 20 orgs per page
     page_index = offset + 1
     if page_index > 1:
+        # if we're not requesting the first page, make sure we have another valid page of results
         if paginator.page(page_index-1).has_next():
-            # make sure we have another page of results
             return paginator.page(page_index)
         else:
             return []
