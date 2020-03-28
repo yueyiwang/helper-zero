@@ -14,7 +14,7 @@ class DonationRequestSerializer(serializers.ModelSerializer):
     amount_received = serializers.IntegerField(allow_null=True)
     class Meta:
         model = DonationRequest
-        fields = ('org_id', 'item_type', 'amount_requested', 'amount_received')
+        fields = ('org', 'item_type', 'amount_requested', 'amount_received')
 
 class DonationSerializer(serializers.ModelSerializer):
     created_at = serializers.DateTimeField(allow_null=True)
