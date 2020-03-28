@@ -2,8 +2,8 @@ import React, { PureComponent, useState } from 'react';
 import ReactMapGL from 'react-map-gl';
 
 import Marker from './Marker';
-import { MapType } from '../types/MapType';
-import { MarkerType } from '../types/MarkerType';
+import { MapType } from '../../types/MapType';
+import { MarkerType } from '../../types/MarkerType';
 
 const MAPBOX_TOKEN = 'pk.eyJ1IjoiY3JvbmciLCJhIjoiY2s4YjEyNGF3MDFmdjNsbnBuaWM2NmdwMyJ9.Pso27wGxMg-882P8r7PB2g';
 
