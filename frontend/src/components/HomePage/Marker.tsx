@@ -3,7 +3,7 @@ import React from 'react';
 import { BaseControl } from 'react-map-gl';
 import RoomIcon from '@material-ui/icons/Room';
 
-import { MarkerType } from '../types/MarkerType';
+import { MarkerType } from '../../types/MarkerType';
 
 class Marker extends BaseControl<any, MarkerType> {
   _render() {
