@@ -1,8 +1,6 @@
 def get_search_bounding_box(search_lat, search_lon, radius):
     """Build a low effort bounding box. Open to future improvements / suggestions.
     """
-    search_lat = float(search_lat)
-    search_lon = float(search_lon)
     lat_radius, lon_radius = _covert_miles_to_degrees(radius)
     tl_lon = search_lon + lon_radius
     tl_lat = search_lat + lat_radius

@@ -9,7 +9,7 @@ class DonationRequestSerializer(serializers.ModelSerializer):
 
 
 class OrganizationSerializer(serializers.ModelSerializer):
-    donation_requests = DonationRequestSerializer(many=True)
+    donation_requests = DonationRequestSerializer(many=True, required=False)
     class Meta:
         model = Organization
         fields = ('id', 'name', 'phone', 'org_type', 'email', 'is_dropoff_only',
