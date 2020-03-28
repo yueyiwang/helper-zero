@@ -33,8 +33,10 @@ class Organization(models.Model):
 class DonationRequest(models.Model):
   org_id = models.ForeignKey(
             'Organization',
-            on_delete=models.CASCADE,
-           )
+             related_name="donation_requests",
+              on_delete=models.CASCADE,
+          )
+
   item_type = models.CharField(max_length=120)
   amount_requested = models.PositiveIntegerField()
   amount_received = models.PositiveIntegerField(default=0)
