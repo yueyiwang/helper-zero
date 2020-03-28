@@ -4,6 +4,7 @@ from helper_zero.models import Organization
 from django.core.paginator import Paginator
 from rest_framework.response import Response
 from helper_zero.location_util import get_search_bounding_box
+from django.http import HttpResponse
 import math
 
 
@@ -59,7 +60,7 @@ def _get_org_search_results(zipcode, lat, lon, radius, delivery_values, offset):
     else:
         # If no location data, default to showing any orgs that have open requests, capping at 20
         org_query_set = Organization.objects.filter(
-            donation_requests__isnull=True
+            donation_requests__isnull=False
         )[:20]
 
     org_search_results = OrganizationSerializer(org_query_set, many=True).data
