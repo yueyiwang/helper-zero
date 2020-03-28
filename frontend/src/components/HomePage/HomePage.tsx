@@ -1,7 +1,6 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import Button from "@material-ui/core/Button";
 import Map from './Map';
+import Marquee from "./Marquee";
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -25,14 +24,9 @@ const MARKERS = [{
 
 
 export default function HomePage() {
-  const history = useHistory();
-
   return (
     <div style={styles.container}>
-      <h1>SPREAD HELP</h1>
-      <Button variant="outlined" onClick={() => history.push("/organizations")}>
-        View organizations
-      </Button>
+      <Marquee />
       <Map
         latitude={37.7577}
         longitude={-122.4376}
