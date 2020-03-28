@@ -23,22 +23,23 @@ class UserView(viewsets.ViewSet):
 			# fields in the serializer, e.g verifying
 			# valid phone number using regex, lat / lon
 			# formatting, etc.
-			u = User(name=request_dict["name"],
-					 phone=request_dict["phone"],
-					 email=request_dict["email"],
-					 zipcode=request_dict["zipcode"],
-					 lat=request_dict["lat"],
-					 lon=request_dict["lon"])
-
+			u = User(
+				name=request_dict["name"],
+			 	phone=request_dict["phone"],
+			 	email=request_dict["email"],
+			 	zipcode=request_dict["zipcode"],
+			 	lat=request_dict["lat"],
+			 	lon=request_dict["lon"]
+			)
 			try:
-				_send_twilio_confirmation_text (request_dict)
+				_send_twilio_confirmation_text(request_dict)
 				u.save()
 				return Response(serializer.data)
 			except TwilioSendError:
 				return Response(status=status.HTTP_400_BAD_REQUEST)
 		else:
 			return Response(serializer.errors,
-							status=status.HTTP_400_BAD_REQUEST)
+											status=status.HTTP_400_BAD_REQUEST)
 
 class TwilioSendError(Exception):
 	pass
@@ -56,13 +57,13 @@ def _send_twilio_confirmation_text (params):
 	try:
 		c = Client(os.environ['TWILIO_ACCOUNT_SID'],
 				   os.environ['TWILIO_AUTH_TOKEN'])
-
 		text = "%s, thank you for signing up to Port.er!" % params["name"]
-		msg = c.messages.create(
-				body=text,
-				from_=os.environ['TWILIO_NUMBER'],
-				to='+%s' % (params["phone"]))
+		c.messages.create(
+			body=text,
+			from_=os.environ['TWILIO_NUMBER'],
+			to='+%s' % (params["phone"])
+		)
 	except Exception as e:
-		raise TwilioSendError ("Couldn't send SMS; please validate your \
-								phone number and set the proper environment variables")
+		raise TwilioSendError ("Couldn't send SMS; please validate your "
+							   					 "phone number and set the proper environment variables")
 
