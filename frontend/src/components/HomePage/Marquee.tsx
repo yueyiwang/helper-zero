@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
+import { Typography } from "@material-ui/core";
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -54,10 +55,10 @@ export default function Marquee() {
         </Button>
       </div>
       <div style={styles.contentContainer}>
-        <span style={styles.title}>Spread help.</span>
-        <span style={styles.subTitle}>
+        <Typography variant="h1">Spread help.</Typography>
+        <Typography variant="h3">
           Donate resources to our city's shelters and hospitals.
-        </span>
+        </Typography>
         <span>
           <Button size="large" variant="outlined" color="primary">
             Donate
