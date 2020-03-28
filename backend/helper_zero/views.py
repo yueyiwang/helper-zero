@@ -5,4 +5,4 @@ from .models import Organization
 
 class OrganizationView(viewsets.ModelViewSet):       
     serializer_class = OrganizationSerializer          
-    queryset = Organization.objects.all()              
+    queryset = Organization.objects.all()
