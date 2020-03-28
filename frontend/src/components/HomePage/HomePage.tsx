@@ -1,37 +1,52 @@
 import React from "react";
-import Map from './Map';
+import Map from "./Results/Map";
 import Marquee from "./Marquee";
+import ResultsContainer from "./Results/ResultsContainer";
+import ORGANIZATION_MOCKS from "../../mocks/organizations.json";
+import { MarkerType } from "../../types/MarkerType";
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
     display: "flex",
     flexDirection: "column",
-    alignItems: "center",
+    alignItems: "center"
+  },
+  resultsContainer: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    minHeight: "1024px"
+  },
+  columnContainer: {
+    flexGrow: 1,
+    flexBasis: 1
   }
 };
 
-//TODO: remove once there is a real data
-const MARKERS = [{
-  key: 'yelp',
-  latitude: 37.7865,
-  longitude: -122.4000,
-  
-}, {
-  key: 'airbnb',
-  latitude: 37.7717,
-  longitude: -122.4054,
-}];
-
+function getMarkers(): MarkerType[] {
+  // TODO: replace this with organization response
+  return ORGANIZATION_MOCKS.reduce((agg, org) => {
+    agg.push({
+      // key: org.name,
+      latitude: Number(org.lat),
+      longitude: Number(org.lon),
+    })
+    return agg
+  }, [] as MarkerType[]);
+}
 
 export default function HomePage() {
   return (
     <div style={styles.container}>
       <Marquee />
-      <Map
-        latitude={37.7577}
-        longitude={-122.4376}
-        markers={MARKERS}
-      />
+      <div style={styles.resultsContainer}>
+        <div style={{ ...styles.columnContainer, ...styles.organizationList }}>
+          <ResultsContainer organizations={ORGANIZATION_MOCKS} />
+        </div>
+        <div style={styles.columnContainer}>
+          <Map latitude={37.7577} longitude={-122.4376} markers={getMarkers()} />
+        </div>
+      </div>
     </div>
   );
 }
