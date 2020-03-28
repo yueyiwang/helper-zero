@@ -26,7 +26,7 @@ class Organization(models.Model):
     return self.name
 
 class DonationRequest(models.Model):
-  org_id = models.ForeignKey(
+  org = models.ForeignKey(
             'Organization',
              related_name="donation_requests",
              on_delete=models.CASCADE,
@@ -34,13 +34,13 @@ class DonationRequest(models.Model):
 
   item_type = models.CharField(max_length=120)
   amount_requested = models.PositiveIntegerField()
-  amount_received = models.PositiveIntegerField(default=0)
+  amount_received = models.PositiveIntegerField()
 
   def _str_(self):
     return self.name
 
 class Donation(models.Model):
-  org_id = models.ForeignKey(
+  org = models.ForeignKey(
             'Organization',
             on_delete=models.CASCADE,
            )
