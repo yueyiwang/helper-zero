@@ -23,8 +23,9 @@ class SearchView(viewsets.ViewSet):
         if not zipcode or (lat and lon):
             return Response(None)
 
+        delivery_values = [True] if delivery else [True, False]
         organizations = _get_organizations(
-            zipcode, lat, lon, radius, delivery
+            zipcode, lat, lon, radius, delivery_values
         )
         org_ordered_list = OrganizationSerializer(organizations, many=True).data
         org_id_list = [org['id'] for org in org_ordered_list]
@@ -55,11 +56,11 @@ def _build_search_response(org_ordered_list, donation_requests_ordered_list):
     return response
 
 
-def _get_organizations(zipcode, lat, lon, radius, delivery):
+def _get_organizations(zipcode, lat, lon, radius, delivery_values):
     if zipcode:
         organizations = Organization.objects.filter(
             zipcode=zipcode,
-            is_dropoff_only=delivery,
+            is_dropoff_only__in=delivery_values,
         ).order_by('name')
     else:
         # Otherwise, use lat and lon
@@ -69,33 +70,8 @@ def _get_organizations(zipcode, lat, lon, radius, delivery):
             lat__gte=br_lat,
             lon__lte=tl_lon,
             lon__gte=br_lon,
-            is_dropoff_only=delivery,
+            is_dropoff_only__in=delivery_values,
         ).order_by('name')
 
     # TODO sort by closest to search location
     return organizations
-
-
-def _get_org_id_list(zipcode, lat, lon, radius, delivery):
-    if zipcode:
-        org_id_list = Organization.objects.filter(
-            zipcode=zipcode,
-            is_dropoff_only=delivery,
-        ).order_by(
-            'name'
-        ).values_list('id', flat=True)
-    else:
-        # Otherwise, use lat and lon
-        tl_lon, tl_lat, br_lon, br_lat = get_search_bounding_box(lat, lon, radius)
-        org_id_list = Organization.objects.filter(
-            lat__lte=tl_lat,
-            lat__gte=br_lat,
-            lon__lte=tl_lon,
-            lon__gte=br_lon,
-            is_dropoff_only=delivery,
-        ).order_by(
-            'name'
-        ).values_list('id', flat=True)
-
-    # TODO sort by closest to search location
-    return org_id_list
