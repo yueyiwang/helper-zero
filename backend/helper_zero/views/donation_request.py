@@ -17,7 +17,7 @@ class DonationRequestView(viewsets.ModelViewSet):
                 request_dict["amount_received"] = 0
             org = Organization.objects.get(id=request_dict["org_id"])
             donation_request = DonationRequest(
-                org_id=org,
+                org=org,
                 item_type=request_dict["item_type"],
                 amount_requested=request_dict["amount_requested"],
                 amount_received=request_dict["amount_received"],
