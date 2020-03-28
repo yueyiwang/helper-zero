@@ -20,7 +20,7 @@ class SearchView(viewsets.ViewSet):
         radius = request.query_params.get('radius', 10)
         zipcode = request.query_params.get('zipcode')
 
-        if not zipcode or (lat and lon):
+        if not (zipcode or (lat and lon)):
             return Response(None)
 
         delivery_values = [True] if delivery else [True, False]
@@ -37,7 +37,7 @@ class SearchView(viewsets.ViewSet):
         donation_requests_ordered_list = DonationRequestSerializer(donation_requests, many=True).data
 
         response = _build_search_response(org_ordered_list, donation_requests_ordered_list)
-        return(Response(response))
+        return Response(response)
 
 
 def _build_search_response(org_ordered_list, donation_requests_ordered_list):
