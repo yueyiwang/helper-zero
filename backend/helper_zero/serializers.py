@@ -1,7 +1,10 @@
 from rest_framework import serializers
-from .models import Organization
-from .models import DonationRequest
+from .models import User, Organization, DonationRequest
 
+class UserSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = User
+		fields = ('id', 'name', 'phone', 'email', 'zipcode', 'lat', 'lon')
 
 class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
