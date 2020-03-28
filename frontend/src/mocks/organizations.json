@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "name": "Organization Name",
+    "phone": null,
+    "org_type": null,
+    "email": null,
+    "is_dropoff_only": false,
+    "instructions": "",
+    "point_of_contact": null,
+    "zipcode": "",
+    "lat": "",
+    "lon": "",
+    "donation_requests": []
+  },
+  {
+    "id": 2,
+    "name": "Organization Name 2",
+    "phone": null,
+    "org_type": null,
+    "email": null,
+    "is_dropoff_only": false,
+    "instructions": "",
+    "point_of_contact": null,
+    "zipcode": "",
+    "lat": "",
+    "lon": "",
+    "donation_requests": []
+  }
+]

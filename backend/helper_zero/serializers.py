@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import Organization
 from .models import DonationRequest
+
 class DonationRequestSerializer(serializers.ModelSerializer):
     class Meta:
         model = DonationRequest
