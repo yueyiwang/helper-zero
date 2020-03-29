@@ -47,7 +47,8 @@ const DeliveryMethodForm = ({onNext, onBack}) => {
                   Delivery Details
                 </Typography>
               </Box>
-              // @ts-ignore
+              {/* 
+                // @ts-ignore */}
               {values.methods.includes(PICKUP) &&(
                 <Box mt={6}>
                   <DeliveryInstruction 
@@ -58,7 +59,8 @@ const DeliveryMethodForm = ({onNext, onBack}) => {
                   />
                 </Box>
               )}
-              // @ts-ignore
+              {/* 
+                // @ts-ignore */}
               {values.methods.includes(DELIVERY) &&(
                 <Box mt={6}>
                   <DeliveryInstruction 
@@ -69,7 +71,8 @@ const DeliveryMethodForm = ({onNext, onBack}) => {
                   />
                 </Box>
               )}
-              // @ts-ignore
+              {/* 
+                // @ts-ignore */}
               {values.methods.includes(MAIL) &&(
                 <Box mt={6}>
                   <DeliveryInstruction 

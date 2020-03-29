@@ -88,7 +88,8 @@ const DonationRequestForm = ({onNext, onBack}) => {
                     {DONATION_INFOS[donationType]['label']}
                   </Typography>
                   <Box pt={1}>
-                    // @ts-ignore
+                    {/* 
+                      // @ts-ignore */}
                     {DONATION_INFOS[donationType]['requests'].map(request=> (
                       <>
                         <Typography variant="h4">
