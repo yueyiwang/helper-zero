@@ -1,4 +1,4 @@
-import os
+import logging
 
 from rest_framework import status, viewsets
 from helper_zero.serializers import UserSerializer
@@ -6,7 +6,8 @@ from helper_zero.models import User
 from rest_framework import status
 from rest_framework.response import Response
 
-from twilio.rest import Client
+from helper_zero.sms.texts import message_sender as sender
+from helper_zero.sms.errors import TwilioInvalidKeyError, TwilioSendError
 
 class UserView(viewsets.ViewSet):
 
@@ -32,38 +33,25 @@ class UserView(viewsets.ViewSet):
 			 	lon=request_dict["lon"]
 			)
 			try:
-				_send_twilio_confirmation_text(request_dict)
+				_send_user_confirmation_text(request_dict)
 				u.save()
 				return Response(serializer.data)
+			except TwilioInvalidKeyError:
+				logging.error ("Twilio environment variables not properly configured")
+				return Response(status=status.HTTP_400_BAD_REQUEST)
 			except TwilioSendError:
+				logging.error ("Twilio sender failed, please check your parameters")
 				return Response(status=status.HTTP_400_BAD_REQUEST)
 		else:
 			return Response(serializer.errors,
 											status=status.HTTP_400_BAD_REQUEST)
 
-class TwilioSendError(Exception):
-	pass
+def _send_user_confirmation_text (params):
+	recipient = "+%s" % params["phone"]
+	msg = "%s, thank you for signing up to Port.er!" % params["name"]
 
-def _send_twilio_confirmation_text (params):
-	"""
-	Uses Twilio client to send a text message.
-	TODO: Instantiate client in UserView class to avoid
-	having to reauthenticate on each text
-	TODO: Move TwilioSendError to centralized location
-	for errors
-	TODO: Update serializer to validate that user submitted
-	phone numbers are in the right format
-	"""
 	try:
-		c = Client(os.environ['TWILIO_ACCOUNT_SID'],
-				   os.environ['TWILIO_AUTH_TOKEN'])
-		text = "%s, thank you for signing up to Port.er!" % params["name"]
-		c.messages.create(
-			body=text,
-			from_=os.environ['TWILIO_NUMBER'],
-			to='+%s' % (params["phone"])
-		)
+		sender.sendTextMessage (recipient, msg)
 	except Exception as e:
-		raise TwilioSendError ("Couldn't send SMS; please validate your "
-							   					 "phone number and set the proper environment variables")
+		raise
 
