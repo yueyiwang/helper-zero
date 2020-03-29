@@ -6,7 +6,7 @@ from helper_zero.serializers import OrganizationSerializer, DonationRequestSeria
 
 class AuthView(viewsets.ViewSet):
   def list(self, request):
-    auth_token = request.GET.get('auth_token')
+    auth_token = request.query_params.get('auth_token')
     org = Organization.objects.filter(auth_token=auth_token).first()
     if org == None:
       return Response({})
