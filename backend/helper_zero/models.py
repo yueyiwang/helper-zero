@@ -58,12 +58,13 @@ class Donation(models.Model):
   phone = models.CharField(max_length=120)
   email = models.EmailField(null=True)
   status = models.CharField(max_length=120)
-  item_type = models.CharField(max_length=120)
+  item = models.CharField(max_length=120)
   amount = models.PositiveIntegerField()
   created_at = models.DateTimeField()
-  donation_time_start = models.DateTimeField()
-  donation_time_end = models.DateTimeField()
+  city = models.CharField(max_length=120)
   pickup_address = models.TextField(blank=True, null=True)
+  delivery_type = models.CharField(max_length=120)
+  pickup_or_dropoff_times = models.TextField()
 
   def _str_(self):
     return self.name

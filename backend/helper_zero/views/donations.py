@@ -25,13 +25,17 @@ class DonationView(viewsets.ModelViewSet):
             # TODO: may need to parse donation time start & end
             donation = Donation(
                 org=org,
+                name=request_dict["name"],
+                phone=request_dict["phone"],
+                email=request_dict["email"],
                 status=request_dict["status"],
-                item_type=request_dict["item_type"],
+                item=request_dict["item"],
                 amount=request_dict["amount"],
                 created_at=datetime.now(),
-                donation_time_start=request_dict["donation_time_start"],
-                donation_time_end=request_dict["donation_time_end"],
-                pickup_address=request_dict["pickup_address"]
+                city=request_dict["city"],
+                pickup_address=request_dict["pickup_address"],
+                delivery_type=request_dict["delivery_type"],
+                pickup_or_dropoff_times=request_dict["pickup_or_dropoff_times"]
             )
             try:
                 _send_user_confirmation_email(request_dict)
