@@ -1,5 +1,16 @@
 from django.db import models
 
+class User(models.Model):
+  name = models.CharField(max_length=120)
+  phone = models.CharField(max_length=120)
+  email = models.EmailField(null=True)
+  zipcode = models.CharField(blank=True, null=True, max_length=120)
+  lat = models.CharField(blank=True, null=True, max_length=120)
+  lon = models.CharField(blank=True, null=True, max_length=120)
+
+  def _str_(self):
+    return self.name
+
 class Organization(models.Model):
   name = models.CharField(max_length=120)
   phone = models.CharField(max_length=120)
