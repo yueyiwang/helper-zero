@@ -1,3 +1,5 @@
+import logging
+
 from rest_framework import status, viewsets
 from backend.helper_zero.serializers import OrganizationSerializer, DonationRequestSerializer
 from backend.helper_zero.models import Organization
@@ -15,14 +17,17 @@ class SearchView(viewsets.ViewSet):
     def list(self, request):
         offset = int(request.query_params.get('offset', 0))
         item_type = request.query_params.get('item_type')
-
         location_params, org_filter_params, donation_request_filter_params = _process_params(request.query_params)
-        org_search_results = _get_org_search_results(
-            location_params, org_filter_params, donation_request_filter_params, offset
-        )
 
-        response = _filter_org_list_by_donation_requests(org_search_results, item_type)
-        return Response(response)
+        try:
+            org_search_results = _get_org_search_results(
+                location_params, org_filter_params, donation_request_filter_params, offset
+            )
+            response = _filter_org_list_by_donation_requests(org_search_results, item_type)
+            return Response(response)
+        except Exception as e:
+            logging.error(e)
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 def _process_params(query_params):
@@ -85,7 +90,7 @@ def _get_org_search_results(
         org_query_set = _process_lat_lon_query(lat, lon, radius, org_filter_params, donation_request_filter_params)
     else:
         # If no location data, default to showing any orgs that have open requests, capping at 20
-        org_query_set =_process_default_query(org_filter_params, donation_request_filter_params)
+        org_query_set = _process_default_query(org_filter_params, donation_request_filter_params)
 
     org_search_results = OrganizationSerializer(org_query_set, many=True).data
     # Remove duplicates from query set.
@@ -113,6 +118,7 @@ def _process_zipcode_query(zipcode, org_filter_params, donation_request_filter_p
             **org_filter_params,
         )
     return org_query_set
+
 
 def _process_lat_lon_query(lat, lon, radius, org_filter_params, donation_request_filter_params):
     tl_lon, tl_lat, br_lon, br_lat = get_search_bounding_box(
