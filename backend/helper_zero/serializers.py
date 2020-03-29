@@ -14,7 +14,7 @@ class DonationRequestSerializer(serializers.ModelSerializer):
     amount_received = serializers.IntegerField(allow_null=True)
     class Meta:
         model = DonationRequest
-        fields = ('org', 'item_type', 'amount_requested', 'amount_received')
+        fields = ('org', 'item', 'item_type', 'amount_requested', 'amount_received')
 
 class DonationSerializer(serializers.ModelSerializer):
     status = serializers.CharField(allow_null=True)
@@ -29,7 +29,7 @@ class OrganizationSerializer(serializers.ModelSerializer):
     donations = DonationSerializer(many=True, required=False)
     class Meta:
         model = Organization
-        fields = ('id', 'name', 'phone', 'org_type', 'email', 'is_dropoff_only',
-              'instructions', 'zipcode', 'lat', 'lon', 'auth_user_id',
-              'pickup_times', 'dropoff_times', 'donation_requests', 'donations')
-
+        fields = ('id', 'name', 'url', 'address', 'description', 'phone',
+                  'org_type', 'email', 'is_dropoff', 'is_pickup', 'is_mail',
+                  'instructions', 'zipcode', 'lat', 'lon', 'auth_user_id',
+                  'pickup_times', 'dropoff_times', 'donation_requests', 'donations')

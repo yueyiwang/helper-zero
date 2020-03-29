@@ -10,7 +10,11 @@ from backend.helper_zero.serializers import OrganizationSerializer, DonationRequ
 class AuthView(viewsets.ViewSet):
   def list(self, request):
     auth_token = request.query_params.get('auth_token')
-    id_info = id_token.verify_oauth2_token(auth_token, requests.Request(), os.environ['GOOGLE_CLIENT_ID'])
+    id_info = id_token.verify_oauth2_token(
+      auth_token,
+      requests.Request(),
+      os.environ['GOOGLE_CLIENT_ID']
+    )
     if id_info['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
       return Response(status=status.HTTP_401_UNAUTHORIZED)
     user_id = id_info['sub']
