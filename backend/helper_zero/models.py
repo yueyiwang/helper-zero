@@ -45,6 +45,7 @@ class DonationRequest(models.Model):
 class Donation(models.Model):
   org = models.ForeignKey(
           'Organization',
+          related_name="donations",
           on_delete=models.CASCADE,
         )
   name = models.CharField(max_length=120)

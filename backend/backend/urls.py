@@ -11,7 +11,7 @@ from helper_zero.views.search import SearchView
 from helper_zero.views.auth import AuthView
 
 router = routers.DefaultRouter()
-router.register(r'auth/$', AuthView, 'auth')
+router.register(r'login', AuthView, 'login')
 router.register(r'organizations', OrganizationView, 'organizations')
 router.register(r'users', UserView, 'users')
 router.register(r'search', SearchView, 'search')
