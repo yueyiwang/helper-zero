@@ -1,6 +1,11 @@
-# helper-zero
+# Port.er
+Porter is a service that allows users to donate spare supplies to local organizations that are affected by COVID-19.
 
-## Setup steps
+If you have unopened medical supplies, disinfectant, or toiletries and wish to donate them, Porter will attempt to find organizations in need near you.
+
+If you're an organization affected by COVID-19, registering your organization and putting out requests for supplies is simple as well!
+
+## Local Setup
 
 ### Clone Repo
 
@@ -8,32 +13,60 @@
 
 `cd helper-zero`
 
-### Backend-related setup
-`cd backend`
+### Backend Setup
+```
+cd backend
 
-`pip install pipenv`
+# if you don't have pipenv
+pip install pipenv
 
-`pipenv shell` 
-Press Ctrl-D to exit out of shell. Make sure to always start up a shell before coding in python.
+# control-D to exit the shell;
+# always develop with a shell open
+pipenv shell 
 
-`pipenv install` to install all dependencies
+# install dependencies
+pipenv install
 
-`python manage.py runserver` to start up a server
+# spin up the backend
+pipenv manage.py runserver
+```
 
-If you run `http://localhost:8000/api/organizations/` you should be able to see a UI where you can can directly POST/PUT/DELETE `organization` objects
+### Database Migrations
+When you make changes to the `model.py` file, make sure to run migrations by running `python manage.py makemigrations` and `python manage.py migrate`
 
-### Frontend-related setup
+### Environment Variables
+Port.er uses a few environment variables for setting up authentication and our integration with Twilio for SMS and email. You'll need to set up your own keys in either `.env` files or as a local environment variable in `~/.bashrc`:
 
-`cd frontend`
+```
+# SMS Support
+export TWILIO_ACCOUNT_SID= <YOUR_SID>
+export TWILIO_AUTH_TOKEN= <AUTH_TOKEN>
+export TWILIO_NUMBER= <TWILIO_NUMBER>
 
-`brew install yarn` if you don't have yarn
+# Email Support
+export SENDGRID_API_KEY= <SENDGRID_API_KEY>
 
-`yarn install` to install all dependencies
+# OAuth
+export GOOGLE_CLIENT_ID= <GOOGLE_CLIENT_ID>
+```
 
-`yarn start` to spin up a server
+You'll also need the following in `porter/frontend/.env`:
 
-If you go to `http://localhost:3000` you should be able to see the app!
+`REACT_APP_GOOGLE_CLIENT_ID= <GOOGLE_CLIENT_ID>`
 
+### Frontend Setup
 
-### Other
-When you make changes to the `model.py` file, make sure to run migrations by running `python manage.py makemigrations helper_zero`
+```
+cd frontend
+
+# if you don't have yarn
+brew install yarn
+
+# install all dependencies
+yarn install
+
+# spin up a server
+yarn start
+```
+
+Navigate to `http://localhost:3000` to see the main frontend entrypoint!
