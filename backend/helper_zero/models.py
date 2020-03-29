@@ -13,17 +13,20 @@ class User(models.Model):
 
 class Organization(models.Model):
   name = models.CharField(max_length=120)
+  url = models.CharField(max_length=120)
+  address = models.CharField(max_length=120)
+  description = models.CharField(max_length=120)
   phone = models.CharField(max_length=120)
   org_type = models.CharField(max_length=120)
   email = models.EmailField()
-  is_dropoff_only = models.BooleanField(default=True)
+  delivery_type = models.CharField(max_length=120)
   instructions = models.TextField(blank=True)
   zipcode = models.CharField(blank=True, null=True, max_length=120)
   lat = models.CharField(blank=True, null=True, max_length=120)
   lon = models.CharField(blank=True, null=True, max_length=120)
+  auth_user_id=models.CharField(max_length=120)
   pickup_times = models.TextField(blank=True, null=True)
   dropoff_times = models.TextField(blank=True, null=True)
-  auth_user_id=models.CharField(max_length=120)
 
   def _str_(self):
     return self.name

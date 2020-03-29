@@ -15,6 +15,9 @@ class DonationRequestView(viewsets.ModelViewSet):
         if serializer.is_valid():
             if request_dict['amount_received'] is None:
                 request_dict["amount_received"] = 0
+
+            # TODO: Error check to make sure the organization object
+            # is valid, otherwise below code will fail to execute
             org = Organization.objects.get(id=request_dict["org"])
             donation_request = DonationRequest(
                 org=org,
@@ -23,6 +26,11 @@ class DonationRequestView(viewsets.ModelViewSet):
                 amount_received=request_dict["amount_received"],
             )
             donation_request.save()
+
+            # Will not actually overwrite the existing
+            # donation requests, appends to the existing list
+            org.donation_requests.set([donation_request])
+            org.save()
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.data)
