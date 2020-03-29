@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 import Container from '@material-ui/core/Container';
 import { Typography, Box } from "@material-ui/core";
-import Grid from '@material-ui/core/Grid';
 
-import { OrganizationType, DonationRequestType } from '../../types/OrganizationType';
-import { render } from "@testing-library/react";
+import { OrganizationType } from '../../types/OrganizationType';
 
 const styles = {
   container: {
@@ -13,48 +11,27 @@ const styles = {
   }
 }
 
-const organization: OrganizationType = {
-  name: "vicky",
-  id: 1,
-  phone: "1234567890",
-  email: "fake@email.com",
-  isDropoffOnly: false,
-  instructions: "random instructions",
-  accessToken: "12345",
-  orgType: "myself",
-};
-
-const donationRequests: Array<DonationRequestType> = [
-  {
-    id: 1,
-    orgId: 2,
-    itemType: "toilet",
-    amountRequested: 213,
-    amountReceived: 123,
-  },
-];
-
-type Props  = {
-  organization: OrganizationType;
-  donationRequests: Array<DonationRequestType>;
+type Props = {
+  location: {
+    state: {
+      organization: OrganizationType;
+    };
+  };
 }
 
-const OrganizationProfilePage: React.FC = () => {
-  const 
-
+const OrganizationProfilePage: React.FC<Props> = (props: Props) => {
   return (
       <Container maxWidth="lg" style={styles.container}>
       <Box>
-        <Typography variant="h2">{organization.name}</Typography>
+        <Typography variant="h2">{props.location.state.organization.name}</Typography>
         <Box>
-          <Typography color="textPrimary" variant="h3">{donationRequests</Typography>
+          <Typography color="textPrimary" variant="h3">10</Typography>
         </Box>
       </Box>
     </Container>
   );
 }
 
-);
 
 export default OrganizationProfilePage
 

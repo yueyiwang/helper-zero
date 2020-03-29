@@ -1,4 +1,5 @@
 import { DonationRequestType } from "./DonationRequestType";
+import { DonationType } from "./DonationType";
 
 export type OrganizationType = {
   id: number;
@@ -7,15 +8,16 @@ export type OrganizationType = {
   address: string;
   description: string;
   phone: string;
-  orgType: string;
+  org_type: string;
   email: string;
-  isDropoffOnly: boolean;
+  is_dropoff_only: boolean;
   instructions: string;
   zipcode?: string;
   lat?: string;
   lon?: string;
-  accessToken: string;
-  pickupDateTimes?: Array<Date>;
-  dropoffDateTimes?: Array<Date>;
+  auth_user_id: string;
+  pickup_date_times?: Array<Date>;
+  dropoff_date_times?: Array<Date>;
   donation_requests: DonationRequestType[];
+  donations: DonationType[];
 }
