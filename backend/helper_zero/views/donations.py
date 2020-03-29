@@ -1,3 +1,5 @@
+import logging
+
 from datetime import datetime
 from rest_framework import viewsets
 from rest_framework import status
@@ -31,7 +33,9 @@ class DonationView(viewsets.ModelViewSet):
                 donation_time_end=request_dict["donation_time_end"]
             )
             try:
+                _send_user_confirmation_email(request_dict)
                 donation.save()
+                return Response(serializer.data)
             except TwilioInvalidKeyError:
                 logging.error("Twilio environment variables not properly configured")
                 return Response(status=status.HTTP_400_BAD_REQUEST)
@@ -43,7 +47,6 @@ class DonationView(viewsets.ModelViewSet):
                 return Response(status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response(serializer.data)
 
 def _send_user_confirmation_text (params):
     recipient = "+%s" % params["phone"]
@@ -55,7 +58,10 @@ def _send_user_confirmation_text (params):
         raise
 
 def _send_user_confirmation_email (params):
+    msg = ("Welcome to port.er! This email is a confirmation of your "
+           "donation. You are donating %d %s. We look forward to receiving "
+           "your donation!" % (params["amount"], params["item_type"]))
     try:
-        sender.send_email(params["email"], "")
+        sender.send_email(params["email"], msg)
     except Exception as e:
         raise

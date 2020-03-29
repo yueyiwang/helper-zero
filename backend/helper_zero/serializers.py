@@ -17,11 +17,16 @@ class DonationRequestSerializer(serializers.ModelSerializer):
         fields = ('org', 'item_type', 'amount_requested', 'amount_received')
 
 class DonationSerializer(serializers.ModelSerializer):
-    created_at = serializers.DateTimeField(allow_null=True)
+    lat = serializers.CharField(allow_null=True)
+    lon = serializers.CharField(allow_null=True)
+    zipcode = serializers.CharField(allow_null=True)
     status = serializers.CharField(allow_null=True)
+
     class Meta:
         model = Donation
-        fields = ('org', 'status', 'item_type', 'amount', 'created_at', 'donation_time_start', 'donation_time_end')
+        fields = ('org', 'status', 'item_type', 'amount', 'created_at',
+                  'name', 'phone', 'email', 'zipcode', 'lat', 'lon',
+                  'donation_time_start', 'donation_time_end')
 
 class OrganizationSerializer(serializers.ModelSerializer):
     donation_requests = DonationRequestSerializer(many=True, required=False)
