@@ -9,13 +9,14 @@ from helper_zero.views.donation_request import DonationRequestView
 from helper_zero.views.donations import DonationView
 from helper_zero.views.search import SearchView
 
-data_api_router = routers.DefaultRouter()
-data_api_router.register(r'organizations', OrganizationView, 'organizations')
-data_api_router.register(r'donations', DonationView, 'donations')
-data_api_router.register(r'donation_requests', DonationRequestView, 'donation_requests')
-data_api_router.register(r'search', SearchView, 'search')
+router = routers.DefaultRouter()
+router.register(r'organizations', OrganizationView, 'organizations')
+router.register(r'users', UserView, 'users')
+router.register(r'search', SearchView, 'search')
+router.register(r'donations', DonationView, 'donations')
+router.register(r'donation_requests', DonationRequestView, 'donation_requests')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('data_api/', include(data_api_router.urls)),
+    path('api/', include(router.urls)),
 ]

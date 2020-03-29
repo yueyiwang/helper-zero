@@ -9,7 +9,8 @@ from .errors import TwilioSendError, TwilioInvalidKeyError
 
 class MessageSender:
 	def __init__ (self):
-		self.client = self._initializeTwilioClient()
+		self.text_client = self._initializeTwilioClient()
+		self.mail_client = self._initializeSendGridClient()
 
 	def _initializeTwilioClient(self):
 		try:
@@ -19,10 +20,17 @@ class MessageSender:
 			raise TwilioInvalidKeyError
 		return Client(twilio_sid, twilio_auth)
 
+	def _initializeSendGridClient(self):
+		try:
+			sendgrid_api_key = os.environ['SENDGRID_API_KEY']
+		except KeyError:
+			raise TwilioInvalidKeyError
+		return SendGridAPIClient(sendgrid_api_key)
+
 	def send_text_message(self, recipient, msg):
 		try:
 			sender_num = os.environ['TWILIO_NUMBER']
-			self.client.messages.create(
+			self.text_client.messages.create(
 				body=msg,
 				from_=sender_num,
 				to=recipient
@@ -43,12 +51,13 @@ class MessageSender:
 		message = Mail(
 			from_email="helperzerosf@gmail.com",
 			to_emails=recipient,
-			subject="Port.er Confirmation",
+			subject="Port.er Donation Confirmation",
 			html_content=content
 		)
 		try:
-			sg = SendGridAPIClient(os.environ['SENDGRID_API_KEY'])
-			resp = sg.send(message)
+			# TODO: Potentially log the response
+			# and raise error if it's a 4XX
+			self.mail_client.send(message)
 		except Exception as e:
 			raise
 
