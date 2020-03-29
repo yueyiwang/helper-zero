@@ -7,6 +7,7 @@ import HomePage from "./components/HomePage/HomePage";
 import OrganizationsPage from "./components/OrganizationsPage";
 import OrganizationLoginPage from "./components/OrganizationLoginPage/OrganizationLoginPage";
 import OrganizationSignUpPage from './components/OrganizationSignUpPage/OrganizationSignUpPage';
+import OrganizationProfilePage from "./components/OrganizationProfilePage/OrganizationProfilePage";
 
 // Material UI Overrides
 const theme = createMuiTheme({
@@ -92,6 +93,7 @@ export default function App() {
         <Route path="/organizations" component={OrganizationsPage} />
         <Route path="/organization/login" component={OrganizationLoginPage} />
         <Route path="/organization/signup" component={OrganizationSignUpPage} />
+        <Route path="/organization/profile" component={OrganizationProfilePage} />
         <Route path="/" component={HomePage} />
       </Switch>
     </MuiThemeProvider>

@@ -30,6 +30,6 @@ class OrganizationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Organization
         fields = ('id', 'name', 'phone', 'org_type', 'email', 'is_dropoff_only',
-              'instructions', 'zipcode', 'lat', 'lon', 'auth_token',
+              'instructions', 'zipcode', 'lat', 'lon', 'auth_user_id',
               'pickup_times', 'dropoff_times', 'donation_requests', 'donations')
 
