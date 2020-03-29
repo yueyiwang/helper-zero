@@ -123,6 +123,13 @@ USE_TZ = True
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+REACT_APP_DIR = os.path.join(BASE_DIR, 'frontend')
+STATICFILES_DIRS = [
+    os.path.join(REACT_APP_DIR, 'build', 'static'),
+]
+
+
 
 CORS_ORIGIN_WHITELIST = (
 'https://localhost:3000',
