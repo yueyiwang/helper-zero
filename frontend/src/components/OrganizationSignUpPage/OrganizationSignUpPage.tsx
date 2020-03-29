@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { Divider, Button, FormControl, Input, FormHelperText } from '@material-ui/core';
@@ -8,21 +8,41 @@ import Paper from '@material-ui/core/Paper';
 import PeopleOutlined from '@material-ui/icons/PeopleOutlined';
 import DriveEtaOutlined from '@material-ui/icons/DriveEtaOutlined';
 import TextField from '@material-ui/core/TextField';
+import GoogleLogin from 'react-google-login';
+
 
 const styles: { [key: string]: React.CSSProperties } = {
   icon: {
     verticalAlign: "bottom",
+  },
+  buttonBox: {
+    justifyContent: "space-between",
+  },
+  button: {
+    padding: "10px",
+    width: "200px",
+    marginRight: "50px",
   }
 };
 
 export default function ReceiverSignUpPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  const onLoginSuccess = (response) => {
+    setIsLoggedIn(true);
+    console.log(isLoggedIn);
+  }
+
+  const onLoginFailure = (response) => {
+    return;
+  }
 
   return (
     <>
       {/* TODO: add Header component */}
       <Container maxWidth="lg">
-        <Grid container spacing={6}>
-          <Grid item xs>
+        <Grid container>
+          <Grid item xs lg={7}>
             <Box m={6}>
               <Box pb={5}>
                 <Typography color="textPrimary" variant="h1">
@@ -52,43 +72,14 @@ export default function ReceiverSignUpPage() {
                   You can then either choose whether you would like to pick-up donations near you or receive scheduled drop-offs.
                 </Typography>
               </Box>
-              <Button size="large" variant="outlined" color="primary">
-                Create Profile
-              </Button>
-            </Box>
-          </Grid>
-          <Grid item xs={5}>
-            <Box m={6}>
-              <Paper variant="outlined">
-                <Box p={3}>
-                  <Typography color="textPrimary" variant="h2">
-                    Returning User
-                  </Typography>
-                  <TextField
-                      id="username"
-                      helperText="Username"
-                      fullWidth
-                      margin="normal"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                    />
-                  <TextField
-                      id="password"
-                      helperText="Password"
-                      fullWidth
-                      margin="normal"
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                  />
-                  <Box pt={2} style={{textAlign: 'right'}}>
-                    <Button size="large" variant="outlined" color="primary">
-                      Login
-                    </Button>
-                  </Box>
-                </Box>
-              </Paper>
+              <Box style={styles.buttonBox}>
+                <GoogleLogin 
+                  clientId="650902157032-v1gqmd903sedgmdrpd0goa1343b049ug.apps.googleusercontent.com"
+                  onSuccess={onLoginSuccess}
+                  onFailure={onLoginFailure}
+                  cookiePolicy={'single_host_origin'}
+                />
+              </Box>
             </Box>
           </Grid>
         </Grid>
