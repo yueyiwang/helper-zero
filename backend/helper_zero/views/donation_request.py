@@ -2,8 +2,8 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
 
-from helper_zero.serializers import DonationRequestSerializer
-from helper_zero.models import DonationRequest, Organization
+from backend.helper_zero.serializers import DonationRequestSerializer
+from backend.helper_zero.models import DonationRequest, Organization
 
 class DonationRequestView(viewsets.ModelViewSet):
     serializer_class = DonationRequestSerializer

@@ -1,8 +1,8 @@
 from rest_framework import status, viewsets
 from rest_framework.response import Response
 
-from helper_zero.models import Organization, DonationRequest
-from helper_zero.serializers import OrganizationSerializer, DonationRequestSerializer
+from backend.helper_zero.models import Organization, DonationRequest
+from backend.helper_zero.serializers import OrganizationSerializer, DonationRequestSerializer
 
 class AuthView(viewsets.ViewSet):
   def list(self, request):

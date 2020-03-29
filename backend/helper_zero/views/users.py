@@ -1,8 +1,8 @@
 import logging
 
 from rest_framework import status, viewsets
-from helper_zero.serializers import UserSerializer
-from helper_zero.models import User
+from backend.helper_zero.serializers import UserSerializer
+from backend.helper_zero.models import User
 from rest_framework import status
 from rest_framework.response import Response
 

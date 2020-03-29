@@ -1,6 +1,6 @@
 from rest_framework import status, viewsets
-from helper_zero.serializers import OrganizationSerializer
-from helper_zero.models import Organization
+from backend.helper_zero.serializers import OrganizationSerializer
+from backend.helper_zero.models import Organization
 
 
 class OrganizationView(viewsets.ModelViewSet):

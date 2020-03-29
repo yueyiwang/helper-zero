@@ -1,9 +1,9 @@
 from rest_framework import status, viewsets
-from helper_zero.serializers import OrganizationSerializer, DonationRequestSerializer
-from helper_zero.models import Organization
+from backend.helper_zero.serializers import OrganizationSerializer, DonationRequestSerializer
+from backend.helper_zero.models import Organization
+from backend.helper_zero.location_util import get_search_bounding_box
 from django.core.paginator import Paginator
 from rest_framework.response import Response
-from helper_zero.location_util import get_search_bounding_box
 import math
 
 
