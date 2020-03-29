@@ -29,7 +29,7 @@ class DonationRequest(models.Model):
   org_id = models.ForeignKey(
             'Organization',
              related_name="donation_requests",
-              on_delete=models.CASCADE,
+             on_delete=models.CASCADE,
           )
 
   item_type = models.CharField(max_length=120)
