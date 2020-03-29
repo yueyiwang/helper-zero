@@ -28,6 +28,7 @@ const OrganizationSignUpPage = () => {
   return (
     <>
       {/* TODO: add Header component */}
+      {JSON.stringify(formData)}
       <Container maxWidth="lg">
         <Box m={6}>
           <Typography variant="h1">

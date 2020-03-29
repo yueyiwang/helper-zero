@@ -5,6 +5,7 @@ import Box from '@material-ui/core/Box';
 import { Field } from 'react-final-form';
 
 import SelectorWithPopover from './SelecterWithPopover';
+import { MAIL } from './DeliveryMethodForm';
 
 const styles: { [key: string]: React.CSSProperties } = {
   button: {
@@ -20,15 +21,15 @@ const styles: { [key: string]: React.CSSProperties } = {
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-const DeliveryInstruction = ({type, values}) => {
+const DeliveryInstruction = ({title, subtitle, type, values}) => {
   return (
     <>
       <Box mt={3}>
         <Typography variant="h3">
-          Drop-off Instructions
+          {title}
         </Typography>
         <Typography variant="body1">
-          Tell your donators how you would like them to drop off their donations. 
+          {subtitle}
         </Typography>
         <Box pt={2}>
           <Field
@@ -39,45 +40,47 @@ const DeliveryInstruction = ({type, values}) => {
           />
         </Box>
       </Box>
-      <Box mt={4}>
-        <Typography variant="body1">
-          Create a drop-off windows for when you want donators to drop-off donations. 
-        </Typography>
-        <Box pt={3}>
-          <Typography variant="h4">
-            Select Available Days
+      {type !== MAIL && (
+        <Box mt={4}>
+          <Typography variant="body1">
+            Create a windows for when you want donators to donations. 
           </Typography>
-          <Box pt={2}>
-            {/* Selector Group */}
-            <Grid 
-              container
-              direction="row"
-              justify="flex-start"
-              alignItems="flex-start"
-              spacing={1}
-            >
-              {DAYS.map(day => (
-                <Grid item>
-                  <SelectorWithPopover 
-                    key={`${type}-${day}`}
-                    text={day}
-                    extraInfo={values[type][day] ? values[type][day] : ''}
-                    popoverTitle="Add Times"
-                    popOverContentComponent={
-                      <Field
-                        name={`${type}.${day}`}
-                        render={({ input }) => (
-                          <textarea rows={5} cols={30} style={styles.textarea} onChange={v => input.onChange(v)}/>
-                        )}
-                      />
-                    }
-                  />
-                </Grid>
-              ))}
-            </Grid>
+          <Box pt={3}>
+            <Typography variant="h4">
+              Select Available Days
+            </Typography>
+            <Box pt={2}>
+              {/* Selector Group */}
+              <Grid 
+                container
+                direction="row"
+                justify="flex-start"
+                alignItems="flex-start"
+                spacing={1}
+              >
+                {DAYS.map(day => (
+                  <Grid item>
+                    <SelectorWithPopover 
+                      key={`${type}-${day}`}
+                      text={day}
+                      extraInfo={values[type][day] ? values[type][day] : ''}
+                      popoverTitle="Add Times"
+                      popOverContentComponent={
+                        <Field
+                          name={`${type}.${day}`}
+                          render={({ input }) => (
+                            <textarea rows={5} cols={30} style={styles.textarea} onChange={v => input.onChange(v)}/>
+                          )}
+                        />
+                      }
+                    />
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
           </Box>
         </Box>
-      </Box>
+      )}
     </>
   )
 };

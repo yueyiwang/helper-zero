@@ -47,11 +47,39 @@ const DeliveryMethodForm = ({onNext, onBack}) => {
                   Delivery Details
                 </Typography>
               </Box>
-              {values.methods.map(method => (
+              // @ts-ignore
+              {values.methods.includes(PICKUP) &&(
                 <Box mt={6}>
-                  <DeliveryInstruction type={method} values={values}/>
+                  <DeliveryInstruction 
+                    title={"Pick-Up Instructions"}
+                    subtitle={"Leave your donators any instructions for how you will be picking up the donations."}
+                    type={PICKUP}
+                    values={values}
+                  />
                 </Box>
-              ))}
+              )}
+              // @ts-ignore
+              {values.methods.includes(DELIVERY) &&(
+                <Box mt={6}>
+                  <DeliveryInstruction 
+                    title={"Drop-off Instructions"}
+                    subtitle={"Tell your donators how you would like them to drop off their donations."}
+                    type={PICKUP}
+                    values={values}
+                  />
+                </Box>
+              )}
+              // @ts-ignore
+              {values.methods.includes(MAIL) &&(
+                <Box mt={6}>
+                  <DeliveryInstruction 
+                    title={"Mailing Instructions"}
+                    subtitle={"Leave your donators the specific address of the mail room you would like the donations to be sent to."}
+                    type={MAIL}
+                    values={values}
+                  />
+                </Box>
+              )}
             </>
           )}
           <Box mt={6}>
