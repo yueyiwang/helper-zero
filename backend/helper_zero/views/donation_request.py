@@ -15,7 +15,7 @@ class DonationRequestView(viewsets.ModelViewSet):
         if serializer.is_valid():
             if request_dict['amount_received'] is None:
                 request_dict["amount_received"] = 0
-            org = Organization.objects.get(id=request_dict["org_id"])
+            org = Organization.objects.get(id=request_dict["org"])
             donation_request = DonationRequest(
                 org=org,
                 item_type=request_dict["item_type"],
