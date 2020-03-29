@@ -9,21 +9,23 @@ from rest_framework.response import Response
 import math
 
 
+NUM_RESULTS_PER_PAGE = 20
+DEFAULT_RADIUS = 10.0 # miles
+
+
 class SearchView(viewsets.ViewSet):
     """
     A ViewSet for search results.
     """
 
     def list(self, request):
-        offset = int(request.query_params.get('offset', 0))
-        item_type = request.query_params.get('item_type')
-        location_params, org_filter_params, donation_request_filter_params = _process_params(request.query_params)
+        paging_params, location_params, org_filter_params, donation_request_filter_params = _process_params(request.query_params)
 
         try:
             org_search_results = _get_org_search_results(
-                location_params, org_filter_params, donation_request_filter_params, offset
+                location_params, org_filter_params, donation_request_filter_params, paging_params['offset']
             )
-            response = _filter_org_list_by_donation_requests(org_search_results, item_type)
+            response = _filter_org_list_by_donation_requests(org_search_results, donation_request_filter_params.get('item_type'))
             return Response(response)
         except Exception as e:
             logging.error(e)
@@ -38,9 +40,12 @@ def _process_params(query_params):
     item_type = query_params.get('item_type')
     lat = query_params.get('lat')
     lon = query_params.get('lon')
-    radius = query_params.get('radius', 10)
+    radius = query_params.get('radius', DEFAULT_RADIUS)
     zipcode = query_params.get('zipcode')
 
+    paging_params = {
+        'offset': int(query_params.get('offset', 0))
+    }
     location_params = {
         'zipcode': zipcode,
         'lat': float(lat) if lat else None,
@@ -60,7 +65,7 @@ def _process_params(query_params):
     if item_type:
         donation_request_filter_params['item_type'] = item_type
 
-    return location_params, org_filter_params, donation_request_filter_params
+    return paging_params, location_params, org_filter_params, donation_request_filter_params
 
 
 def _filter_org_list_by_donation_requests(org_search_results, item_type):
@@ -152,17 +157,17 @@ def _process_default_query(org_filter_params, donation_request_filter_params):
             donation_requests__isnull=False,
             donation_requests__item_type=donation_request_filter_params['item_type'],
             **org_filter_params
-        ).order_by("name")[:20]
+        ).order_by("name")
     else:
         org_query_set = Organization.objects.filter(
             donation_requests__isnull=False,
             **org_filter_params
-        ).order_by("name")[:20]
+        ).order_by("name")
     return org_query_set
 
 
 def _paginate_results(org_search_results, offset):
-    paginator = Paginator(org_search_results, 20)  # Show 20 orgs per page
+    paginator = Paginator(org_search_results, NUM_RESULTS_PER_PAGE)
     page_index = offset + 1
     if page_index > 1:
         # if we're not requesting the first page, make sure we have another valid page of results
