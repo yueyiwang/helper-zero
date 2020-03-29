@@ -10,10 +10,16 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 
 import { OrganizationType } from '../../types/OrganizationType';
-
-
+import Header from "../Header";
 
 const styles: { [key: string]: React.CSSProperties } = {
+  container: {
+    display: "flex"
+  },
+  contentContainer: {
+    marginTop: "128px",
+    width: "100%"
+  },
   icon: {
     verticalAlign: "bottom",
   },
@@ -87,64 +93,68 @@ export default function ReceiverSignUpPage() {
   }
   return (
     <>
-      {/* TODO: add Header component */}
-      <Container maxWidth="lg">
-        <Grid container>
-          <Grid item xs lg={7}>
-            <Box m={6}>
-              <Box pb={5}>
-                <Typography color="textPrimary" variant="h1">
-                  How does this work?
-                </Typography>
-                <Typography color="textSecondary" variant="subtitle1">
-                  If you are a hospital or a homeless shelter, help your community help you by crowd sourcing resources like medical supplies, food, and donations.
-                </Typography>
-              </Box>
-              <Box pb={5}>
-                <Typography color="textPrimary" variant="h2">
-                  <PeopleOutlined fontSize="large" style={styles.icon}/>
-                  {' '}
-                  Create a request profile  
-                </Typography>
-                <Typography color="textSecondary" variant="subtitle1">
-                  Create a profile requesting an amount of supplies from your community. We’ll first verify your organization, then publish your requests live. 
-                </Typography>
-              </Box>
-              <Box pb={8}>
-                <Typography color="textPrimary" variant="h2">
-                  <DriveEtaOutlined fontSize="large" style={styles.icon}/>
-                  {' '}
-                  Receive drop-offs or pick-up donations
-                </Typography>
-                <Typography color="textSecondary" variant="body1" style={styles.subTitle}>
-                  You can then either choose whether you would like to pick-up donations near you or receive scheduled drop-offs.
-                </Typography>
-              </Box>
-              <Box style={styles.buttonBox}>
-                <Box style={styles.button}>
-                <GoogleLogin 
-                  clientId="650902157032-v1gqmd903sedgmdrpd0goa1343b049ug.apps.googleusercontent.com"
-                  onSuccess={onCreateAccountSuccess}
-                  onFailure={onCreateAccountFailure}
-                  cookiePolicy={'single_host_origin'}
-                  buttonText="Create account with Google"
-                  style={styles.button}
-                  theme="dark"
-                  responseType="code"
-                />
+      <div style={styles.container}>
+        <Header isWhiteBackground />
+        <div style={styles.contentContainer}>
+          <Container maxWidth="lg">
+            <Grid container>
+              <Grid item xs lg={7}>
+                <Box m={6}>
+                  <Box pb={5}>
+                    <Typography color="primary" variant="h1">
+                      How does this work?
+                    </Typography>
+                    <Typography color="primary" variant="subtitle1">
+                      If you are a hospital or a homeless shelter, help your community help you by crowd sourcing resources like medical supplies, food, and donations.
+                    </Typography>
+                  </Box>
+                  <Box pb={5}>
+                    <Typography color="primary" variant="h2">
+                      <PeopleOutlined fontSize="large" style={styles.icon}/>
+                      {' '}
+                      Create a request profile  
+                    </Typography>
+                    <Typography color="primary" variant="subtitle1">
+                      Create a profile requesting an amount of supplies from your community. We’ll first verify your organization, then publish your requests live. 
+                    </Typography>
+                  </Box>
+                  <Box pb={8}>
+                    <Typography color="primary" variant="h2">
+                      <DriveEtaOutlined fontSize="large" style={styles.icon}/>
+                      {' '}
+                      Receive drop-offs or pick-up donations
+                    </Typography>
+                    <Typography color="primary" variant="body1" style={styles.subTitle}>
+                      You can then either choose whether you would like to pick-up donations near you or receive scheduled drop-offs.
+                    </Typography>
+                  </Box>
+                  <Box style={styles.buttonBox}>
+                    <Box style={styles.button}>
+                    <GoogleLogin 
+                      clientId="650902157032-v1gqmd903sedgmdrpd0goa1343b049ug.apps.googleusercontent.com"
+                      onSuccess={onCreateAccountSuccess}
+                      onFailure={onCreateAccountFailure}
+                      cookiePolicy={'single_host_origin'}
+                      buttonText="Create account with Google"
+                      style={styles.button}
+                      theme="dark"
+                      responseType="code"
+                    />
+                    </Box>
+                    <GoogleLogin 
+                      clientId="650902157032-v1gqmd903sedgmdrpd0goa1343b049ug.apps.googleusercontent.com"
+                      onSuccess={onLoginSuccess}
+                      onFailure={onLoginFailure}
+                      cookiePolicy={'single_host_origin'}
+                      buttonText="Sign in with Google"
+                    />
+                  </Box>
                 </Box>
-                <GoogleLogin 
-                  clientId="650902157032-v1gqmd903sedgmdrpd0goa1343b049ug.apps.googleusercontent.com"
-                  onSuccess={onLoginSuccess}
-                  onFailure={onLoginFailure}
-                  cookiePolicy={'single_host_origin'}
-                  buttonText="Sign in with Google"
-                />
-              </Box>
-            </Box>
-          </Grid>
-        </Grid>
-      </Container>
+              </Grid>
+            </Grid>
+          </Container>
+        </div>
+      </div>
     </>
   );
 }
