@@ -12,18 +12,26 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   separatorLine: {
     margin: "36px 0px"
+  },
+  filtersContainer: {
+    marginBottom: "24px"
   }
 };
 
 type ResultsContainerProps = {
+  onFilterChange: Function;
   organizations: any[];
 };
 export default function ResultsContainer({
+  onFilterChange,
   organizations
 }: ResultsContainerProps) {
   return (
     <div style={styles.container}>
-      <FilterBar />
+      <div style={styles.filtersContainer}>
+
+        <FilterBar onFilterChange={onFilterChange} />
+      </div>
       {organizations.map((organization, index) => (
         <>
           <OrganizationResultItem organization={organization} />

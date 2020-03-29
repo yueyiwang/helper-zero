@@ -35,13 +35,17 @@ function getMarkers(): MarkerType[] {
   }, [] as MarkerType[]);
 }
 
+function handleFilterChange(filters) {
+// TODO: fetch request with new filters
+}
+
 export default function HomePage() {
   return (
     <div style={styles.container}>
       <Marquee />
       <div style={styles.resultsContainer}>
         <div style={{ ...styles.columnContainer, ...styles.organizationList }}>
-          <ResultsContainer organizations={ORGANIZATION_MOCKS} />
+          <ResultsContainer organizations={ORGANIZATION_MOCKS} onFilterChange={(filters) => handleFilterChange(filters)}/>
         </div>
         <div style={styles.columnContainer}>
           <Map latitude={37.7577} longitude={-122.4376} markers={getMarkers()} />

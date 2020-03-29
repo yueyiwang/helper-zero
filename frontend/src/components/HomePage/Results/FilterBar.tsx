@@ -1,27 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import results from "../../../mocks/organizations.json";
 import OrganizationResultItem from "./OrganizationListItem";
-import { Divider } from "@material-ui/core";
+import { Divider, TextField, Button } from "@material-ui/core";
 
-const styles: { [key: string]: React.CSSProperties } = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    padding: "64px"
-  },
-  separatorLine: {
-    margin: "36px 0px"
-  }
-};
+const styles: { [key: string]: React.CSSProperties } = {};
 
 type FilterBarProps = {
-  organizations: any[];
+  filters?: any;
+  onFilterChange: Function;
 };
 export default function FilterBar({
-  organizations
+  filters = {},
+  onFilterChange
 }: FilterBarProps) {
-    
   return (
-    <div />
+    <div>
+      <TextField
+        id="standard-basic"
+        label="Zip Code"
+        onBlur={e => onFilterChange(...filters, { zipcode: e.target.value })}
+      />
+    </div>
   );
 }
