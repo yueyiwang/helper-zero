@@ -26,7 +26,7 @@ SECRET_KEY = 'c!_s047=el=0ho*@nue2r=e@@9jm41!+l)%s7pfzsf=2-s78ti'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['react-django.herokuapp.com', '127.0.0.1:8000', '.herokuapp.com']
 
 
 # Application definition
@@ -131,3 +131,6 @@ CORS_ORIGIN_WHITELIST = (
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
