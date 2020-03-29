@@ -5,7 +5,8 @@ import { createMuiTheme } from "@material-ui/core/styles";
 
 import HomePage from "./components/HomePage/HomePage";
 import OrganizationsPage from "./components/OrganizationsPage";
-import OrganizationSignUpPage from "./components/OrganizationSignUpPage/OrganizationSignUpPage";
+import OrganizationLoginPage from "./components/OrganizationLoginPage/OrganizationLoginPage";
+import OrganizationSignUpPage from './components/OrganizationSignUpPage/OrganizationSignUpPage';
 import OrganizationProfilePage from "./components/OrganizationProfilePage/OrganizationProfilePage";
 
 // Material UI Overrides
@@ -26,7 +27,6 @@ const theme = createMuiTheme({
     },
     text: {
       primary: "#405CC0", // bright blue
-      secondary: "#EFF6FF" // whiteIsh
     }
   },
   overrides: {
@@ -42,11 +42,11 @@ const theme = createMuiTheme({
         fontFamily: "Gangster Grotesk",
         fontStyle: "normal",
         fontWeight: "bold",
-        fontSize: "60px",
-        lineHeight: "72px",
+        fontSize: "42px",
+        lineHeight: "54px",
         letterSpacing: "0.02em",
+        color: "#212633",
         marginBottom: "24px",
-        color: "#EFF6FF"
       },
       h2: {
         fontStyle: "normal",
@@ -62,26 +62,26 @@ const theme = createMuiTheme({
         fontWeight: "normal",
         fontSize: "20px",
         lineHeight: "27px",
-        letterSpacing: " 0.02em",
+        letterSpacing: "0.02em",
+        color: "#384555",
         marginBottom: "10px",
-        color: "#EFF6FF"
       },
       h4: {
         fontStyle: "normal",
         fontWeight: 600,
         fontSize: "16px",
         lineHeight: "24px",
-        letterSpacing: " 0.02em",
-        color: "#384555"
+        letterSpacing: "0.02em",
+        color: "#384555",
       },
       body1: {
         fontStyle: "normal",
         fontWeight: "normal",
         fontSize: "16px",
         lineHeight: "28px",
-        letterSpacing: " 0.02em",
-        color: "#384555"
-      }
+        letterSpacing: "0.02em",
+        color: "#384555",
+      },
     }
   }
 });
@@ -91,6 +91,7 @@ export default function App() {
     <MuiThemeProvider theme={theme}>
       <Switch>
         <Route path="/organizations" component={OrganizationsPage} />
+        <Route path="/organization/login" component={OrganizationLoginPage} />
         <Route path="/organization/signup" component={OrganizationSignUpPage} />
         <Route path="/organization/profile" component={OrganizationProfilePage} />
         <Route path="/" component={HomePage} />
