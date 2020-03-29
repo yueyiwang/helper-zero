@@ -22,7 +22,6 @@ class DonationView(viewsets.ModelViewSet):
             org = Organization.objects.get(id=request_dict["org"])
             if request_dict["status"] is None:
                 request_dict["status"] = "incomplete"
-            # TODO: may need to parse donation time start & end
             donation = Donation(
                 org=org,
                 name=request_dict["name"],
