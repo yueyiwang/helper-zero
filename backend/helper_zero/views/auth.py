@@ -9,6 +9,6 @@ class AuthView(viewsets.ViewSet):
     auth_token = request.GET.get('auth_token')
     org = Organization.objects.filter(auth_token=auth_token).first()
     if org == None:
-      return Response([])
+      return Response({})
     org_dict = OrganizationSerializer(org).data
     return Response(org_dict)
