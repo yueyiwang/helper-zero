@@ -2,6 +2,7 @@ import React from "react";
 import results from "../../../mocks/organizations.json";
 import OrganizationResultItem from "./OrganizationListItem";
 import { Divider } from "@material-ui/core";
+import FilterBar from "./FilterBar";
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -22,7 +23,7 @@ export default function ResultsContainer({
 }: ResultsContainerProps) {
   return (
     <div style={styles.container}>
-      <h1>Filters</h1>
+      <FilterBar />
       {organizations.map((organization, index) => (
         <>
           <OrganizationResultItem organization={organization} />

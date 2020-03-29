@@ -40,7 +40,6 @@ const Map = ({ latitude, longitude, markers }: MapType) => {
     <ReactMapGL
       {...viewport}
       // @ts-ignore - due to react-map-gl type
-      onViewportChange={setViewport}
       mapboxApiAccessToken={MAPBOX_TOKEN}
     >
       <Markers markers={markers} />
