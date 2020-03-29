@@ -5,11 +5,11 @@ from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
 
-from helper_zero.serializers import DonationSerializer
-from helper_zero.models import Donation, Organization
+from backend.helper_zero.serializers import DonationSerializer
+from backend.helper_zero.models import Donation, Organization
 
-from helper_zero.sms.messages import message_sender as sender 
-from helper_zero.sms.errors import TwilioInvalidKeyError, TwilioSendError
+from backend.helper_zero.sms.messages import message_sender as sender 
+from backend.helper_zero.sms.errors import TwilioInvalidKeyError, TwilioSendError
 
 class DonationView(viewsets.ModelViewSet):
     serializer_class = DonationSerializer
