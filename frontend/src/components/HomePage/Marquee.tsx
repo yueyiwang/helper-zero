@@ -1,7 +1,9 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import { Typography } from "@material-ui/core";
+import Header from "../Header";
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -42,21 +44,15 @@ const styles: { [key: string]: React.CSSProperties } = {
     marginBottom: "24px"
   }
 };
+
 export default function Marquee() {
+  let history = useHistory();
+
   return (
     <div style={styles.container}>
-      <div style={styles.header}>
-        <span style={styles.logo}>
-          <AddIcon />
-          <b>Helper Zero</b>
-        </span>
-        <Button size="large" variant="text" color="secondary">
-          Request Aid
-        </Button>
-      </div>
       <div style={styles.contentContainer}>
         <Typography variant="h1">Spread help.</Typography>
-        <Typography variant="h3">
+        <Typography variant="h3" style={{ marginBottom: "24px" }}>
           Donate resources to our city's shelters and hospitals.
         </Typography>
         <span>
