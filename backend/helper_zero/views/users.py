@@ -6,7 +6,7 @@ from helper_zero.models import User
 from rest_framework import status
 from rest_framework.response import Response
 
-from helper_zero.sms.texts import message_sender as sender
+from helper_zero.sms.messages import message_sender as sender
 from helper_zero.sms.errors import TwilioInvalidKeyError, TwilioSendError
 
 class UserView(viewsets.ViewSet):
@@ -33,14 +33,18 @@ class UserView(viewsets.ViewSet):
 			 	lon=request_dict["lon"]
 			)
 			try:
-				_send_user_confirmation_text(request_dict)
+				# _send_user_confirmation_text(request_dict)
+				_send_user_confirmation_email(request_dict)
 				u.save()
 				return Response(serializer.data)
 			except TwilioInvalidKeyError:
-				logging.error ("Twilio environment variables not properly configured")
+				logging.error("Twilio environment variables not properly configured")
 				return Response(status=status.HTTP_400_BAD_REQUEST)
 			except TwilioSendError:
-				logging.error ("Twilio sender failed, please check your parameters")
+				logging.error("Twilio sender failed, please check your parameters")
+				return Response(status=status.HTTP_400_BAD_REQUEST)
+			except Exception as e:
+				logging.error(e)
 				return Response(status=status.HTTP_400_BAD_REQUEST)
 		else:
 			return Response(serializer.errors,
@@ -51,7 +55,13 @@ def _send_user_confirmation_text (params):
 	msg = "%s, thank you for signing up to Port.er!" % params["name"]
 
 	try:
-		sender.sendTextMessage (recipient, msg)
+		sender.sendTextMessage(recipient, msg)
+	except Exception as e:
+		raise
+
+def _send_user_confirmation_email (params):
+	try:
+		sender.sendEmail(params["email"], "")
 	except Exception as e:
 		raise
 
