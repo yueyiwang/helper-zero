@@ -34,7 +34,7 @@ class UserView(viewsets.ViewSet):
 			)
 			try:
 				# _send_user_confirmation_text(request_dict)
-				_send_user_confirmation_email(request_dict)
+				# _send_user_confirmation_email(request_dict)
 				u.save()
 				return Response(serializer.data)
 			except TwilioInvalidKeyError:
@@ -49,19 +49,4 @@ class UserView(viewsets.ViewSet):
 		else:
 			return Response(serializer.errors,
 											status=status.HTTP_400_BAD_REQUEST)
-
-def _send_user_confirmation_text (params):
-	recipient = "+%s" % params["phone"]
-	msg = "%s, thank you for signing up to Port.er!" % params["name"]
-
-	try:
-		sender.sendTextMessage(recipient, msg)
-	except Exception as e:
-		raise
-
-def _send_user_confirmation_email (params):
-	try:
-		sender.sendEmail(params["email"], "")
-	except Exception as e:
-		raise
 

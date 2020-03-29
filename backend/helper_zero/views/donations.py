@@ -6,6 +6,9 @@ from rest_framework.response import Response
 from helper_zero.serializers import DonationSerializer
 from helper_zero.models import Donation, Organization
 
+from helper_zero.sms.messages import message_sender as sender 
+from helper_zero.sms.errors import TwilioInvalidKeyError, TwilioSendError
+
 class DonationView(viewsets.ModelViewSet):
     serializer_class = DonationSerializer
     queryset = Donation.objects.all()
@@ -27,7 +30,32 @@ class DonationView(viewsets.ModelViewSet):
                 donation_time_start=request_dict["donation_time_start"],
                 donation_time_end=request_dict["donation_time_end"]
             )
-            donation.save()
+            try:
+                donation.save()
+            except TwilioInvalidKeyError:
+                logging.error("Twilio environment variables not properly configured")
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+            except TwilioSendError:
+                logging.error("Twilio sender failed, please check your parameters")
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+            except Exception as e:
+                logging.error(e)
+                return Response(status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.data)
+
+def _send_user_confirmation_text (params):
+    recipient = "+%s" % params["phone"]
+    msg = "%s, thank you for signing up to Port.er!" % params["name"]
+
+    try:
+        sender.send_text_message(recipient, msg)
+    except Exception as e:
+        raise
+
+def _send_user_confirmation_email (params):
+    try:
+        sender.send_email(params["email"], "")
+    except Exception as e:
+        raise

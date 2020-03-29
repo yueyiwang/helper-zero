@@ -19,7 +19,7 @@ class MessageSender:
 			raise TwilioInvalidKeyError
 		return Client(twilio_sid, twilio_auth)
 
-	def sendTextMessage(self, recipient, msg):
+	def send_text_message(self, recipient, msg):
 		try:
 			sender_num = os.environ['TWILIO_NUMBER']
 			self.client.messages.create(
@@ -33,7 +33,7 @@ class MessageSender:
 			logging.error(e)
 			raise TwilioSendError
 
-	def sendEmail(self, recipient, content):
+	def send_email(self, recipient, content):
 		"""
 		https://github.com/sendgrid/sendgrid-python
 

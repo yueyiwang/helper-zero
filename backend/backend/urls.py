@@ -6,7 +6,7 @@ from rest_framework import routers
 from helper_zero.views.organizations import OrganizationView
 from helper_zero.views.users import UserView
 from helper_zero.views.donation_request import DonationRequestView
-from helper_zero.views.donation import DonationView
+from helper_zero.views.donations import DonationView
 from helper_zero.views.search import SearchView
 
 data_api_router = routers.DefaultRouter()
