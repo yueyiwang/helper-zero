@@ -21,16 +21,19 @@ class Organization(models.Model):
   zipcode = models.CharField(blank=True, null=True, max_length=120)
   lat = models.CharField(blank=True, null=True, max_length=120)
   lon = models.CharField(blank=True, null=True, max_length=120)
+  auth_token = models.CharField(max_length=120)
+  pickup_times = models.TextField(blank=True, null=True)
+  dropoff_times = models.TextField(blank=True, null=True)
 
   def _str_(self):
     return self.name
 
 class DonationRequest(models.Model):
   org = models.ForeignKey(
-            'Organization',
-             related_name="donation_requests",
-             on_delete=models.CASCADE,
-          )
+          'Organization',
+          related_name="donation_requests",
+          on_delete=models.CASCADE,
+        )
 
   item_type = models.CharField(max_length=120)
   amount_requested = models.PositiveIntegerField()
@@ -41,9 +44,13 @@ class DonationRequest(models.Model):
 
 class Donation(models.Model):
   org = models.ForeignKey(
-            'Organization',
-            on_delete=models.CASCADE,
-           )
+          'Organization',
+          related_name="donations",
+          on_delete=models.CASCADE,
+        )
+  name = models.CharField(max_length=120)
+  phone = models.CharField(max_length=120)
+  email = models.EmailField(null=True)
   status = models.CharField(max_length=120)
   item_type = models.CharField(max_length=120)
   amount = models.PositiveIntegerField()

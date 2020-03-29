@@ -15,12 +15,17 @@ const theme = createMuiTheme({
       textTransform: "none"
     }
   },
+  // button has to be primary or secondary
   palette: {
     primary: {
-      main: "#384555"
+      main: "#384555" // dark blue
     },
     secondary: {
-      main: "#F56767"
+      main: "#F56767" //orange
+    },
+    text: {
+      primary: "#405CC0", // bright blue
+      secondary: "#EFF6FF" // whiteIsh
     }
   },
   overrides: {
