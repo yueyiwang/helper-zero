@@ -13,6 +13,7 @@ sendgrid = "*"
 django-heroku = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
+google-api-python-client = "*"
 
 [requires]
 python_version = "3.7"
