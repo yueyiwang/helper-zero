@@ -37,7 +37,7 @@ def _build_search_response(org_list_results, item_type):
     for org in org_list_results:
         if item_type:
             org['donation_requests'] = list(filter(lambda x: (x['item_type'] == item_type), org['donation_requests']))
-        response += [org]
+        response += [org] if org['donation_requests'] else []
     return response
 
 

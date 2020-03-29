@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Organization, DonationRequest
+from .models import User, Organization, DonationRequest, Donation
 
 class UserSerializer(serializers.ModelSerializer):
 	lat = serializers.CharField(allow_null=True)
