@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "Airbnb",
+    "phone": null,
+    "org_type": null,
+    "email": null,
+    "is_dropoff_only": false,
+    "instructions": "",
+    "point_of_contact": null,
+    "zipcode": "",
+    "lat": "37.77",
+    "lon": "-122.40",
+    "url": "https://www.airbnb.com",
+    "address": "888 Brannan Street, San Francisco, CA 94110",
+    "donation_requests": [
+      {
+        "item_type": "Hand Sanitizer",
+        "amount_requested": 5000,
+        "amount_received": 2000
+      },
+      {
+        "item_type": "Masks",
+        "amount_requested": 5000,
+        "amount_received": 3000
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Yelp",
+    "phone": null,
+    "org_type": null,
+    "email": null,
+    "is_dropoff_only": false,
+    "instructions": "",
+    "point_of_contact": null,
+    "zipcode": "",
+    "lat": "37.7865",
+    "lon": "-122.4",
+    "url": "https://www.yelp.com",
+    "address": "140 New Montgomery Street San Francisco, CA 94105 USA",
+    "donation_requests": [
+      {
+        "item_type": "Hand Sanitizer",
+        "amount_requested": 5000,
+        "amount_received": 1000
+      },
+      {
+        "item_type": "Masks",
+        "amount_requested": 5000,
+        "amount_received": 4000
+      }
+    ]
+  }
+]

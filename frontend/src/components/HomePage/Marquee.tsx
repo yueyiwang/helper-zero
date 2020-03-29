@@ -50,7 +50,7 @@ export default function Marquee() {
           <AddIcon />
           <b>Helper Zero</b>
         </span>
-        <Button size="large" variant="text" color="primary">
+        <Button size="large" variant="text" color="secondary">
           Request Aid
         </Button>
       </div>
@@ -60,7 +60,7 @@ export default function Marquee() {
           Donate resources to our city's shelters and hospitals.
         </Typography>
         <span>
-          <Button size="large" variant="outlined" color="primary">
+          <Button size="large" variant="outlined" color="secondary">
             Donate
           </Button>
         </span>
