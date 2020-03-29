@@ -104,7 +104,6 @@ def _process_zipcode_query(zipcode, org_filter_params, donation_request_filter_p
     if donation_request_filter_params.get('item_type'):
         org_query_set = Organization.objects.filter(
             zipcode=zipcode,
-            # does this work? filter on FK field
             donation_requests__item_type=donation_request_filter_params['item_type'],
             **org_filter_params,
         )
@@ -127,7 +126,6 @@ def _process_lat_lon_query(lat, lon, radius, org_filter_params, donation_request
             lat__gte=br_lat,
             lon__lte=tl_lon,
             lon__gte=br_lon,
-            # does this work? filter on FK field
             donation_requests__item_type=donation_request_filter_params['item_type'],
             **org_filter_params
         )
@@ -146,7 +144,6 @@ def _process_default_query(org_filter_params, donation_request_filter_params):
     if donation_request_filter_params.get('item_type'):
         org_query_set = Organization.objects.filter(
             donation_requests__isnull=False,
-            # does this work? filter on FK field
             donation_requests__item_type=donation_request_filter_params['item_type'],
             **org_filter_params
         ).order_by("name")[:20]
