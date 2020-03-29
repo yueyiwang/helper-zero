@@ -47,10 +47,6 @@ class Donation(models.Model):
   name = models.CharField(max_length=120)
   phone = models.CharField(max_length=120)
   email = models.EmailField(null=True)
-  zipcode = models.CharField(blank=True, null=True, max_length=120)
-  lat = models.CharField(blank=True, null=True, max_length=120)
-  lon = models.CharField(blank=True, null=True, max_length=120)
-
   status = models.CharField(max_length=120)
   item_type = models.CharField(max_length=120)
   amount = models.PositiveIntegerField()
