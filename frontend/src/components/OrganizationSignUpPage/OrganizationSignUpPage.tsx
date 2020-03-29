@@ -33,56 +33,47 @@ const styles: { [key: string]: React.CSSProperties } = {
 };
 
 export default function ReceiverSignUpPage() {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  const [organization, setOrganization] = useState<OrganizationType>();
+  const [navigateToProfile, setNavigateToProfile] = useState<boolean>(false);
   const [navigateToCreation, setNavigateToCreation] = useState<boolean>(false);
+  const [organization, setOrganization] = useState<OrganizationType>();
   const [authToken, setAuthToken] = useState<String>('');
+  const [error, setError] = useState<boolean>(false);
 
-  const onLoginSuccess = (response) => {
-    const auth_token = response.uc.id_token;
-    axios.get(`/api/login?auth_token=${auth_token}`).then(res => {
+  const onSuccess = (response) => {
+    const authToken = response.uc.id_token;
+    setAuthToken(authToken);
+    axios.get(`/api/login?auth_token=${authToken}`).then(res => {
       if (res.status !== 200) {
-        // Prompt user to create an account if their account does not exist.
+        setError(true);
+      } else if (res.data.length === 0) {
         setNavigateToCreation(true);
+      } else {
+          const retrievedOrg: OrganizationType = {
+          id: res.data.id,
+          name: res.data.name,
+          url: res.data.url,
+          address: res.data.address,
+          description: res.data.description,
+          phone: res.data.phone,
+          org_type: res.data.org_type,
+          email: res.data.email,
+          is_dropoff_only: res.data.is_dropoff_only,
+          instructions: res.data.instructions,
+          auth_user_id: res.data.auth_user_id,
+          donation_requests: res.data.donation_requests,
+          donations: res.data.donations,
+        }
+        setOrganization(retrievedOrg);
+        setNavigateToProfile(true);
       }
-      const retrievedOrg: OrganizationType = {
-        id: res.data.id,
-        name: res.data.name,
-        url: res.data.url,
-        address: res.data.address,
-        description: res.data.description,
-        phone: res.data.phone,
-        org_type: res.data.org_type,
-        email: res.data.email,
-        is_dropoff_only: res.data.is_dropoff_only,
-        instructions: res.data.instructions,
-        auth_user_id: res.data.auth_user_id,
-        donation_requests: res.data.donation_requests,
-        donations: res.data.donations,
-      }
-      setOrganization(retrievedOrg);
-      setLoggedIn(true);
     })
   }
 
-  const onLoginFailure = (response) => {
-    // TODO: navigate to error page
-    return;
+  const onFailure = (response) => {
+    setError(true);
   }
 
-  const onCreateAccountSuccess = (response) => {
-    const authToken = response.uc.id_token;
-    setAuthToken(authToken);
-    setNavigateToCreation(true);
-  }
-
-  const onCreateAccountFailure = (response) => {
-    // TODO: navigate to error page
-    setNavigateToCreation(true);
-  }
-
-  if (loggedIn) {
-    console.log(organization);
+  if (navigateToProfile) {
     return <Redirect to={{
       pathname: "/organization/profile",
       state: { organization: organization },
@@ -129,22 +120,24 @@ export default function ReceiverSignUpPage() {
                     </Typography>
                   </Box>
                   <Box style={styles.buttonBox}>
+                    {error && (
+                      <Typography color="error">An error has occurred. Please try again.</Typography>
+                    )}
                     <Box style={styles.button}>
-                    <GoogleLogin 
-                      clientId="650902157032-v1gqmd903sedgmdrpd0goa1343b049ug.apps.googleusercontent.com"
-                      onSuccess={onCreateAccountSuccess}
-                      onFailure={onCreateAccountFailure}
-                      cookiePolicy={'single_host_origin'}
-                      buttonText="Create account with Google"
-                      style={styles.button}
-                      theme="dark"
-                      responseType="code"
-                    />
+                      <GoogleLogin 
+                        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID as string}
+                        onSuccess={onSuccess}
+                        onFailure={onFailure}
+                        cookiePolicy={'single_host_origin'}
+                        buttonText="Create account with Google"
+                        theme="dark"
+                        responseType="code"
+                      />
                     </Box>
                     <GoogleLogin 
-                      clientId="650902157032-v1gqmd903sedgmdrpd0goa1343b049ug.apps.googleusercontent.com"
-                      onSuccess={onLoginSuccess}
-                      onFailure={onLoginFailure}
+                      clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID as string}
+                      onSuccess={onSuccess}
+                      onFailure={onFailure}
                       cookiePolicy={'single_host_origin'}
                       buttonText="Sign in with Google"
                     />
