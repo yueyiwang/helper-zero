@@ -43,6 +43,10 @@ function onFilterChange() {
   // TODO: Refetch with new filters
 }
 
+function handleFilterChange(filters) {
+// TODO: fetch request with new filters
+}
+
 export default function HomePage() {
   return (
     <div style={styles.container}>
@@ -50,7 +54,7 @@ export default function HomePage() {
       <Marquee />
       <div style={styles.resultsContainer}>
         <div style={{ ...styles.columnContainer, ...styles.organizationList }}>
-          <ResultsContainer organizations={ORGANIZATION_MOCKS} />
+          <ResultsContainer organizations={ORGANIZATION_MOCKS} onFilterChange={(filters) => handleFilterChange(filters)}/>
         </div>
         <div style={styles.columnContainer}>
           <Map

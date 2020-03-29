@@ -2,6 +2,7 @@ import React from "react";
 import results from "../../../mocks/organizations.json";
 import OrganizationResultItem from "./OrganizationListItem";
 import { Divider } from "@material-ui/core";
+import FilterBar from "./FilterBar";
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -11,18 +12,26 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   separatorLine: {
     margin: "36px 0px"
+  },
+  filtersContainer: {
+    marginBottom: "24px"
   }
 };
 
 type ResultsContainerProps = {
+  onFilterChange: Function;
   organizations: any[];
 };
 export default function ResultsContainer({
+  onFilterChange,
   organizations
 }: ResultsContainerProps) {
   return (
     <div style={styles.container}>
-      <h1>Filters</h1>
+      <div style={styles.filtersContainer}>
+
+        <FilterBar onFilterChange={onFilterChange} />
+      </div>
       {organizations.map((organization, index) => (
         <>
           <OrganizationResultItem organization={organization} />
