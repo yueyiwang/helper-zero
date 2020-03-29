@@ -40,6 +40,7 @@ class DonationRequest(models.Model):
           on_delete=models.CASCADE,
         )
 
+  item = models.CharField(max_length=120)
   item_type = models.CharField(max_length=120)
   amount_requested = models.PositiveIntegerField()
   amount_received = models.PositiveIntegerField()
