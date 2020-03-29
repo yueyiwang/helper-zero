@@ -14,7 +14,7 @@ class AuthView(viewsets.ViewSet):
     if id_info['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
       return Response(status=status.HTTP_401_UNAUTHORIZED)
     user_id = id_info['sub']
-    org_list = Organization.objects.filter(auth_user_id=user_id)]
+    org_list = Organization.objects.filter(auth_user_id=user_id)
     if len(org_list) != 1:
       return Response(status=status.HTTP_400_BAD_REQUEST)
     org = org_list.first()
