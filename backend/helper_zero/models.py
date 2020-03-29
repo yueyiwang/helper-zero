@@ -21,6 +21,9 @@ class Organization(models.Model):
   zipcode = models.CharField(blank=True, null=True, max_length=120)
   lat = models.CharField(blank=True, null=True, max_length=120)
   lon = models.CharField(blank=True, null=True, max_length=120)
+  auth_token = models.CharField(max_length=120)
+  pickup_times = models.TextField(blank=True, null=True)
+  dropoff_times = models.TextField(blank=True, null=True)
 
   def _str_(self):
     return self.name

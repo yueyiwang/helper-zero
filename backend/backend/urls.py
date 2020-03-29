@@ -8,8 +8,10 @@ from helper_zero.views.users import UserView
 from helper_zero.views.donation_request import DonationRequestView
 from helper_zero.views.donations import DonationView
 from helper_zero.views.search import SearchView
+from helper_zero.views.auth import AuthView
 
 router = routers.DefaultRouter()
+router.register(r'auth/$', AuthView, 'auth')
 router.register(r'organizations', OrganizationView, 'organizations')
 router.register(r'users', UserView, 'users')
 router.register(r'search', SearchView, 'search')
