@@ -32,7 +32,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   }
 };
 
-export default function ReceiverSignUpPage() {
+export default function OrganizationSignUpPage() {
   const [navigateToProfile, setNavigateToProfile] = useState<boolean>(false);
   const [navigateToCreation, setNavigateToCreation] = useState<boolean>(false);
   const [organization, setOrganization] = useState<OrganizationType>();
