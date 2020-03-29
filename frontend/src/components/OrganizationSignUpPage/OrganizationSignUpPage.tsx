@@ -45,7 +45,7 @@ export default function ReceiverSignUpPage() {
     axios.get(`/api/login?auth_token=${authToken}`).then(res => {
       if (res.status !== 200) {
         setError(true);
-      } else if (res.data.length === 0) {
+      } else if (res.data.length === undefined) {
         setNavigateToCreation(true);
       } else {
           const retrievedOrg: OrganizationType = {
@@ -80,7 +80,7 @@ export default function ReceiverSignUpPage() {
      }} />
   } else if (navigateToCreation) {
     // TODO: navigate to creation flow, pass auth token
-    return;
+    return null;
   }
   return (
     <>
@@ -131,7 +131,6 @@ export default function ReceiverSignUpPage() {
                         cookiePolicy={'single_host_origin'}
                         buttonText="Create account with Google"
                         theme="dark"
-                        responseType="code"
                       />
                     </Box>
                     <GoogleLogin 
