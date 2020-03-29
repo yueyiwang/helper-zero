@@ -30,7 +30,8 @@ class DonationView(viewsets.ModelViewSet):
                 amount=request_dict["amount"],
                 created_at=datetime.now(),
                 donation_time_start=request_dict["donation_time_start"],
-                donation_time_end=request_dict["donation_time_end"]
+                donation_time_end=request_dict["donation_time_end"],
+                pickup_address=request_dict["pickup_address"]
             )
             try:
                 _send_user_confirmation_email(request_dict)

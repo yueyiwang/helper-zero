@@ -63,6 +63,7 @@ class Donation(models.Model):
   created_at = models.DateTimeField()
   donation_time_start = models.DateTimeField()
   donation_time_end = models.DateTimeField()
+  pickup_address = models.TextField(blank=True, null=True)
 
   def _str_(self):
     return self.name
