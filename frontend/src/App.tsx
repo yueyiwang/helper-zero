@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 import { MuiThemeProvider } from "@material-ui/core";
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from "@material-ui/core/styles";
 
 import HomePage from "./components/HomePage/HomePage";
 import OrganizationsPage from "./components/OrganizationsPage";
@@ -12,12 +12,12 @@ const theme = createMuiTheme({
   typography: {
     fontFamily: "Open Sans",
     button: {
-      textTransform: "none",
+      textTransform: "none"
     }
   },
   palette: {
     primary: {
-      main: "#F56767"
+      main: "#384555"
     },
     secondary: {
       main: "#F56767"
@@ -66,7 +66,7 @@ const theme = createMuiTheme({
         fontSize: "16px",
         lineHeight: "24px",
         letterSpacing: " 0.02em",
-        color: "#384555",
+        color: "#384555"
       },
       body1: {
         fontStyle: "normal",
@@ -74,8 +74,8 @@ const theme = createMuiTheme({
         fontSize: "16px",
         lineHeight: "28px",
         letterSpacing: " 0.02em",
-        color: "#384555",
-      },
+        color: "#384555"
+      }
     }
   }
 });
@@ -89,5 +89,5 @@ export default function App() {
         <Route path="/" component={HomePage} />
       </Switch>
     </MuiThemeProvider>
-  )
+  );
 }

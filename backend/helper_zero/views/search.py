@@ -28,16 +28,18 @@ class SearchView(viewsets.ViewSet):
         org_search_results = _get_org_search_results(
             zipcode, lat, lon, radius, delivery_values, offset
         )
-        response = _build_search_response(org_search_results, item_type)
+
+        response = _filter_org_list_by_donation_requests(org_search_results, item_type)
         return Response(response)
 
 
-def _build_search_response(org_list_results, item_type):
+def _filter_org_list_by_donation_requests(org_search_results, item_type):
     response = []
-    for org in org_list_results:
+    for org in org_search_results:
         if item_type:
             org['donation_requests'] = list(filter(lambda x: (x['item_type'] == item_type), org['donation_requests']))
-        response += [org]
+        org['donation_requests'] = list(filter(lambda x: (x['amount_requested'] != x['amount_received']), org['donation_requests']))
+        response += [org] if org['donation_requests'] else []
     return response
 
 
@@ -46,7 +48,7 @@ def _get_org_search_results(zipcode, lat, lon, radius, delivery_values, offset):
         org_query_set = Organization.objects.filter(
             zipcode=zipcode,
             is_dropoff_only__in=delivery_values,
-        ).order_by('name')
+        )
     elif lat and lon:
         tl_lon, tl_lat, br_lon, br_lat = get_search_bounding_box(lat, lon, radius)
         org_query_set = Organization.objects.filter(
@@ -55,14 +57,18 @@ def _get_org_search_results(zipcode, lat, lon, radius, delivery_values, offset):
             lon__lte=tl_lon,
             lon__gte=br_lon,
             is_dropoff_only__in=delivery_values,
-        ).order_by('name')
+        )
     else:
         # If no location data, default to showing any orgs that have open requests, capping at 20
         org_query_set = Organization.objects.filter(
             donation_requests__isnull=False
-        )[:20]
+        ).order_by("name")[:20]
 
     org_search_results = OrganizationSerializer(org_query_set, many=True).data
+    # Remove duplicates from query set.
+    # This appears to be a known django issue with sqlite and filtering on models with FKs.
+    org_search_results = [i for n, i in enumerate(org_search_results) if i not in org_search_results[n + 1:]]
+
     if lat and lon:
         # Order by closest to search location
         org_search_results.sort(key=lambda x: _get_distance(float(x['lat']), lat, float(x['lon']), lon))
