@@ -33,7 +33,21 @@ export default function HomePage() {
 
   function getMarkers(): MarkerType[] {
     // TODO: replace this with organization response
-    return ORGANIZATION_MOCKS.reduce(
+    if (DEBUG) {
+      return ORGANIZATION_MOCKS.reduce(
+        (agg, org) => {
+          agg.push({
+            // key: org.name,
+            latitude: Number(org.lat),
+            longitude: Number(org.lon)
+          });
+          return agg;
+        },
+        [] as MarkerType[]
+      );
+    }
+
+    return organizations.reduce(
       (agg, org) => {
         agg.push({
           // key: org.name,
@@ -50,12 +64,14 @@ export default function HomePage() {
     const { zipcode } = filters;
     if (!DEBUG) {
       if (zipcode) {
-        axios.put("/api/search", { zipcode }).then(resp => {
+        axios.put("/api/search/", { zipcode }).then(resp => {
+          console.log(resp);
           setOrganizations(resp.data);
         });
       } else {
         // if no zipcode just fetch all
-        axios.get("/api/organizations").then(resp => {
+        axios.get("/api/search/").then(resp => {
+          console.log(resp);
           setOrganizations(resp.data);
         });
       }
@@ -67,11 +83,12 @@ export default function HomePage() {
     if (DEBUG) {
       setOrganizations(ORGANIZATION_MOCKS as OrganizationType[]);
     } else {
-      axios.get("/api/organizations").then(resp => {
+      axios.get("/api/search/").then(resp => {
         setOrganizations(resp.data);
       });
     }
   }, []);
+
   return (
     <div style={styles.container}>
       <Header />

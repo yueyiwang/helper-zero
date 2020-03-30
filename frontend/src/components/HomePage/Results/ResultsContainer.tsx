@@ -22,6 +22,7 @@ type ResultsContainerProps = {
   onFilterChange: Function;
   organizations: any[];
 };
+
 export default function ResultsContainer({
   onFilterChange,
   organizations
@@ -29,7 +30,6 @@ export default function ResultsContainer({
   return (
     <div style={styles.container}>
       <div style={styles.filtersContainer}>
-
         <FilterBar onFilterChange={onFilterChange} />
       </div>
       {organizations.map((organization, index) => (
