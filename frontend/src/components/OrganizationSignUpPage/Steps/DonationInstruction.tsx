@@ -63,7 +63,7 @@ const DonationInstruction = ({title, subtitle, type, values}) => {
                     <SelectorWithPopover 
                       key={`${type}-${day}`}
                       text={day}
-                      extraInfo={values[type][day] ? values[type][day] : ''}
+                      extraInfo={values[type]['times'][day] ? values[type]['times'][day] : ''}
                       popoverTitle="Add Times"
                       popOverContentComponent={
                         <Field
