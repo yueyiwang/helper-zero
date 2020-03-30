@@ -13,7 +13,9 @@ export type OrganizationType = {
   is_dropoff: boolean;
   is_pickup: boolean;
   is_mail: boolean;
-  instructions: string;
+  pickup_instructions?: string;
+  dropoff_instructions?: string;
+  mail_instructions?: string;
   zipcode?: string;
   lat?: string;
   lon?: string;
