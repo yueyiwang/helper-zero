@@ -34,7 +34,7 @@ const OrganizationProfilePage: React.FC<Props> = (props: Props) => {
   const color = (pageName: string) => page === pageName ? "primary" : undefined;
   const pickups = (): DonationType[] => (
     props.location.state.organization.donations.filter((donation) => {
-      donation.delivery_type === "pickup"
+      return donation.delivery_type === "pickup"
     })
   )
 

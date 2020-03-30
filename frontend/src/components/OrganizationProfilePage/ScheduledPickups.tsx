@@ -27,7 +27,7 @@ const ScheduledPickups: React.FC<Props> = (props: Props) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {props.pickups.map((pickup: DonationType) => {
+        {props.pickups.map((pickup: DonationType) => (
           <TableRow>
             <TableCell>{pickup.name}</TableCell>
             <TableCell>{pickup.item}</TableCell>
@@ -36,7 +36,7 @@ const ScheduledPickups: React.FC<Props> = (props: Props) => {
             <TableCell>{pickup.email}</TableCell>
             <TableCell>{pickup.pickup_or_dropoff_times}</TableCell>
           </TableRow>
-        })}
+        ))}
       </TableBody>
     </Table>
     </>

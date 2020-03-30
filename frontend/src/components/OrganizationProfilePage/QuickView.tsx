@@ -31,8 +31,8 @@ type Props = {
 const QuickView: React.FC<Props> = (props: Props) => {
   const calcDonationsValue = (status: string) => {
     const donations = props.donations.filter((donation) => {
-      donation.status == status;
-    })
+      return donation.status == status;
+    });
     return donations.length;
   }
   return(
