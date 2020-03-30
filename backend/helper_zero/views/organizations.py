@@ -1,4 +1,6 @@
 import os
+from django.shortcuts import get_object_or_404
+
 from rest_framework import status, viewsets
 from backend.helper_zero.serializers import OrganizationSerializer
 from backend.helper_zero.models import Organization
@@ -12,6 +14,12 @@ class OrganizationView(viewsets.ViewSet):
 	def list(self, request):
 		queryset = Organization.objects.all()
 		serializer = OrganizationSerializer (queryset, many=True)
+		return Response(serializer.data)
+
+	def retrieve(self, request, pk=None):
+		queryset = Organization.objects.all()
+		org = get_object_or_404(queryset, pk=pk)
+		serializer = OrganizationSerializer(org)
 		return Response(serializer.data)
 
 	def create(self, request):
