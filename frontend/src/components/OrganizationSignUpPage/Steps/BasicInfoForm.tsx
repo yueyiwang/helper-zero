@@ -31,6 +31,9 @@ const organizationFields = [{
 },{
   param: "city",
   label: "City",
+},{
+  param: "zipcode",
+  label: "Zipcode",
 }]
 
 const BasicInfoPage = ({onNext, onBack}) => {
