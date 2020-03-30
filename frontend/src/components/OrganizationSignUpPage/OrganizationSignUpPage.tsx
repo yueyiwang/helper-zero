@@ -13,7 +13,7 @@ import ConfirmationPage from "./Steps/ConfirmationPage";
 import Header from "../Header";
 import { convertDataToOrg } from "../../utils";
 
-import {OrganizationType} from '../../types/OrganizationType';
+import { OrganizationType } from "../../types/OrganizationType";
 import {
   DELIVERY_TYPE_DROP_OFF,
   DELIVERY_TYPE_PICK_UP,
@@ -54,6 +54,7 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
         dropoff_instructions: finalFormData[DELIVERY_TYPE_DROP_OFF].instruction,
         mail_instructions: finalFormData[DELIVERY_TYPE_MAIL].instruction,
         zipcode: finalFormData.zipcode,
+        city: finalFormData.city,
         lat: "1.3", //TODO: need address -> lat
         lon: "2.0", //TODO: need address -> lon
         pickup_times: JSON.stringify(
@@ -91,10 +92,13 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
                   console.log(resp);
                 }
                 donationRequests.push(donationRequest);
-              })
+              });
           });
         });
-        setOrganization({...organization, donation_requests: donationRequests});
+        setOrganization({
+          ...organization,
+          donation_requests: donationRequests
+        });
       });
     } else {
       setFormData({ ...formData, ...data });

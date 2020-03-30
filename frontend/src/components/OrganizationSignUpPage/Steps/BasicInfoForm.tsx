@@ -96,7 +96,7 @@ const BasicInfoPage = ({onNext, onBack}) => {
             </Grid>
           </Grid>
           <Box mt={6}>
-            <Button type="submit" size="large" variant="outlined" color="primary">
+            <Button type="submit" size="large" variant="outlined" color="secondary">
               Next
             </Button>
             {/* TODO: support back button */}

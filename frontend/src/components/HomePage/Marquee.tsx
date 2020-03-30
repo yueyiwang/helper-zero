@@ -7,7 +7,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   container: {
     display: "flex",
     flexDirection: "column",
-    height: "750px",
+    height: "600px",
     width: "100%",
     backgroundColor: "#212633",
     color: "white"
