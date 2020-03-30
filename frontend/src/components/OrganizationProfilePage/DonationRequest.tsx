@@ -15,8 +15,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-
-import {DonationType} from '../../types/DonationType';
+import { DonationRequestType } from "../../types/DonationRequestType";
 
 const styles = {
   progressBox: {
@@ -42,7 +41,7 @@ const theme = createMuiTheme({
 
 
 type Props = {
-  donation?: DonationType;
+  donationRequest: DonationRequestType;
 }
 
 const BorderLinearProgress = withStyles({
@@ -56,7 +55,7 @@ const BorderLinearProgress = withStyles({
   },
 })(LinearProgress);
 
-const Donation:React.FC<Props> = (props: Props) => {
+const DonationRequest:React.FC<Props> = (props: Props) => {
   const [viewBreakdown, setViewBreakdown] = useState<boolean>(false);
 
   const progressBar = (currValue: number, expectedValue: number) => {
@@ -141,4 +140,4 @@ const Donation:React.FC<Props> = (props: Props) => {
   )
 }
 
-export default Donation;
+export default DonationRequest;

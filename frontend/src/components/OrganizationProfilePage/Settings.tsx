@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { withStyles } from '@material-ui/core/styles';
 
+import { OrganizationType } from '../../types/OrganizationType';
+
 const styles = {
   requestBox: {
     marginTop: "20px",
@@ -28,13 +30,12 @@ const EditTextField = withStyles({
 })(TextField);
 
 type Props = {
-
+  organization: OrganizationType;
 }
 
 const OrganizationSettings: React.FC<Props> = (props: Props) => {
   const [editingRequest, setEditingRequest] = useState<boolean>(false);
-  // todo: replace with prop
-  const [donationRequest, setDonationRequest] = useState<string>("");
+  const [donationRequest, setDonationRequest] = useState<string>(props.organization.instructions);
   
   const handleChange = (event) => {
     setDonationRequest(event.target.value);
@@ -58,15 +59,12 @@ const OrganizationSettings: React.FC<Props> = (props: Props) => {
             variant="outlined"
             color="primary"
             onChange={handleChange}
-            // todo: set default value to 
-            defaultValue={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nec fermentum tellus. Nulla vel tellus arcu. Nullam vehicula elit non dui egestas convallis. Morbi ut ante ac turpis faucibus hendrerit sollicitudin ac sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam vehicula accumsan sem eu tincidunt. Nulla facilisi. Morbi pulvinar vestibulum massa, non mattis nunc. \
-              Quisque condimentum, lacus eu facilisis tempus, lacus elit euismod justo, eu molestie odio purus ut erat. Maecenas auctor orci scelerisque, vehicula velit sed, consequat lacus. Cras imperdiet justo porttitor lectus tincidunt gravida. Vestibulum ac justo dignissim, posuere sapien eget, rhoncus tellus. Ut a lectus ac nulla consectetur ullamcorper sed consequat leo. Nulla facilisi. In elementum magna nec vehicula iaculis. Integer ultricies justo quis lorem euismod condimentum."}
+            defaultValue={donationRequest}
           >
           </EditTextField>
         : 
           <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent nec fermentum tellus. Nulla vel tellus arcu. Nullam vehicula elit non dui egestas convallis. Morbi ut ante ac turpis faucibus hendrerit sollicitudin ac sem. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam vehicula accumsan sem eu tincidunt. Nulla facilisi. Morbi pulvinar vestibulum massa, non mattis nunc.
-            Quisque condimentum, lacus eu facilisis tempus, lacus elit euismod justo, eu molestie odio purus ut erat. Maecenas auctor orci scelerisque, vehicula velit sed, consequat lacus. Cras imperdiet justo porttitor lectus tincidunt gravida. Vestibulum ac justo dignissim, posuere sapien eget, rhoncus tellus. Ut a lectus ac nulla consectetur ullamcorper sed consequat leo. Nulla facilisi. In elementum magna nec vehicula iaculis. Integer ultricies justo quis lorem euismod condimentum.
+            {donationRequest}
           </Typography>
         }
         {editingRequest && (

@@ -8,6 +8,7 @@ import QuickView from './QuickView';
 import Settings from './Settings';
 import ScheduledPickups from './ScheduledPickups';
 import { OrganizationType } from '../../types/OrganizationType';
+import { DonationType } from '../../types/DonationType';
 import Header from '../Header';
 
 const styles = {
@@ -31,14 +32,17 @@ const OrganizationProfilePage: React.FC<Props> = (props: Props) => {
 
   const variant = (pageName: string) => page === pageName ? "outlined" : undefined;
   const color = (pageName: string) => page === pageName ? "primary" : undefined;
-  
+  const pickups = (): DonationType[] => (
+    props.location.state.organization.donations.filter((donation) => {
+      donation.delivery_type === "pickup"
+    })
+  )
 
   return (
     <>
     <Header isWhiteBackground={true}/>
     <Container maxWidth="lg" style={styles.container}>
       <Box>
-        {/* todo: set props for organization */}
         <Typography variant="h1" color="primary">Your Profile</Typography>
         <Button
           variant={variant("quick_view")}
@@ -68,9 +72,13 @@ const OrganizationProfilePage: React.FC<Props> = (props: Props) => {
           Settings
         </Button>
         <Divider style={{"width": "800px"}}/>
-        {page === "quick_view" && <QuickView />}
-        {page === "scheduled_pickups" && <ScheduledPickups/>}
-        {page === "settings" && <Settings/>}
+        {page === "quick_view" && 
+          <QuickView
+            donationRequests={props.location.state.organization.donation_requests}
+            donations={props.location.state.organization.donations}
+          />}
+        {page === "scheduled_pickups" && <ScheduledPickups pickups={pickups()}/>}
+        {page === "settings" && <Settings organization={props.location.state.organization}/>}
       </Box>
     </Container>
     </>

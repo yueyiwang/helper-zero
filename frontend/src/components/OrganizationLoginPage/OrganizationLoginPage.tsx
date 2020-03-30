@@ -10,6 +10,8 @@ import axios from "axios";
 import { Redirect } from "react-router-dom";
 
 import { OrganizationType } from '../../types/OrganizationType';
+import { DonationType } from '../../types/DonationType';
+import { DonationRequestType } from '../../types/DonationRequestType';
 import Header from "../Header";
 
 const styles: { [key: string]: React.CSSProperties } = {
@@ -32,6 +34,14 @@ const styles: { [key: string]: React.CSSProperties } = {
   }
 };
 
+const convertDonations = (donations): DonationType[] => {
+  return []
+}
+
+const convertDonationRequests = (donationTypes): DonationRequestType[] => {
+  return []
+}
+
 export default function OrganizationSignUpPage() {
   const [navigateToProfile, setNavigateToProfile] = useState<boolean>(false);
   const [navigateToCreation, setNavigateToCreation] = useState<boolean>(false);
@@ -49,19 +59,19 @@ export default function OrganizationSignUpPage() {
         setNavigateToCreation(true);
       } else {
           const retrievedOrg: OrganizationType = {
-          id: res.data.id,
-          name: res.data.name,
-          url: res.data.url,
-          address: res.data.address,
-          description: res.data.description,
-          phone: res.data.phone,
-          org_type: res.data.org_type,
-          email: res.data.email,
-          is_dropoff_only: res.data.is_dropoff_only,
-          instructions: res.data.instructions,
-          auth_user_id: res.data.auth_user_id,
-          donation_requests: res.data.donation_requests,
-          donations: res.data.donations,
+            id: res.data.id,
+            name: res.data.name,
+            url: res.data.url,
+            address: res.data.address,
+            description: res.data.description,
+            phone: res.data.phone,
+            org_type: res.data.org_type,
+            email: res.data.email,
+            is_dropoff_only: res.data.is_dropoff_only,
+            instructions: res.data.instructions,
+            auth_user_id: res.data.auth_user_id,
+            donation_requests: convertDonationRequests(res.data.donation_requests),
+            donations: convertDonations(res.data.donations),
         }
         setOrganization(retrievedOrg);
         setNavigateToProfile(true);
