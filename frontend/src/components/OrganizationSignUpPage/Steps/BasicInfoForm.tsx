@@ -96,10 +96,10 @@ const BasicInfoPage = ({onNext, onBack}) => {
             <Button type="submit" size="large" variant="outlined" color="primary">
               Next
             </Button>
-            {' '}
-            <Button size="large" variant="outlined" color="primary" onClick={onBack}>
+            {/* TODO: support back button */}
+            {/* <Button size="large" variant="outlined" color="primary" onClick={onBack}>
               Back
-            </Button>
+            </Button> */}
           </Box>
         </form>
       )}
