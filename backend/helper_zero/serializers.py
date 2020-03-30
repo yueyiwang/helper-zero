@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User, Organization, DonationRequest, Donation
+from .models import User, Organization, DonationRequest, Donation, HashToDonation
 
 class UserSerializer(serializers.ModelSerializer):
   lat = serializers.CharField(allow_null=True)
@@ -11,25 +11,30 @@ class UserSerializer(serializers.ModelSerializer):
     fields = ('id', 'name', 'phone', 'email', 'zipcode', 'lat', 'lon')
 
 class DonationRequestSerializer(serializers.ModelSerializer):
-    amount_received = serializers.IntegerField(allow_null=True)
-    class Meta:
-        model = DonationRequest
-        fields = ('org', 'item', 'item_type', 'amount_requested', 'amount_received')
+  amount_received = serializers.IntegerField(allow_null=True)
+  class Meta:
+    model = DonationRequest
+    fields = ('org', 'item', 'item_type', 'amount_requested', 'amount_received')
 
 class DonationSerializer(serializers.ModelSerializer):
-    status = serializers.CharField(allow_null=True)
+  status = serializers.CharField(allow_null=True)
 
-    class Meta:
-        model = Donation
-        fields = ('org', 'status', 'item_type', 'amount', 'created_at',
-                  'name', 'phone', 'email', 'donation_time_start', 'donation_time_end')
+  class Meta:
+    model = Donation
+    fields = ('org', 'status', 'item_type', 'amount', 'created_at',
+              'name', 'phone', 'email', 'donation_time_start', 'donation_time_end')
 
 class OrganizationSerializer(serializers.ModelSerializer):
-    donation_requests = DonationRequestSerializer(many=True, required=False)
-    donations = DonationSerializer(many=True, required=False)
-    class Meta:
-        model = Organization
-        fields = ('id', 'name', 'url', 'address', 'description', 'phone',
-                  'org_type', 'email', 'is_dropoff', 'is_pickup', 'is_mail',
-                  'instructions', 'zipcode', 'lat', 'lon', 'auth_user_id',
-                  'pickup_times', 'dropoff_times', 'donation_requests', 'donations')
+  donation_requests = DonationRequestSerializer(many=True, required=False)
+  donations = DonationSerializer(many=True, required=False)
+  class Meta:
+    model = Organization
+    fields = ('id', 'name', 'url', 'address', 'description', 'phone',
+              'org_type', 'email', 'is_dropoff', 'is_pickup', 'is_mail',
+              'instructions', 'zipcode', 'lat', 'lon', 'auth_user_id',
+              'pickup_times', 'dropoff_times', 'donation_requests', 'donations')
+
+class HashToDonationSerializer(serializers.ModelSerializer):
+  class Meta:
+    model = HashToDonation
+    fields = ('id', 'donation', 'hash_key')

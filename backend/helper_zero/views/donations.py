@@ -40,11 +40,16 @@ class DonationView(viewsets.ModelViewSet):
 
                 # Schedule an email for some time in the future, setting
                 # it to a short time from now for testing purposes
-                scheduler.add_job_with_datetime(
-                    _send_donation_confirmation_email,
-                    datetime.now() + timedelta(days=7),
-                    request_dict
-                )
+                # scheduler.add_job_with_datetime(
+                #     _send_donation_confirmation_email,
+                #     datetime.now() + timedelta(days=7),
+                #     request_dict
+                # )
+
+                # Create a hash of this donation and store it in the
+                # HashToDonation table
+                # print(donation.__hash__())
+
                 return Response(serializer.data)
             except TwilioInvalidKeyError:
                 logging.error("Twilio environment variables not properly configured")

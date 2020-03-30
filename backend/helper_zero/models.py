@@ -66,3 +66,13 @@ class Donation(models.Model):
 
   def _str_(self):
     return self.name
+
+class HashToDonation(models.Model):
+  donation = models.ForeignKey(
+              'Donation',
+              on_delete=models.CASCADE,
+            )
+  hash_key = models.CharField(max_length=120)
+
+  def _str_(self):
+    return self.name
