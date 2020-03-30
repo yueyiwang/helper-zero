@@ -42,7 +42,7 @@ const ConfirmationPage = (props) => {
           <Typography variant="h2">
             Thank you for your request, {props.location.state.organization.name}.
             Go to your 
-            <Button style={{"marginTop": "12px", "paddingLeft": "0", "paddingRight": "0"}}onClick={() => setRedirect(true)}><Typography variant="h2" color="secondary">profile</Typography></Button>.
+            <Button style={{"marginTop": "12px", "paddingRight": "0"}}onClick={() => setRedirect(true)}><Typography variant="h2" color="secondary">profile</Typography></Button>.
           </Typography>
           {/* TODO */}
           <Typography variant="body1">

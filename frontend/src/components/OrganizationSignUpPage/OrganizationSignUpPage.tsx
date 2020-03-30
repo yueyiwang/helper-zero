@@ -31,6 +31,27 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     if (progress === 3) {
+      const organization: OrganizationType = {
+        name: formData.organizationName,
+        url: null, //not supported 
+        address: formData.address,
+        description: null, //not supported 
+        phone: formData.phone,
+        org_type: formData.organizationType,
+        email: formData.email,
+        is_pickup: formData.methods.indexOf(DELIVERY_TYPE_PICK_UP) > 0,
+        is_dropoff: formData.methods.indexOf(DELIVERY_TYPE_DROP_OFF) > 0,
+        is_mail: formData.methods.indexOf(DELIVERY_TYPE_MAIL) > 0,
+        pickup_instructions: formData[DELIVERY_TYPE_PICK_UP].instruction,
+        dropoff_instructions: formData[DELIVERY_TYPE_DROP_OFF].instruction,
+        mail_instructions: formData[DELIVERY_TYPE_MAIL].instruction,
+        zipcode: "94114", //TODO: need address -> geocode
+        lat: "1.3",
+        lon: "2.0",
+        pickup_times: JSON.stringify(formData[DELIVERY_TYPE_MAIL].times),
+        dropoff_times: JSON.stringify(formData[DELIVERY_TYPE_DROP_OFF].times),
+        auth_token: props.location.state.authToken,
+      }
       axios.post('/api/organizations/', organization).then((resp) => {
         if (resp.status != 200) {
           console.log(resp);
