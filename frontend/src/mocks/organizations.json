@@ -2,10 +2,16 @@
   {
     "id": 1,
     "name": "Airbnb",
-    "phone": null,
-    "org_type": null,
-    "email": null,
-    "is_dropoff_only": false,
+    "description": "DESCRIPTION",
+    "auth_user_id": "userid",
+    "phone": "4087727608",
+    "org_type": "Hospital",
+    "email": "hellO@gmail.com",
+    "pickup_times": "Monday 6-7pm, Tuesday 8-9pm",
+    "dropoff_times": "Monday 6-7pm, Tuesday 8-9pm",
+    "is_dropoff": true,
+    "is_pickup": true,
+    "is_mail": true,
     "instructions": "",
     "point_of_contact": null,
     "zipcode": "",
@@ -15,24 +21,35 @@
     "address": "888 Brannan Street, San Francisco, CA 94110",
     "donation_requests": [
       {
-        "item_type": "Hand Sanitizer",
+        "org_id": 1,
+        "item": "Hand Sanitizer",
+        "item_type": "Medical",
         "amount_requested": 5000,
         "amount_received": 2000
       },
       {
-        "item_type": "Masks",
+        "org_id": 1,
+        "item": "Masks",
+        "item_type": "Medical",
         "amount_requested": 5000,
         "amount_received": 3000
       }
-    ]
+    ],
+    "donations": []
   },
   {
     "id": 2,
     "name": "Yelp",
-    "phone": null,
-    "org_type": null,
-    "email": null,
-    "is_dropoff_only": false,
+    "description": "DESCRIPTION",
+    "auth_user_id": "userid",
+    "phone": "4087727608",
+    "org_type": "shelter",
+    "email": "hellO@gmail.com",
+    "is_dropoff": true,
+    "is_pickup": true,
+    "is_mail": true,
+    "pickup_times": "Monday 6-7pm, Tuesday 8-9pm",
+    "dropoff_times": "Monday 6-7pm, Friday 8-9pm",
     "instructions": "",
     "point_of_contact": null,
     "zipcode": "",
@@ -42,15 +59,20 @@
     "address": "140 New Montgomery Street San Francisco, CA 94105 USA",
     "donation_requests": [
       {
-        "item_type": "Hand Sanitizer",
+        "org_id": 2,
+        "item": "Hand Sanitizer",
+        "item_type": "Medical",
         "amount_requested": 5000,
-        "amount_received": 1000
+        "amount_received": 2000
       },
       {
-        "item_type": "Masks",
+        "org_id": 2,
+        "item": "Masks",
+        "item_type": "Medical",
         "amount_requested": 5000,
-        "amount_received": 4000
+        "amount_received": 3000
       }
-    ]
+    ],
+    "donations": []
   }
 ]

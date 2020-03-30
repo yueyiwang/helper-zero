@@ -9,15 +9,12 @@ import {
 } from 'mui-rff';
 
 import DeliveryInstruction from './DeliveryInstruction';
-
-const PICKUP = 'pickup';
-const DELIVERY = 'delivery';
-const MAIL = 'mail';
+import { DELIVERY_TYPE_DROP_OFF, DELIVERY_TYPE_PICK_UP, DELIVERY_TYPE_MAIL } from "../../../constants";
 
 const checkboxForm: CheckboxData[] = [
-  {label: "Pick-up at donator’s location", value: PICKUP},
-  {label: "Receive drop-offs at designated location", value: DELIVERY},
-  {label: "Receive mailed deliveries", value: MAIL}
+  {label: "Pick-up at donator’s location", value: DELIVERY_TYPE_PICK_UP},
+  {label: "Receive drop-offs at designated location", value: DELIVERY_TYPE_DROP_OFF},
+  {label: "Receive mailed deliveries", value: DELIVERY_TYPE_MAIL}
 ];
 
 const DeliveryMethodForm = ({onNext, onBack}) => {
@@ -26,9 +23,9 @@ const DeliveryMethodForm = ({onNext, onBack}) => {
       onSubmit={onNext}
       initialValues={{
         methods: [],
-        [PICKUP]: {},
-        [DELIVERY]: {},
-        [MAIL]: {},
+        [DELIVERY_TYPE_PICK_UP]: {},
+        [DELIVERY_TYPE_DROP_OFF]: {},
+        [DELIVERY_TYPE_MAIL]: {},
       }}
       render={({ handleSubmit, values }) => (
         <form onSubmit={handleSubmit} noValidate>

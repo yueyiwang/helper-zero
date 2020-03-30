@@ -1,10 +1,14 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Map from "./Results/Map";
 import Marquee from "./Marquee";
 import ResultsContainer from "./Results/ResultsContainer";
 import ORGANIZATION_MOCKS from "../../mocks/organizations.json";
 import { MarkerType } from "../../types/MarkerType";
 import Header from "../Header";
+import axios from "axios";
+import { OrganizationType } from "../../types/OrganizationType";
+
+const DEBUG = false;
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -24,37 +28,60 @@ const styles: { [key: string]: React.CSSProperties } = {
   }
 };
 
-function getMarkers(): MarkerType[] {
-  // TODO: replace this with organization response
-  return ORGANIZATION_MOCKS.reduce(
-    (agg, org) => {
-      agg.push({
-        // key: org.name,
-        latitude: Number(org.lat),
-        longitude: Number(org.lon)
-      });
-      return agg;
-    },
-    [] as MarkerType[]
-  );
-}
-
-function onFilterChange() {
-  // TODO: Refetch with new filters
-}
-
-function handleFilterChange(filters) {
-// TODO: fetch request with new filters
-}
-
 export default function HomePage() {
+  const [organizations, setOrganizations] = useState<OrganizationType[]>([]);
+
+  function getMarkers(): MarkerType[] {
+    // TODO: replace this with organization response
+    return ORGANIZATION_MOCKS.reduce(
+      (agg, org) => {
+        agg.push({
+          // key: org.name,
+          latitude: Number(org.lat),
+          longitude: Number(org.lon)
+        });
+        return agg;
+      },
+      [] as MarkerType[]
+    );
+  }
+
+  function handleFilterChange(filters) {
+    const { zipcode } = filters;
+    if (!DEBUG) {
+      if (zipcode) {
+        axios.put("/api/search", { zipcode }).then(resp => {
+          setOrganizations(resp.data);
+        });
+      } else {
+        // if no zipcode just fetch all
+        axios.get("/api/organizations").then(resp => {
+          setOrganizations(resp.data);
+        });
+      }
+    }
+    // TODO: fetch request with new filters
+  }
+
+  useEffect(() => {
+    if (DEBUG) {
+      setOrganizations(ORGANIZATION_MOCKS as OrganizationType[]);
+    } else {
+      axios.get("/api/organizations").then(resp => {
+        setOrganizations(resp.data);
+      });
+    }
+  }, []);
   return (
     <div style={styles.container}>
       <Header />
       <Marquee />
       <div style={styles.resultsContainer}>
         <div style={{ ...styles.columnContainer, ...styles.organizationList }}>
-          <ResultsContainer organizations={ORGANIZATION_MOCKS} onFilterChange={(filters) => handleFilterChange(filters)}/>
+          <ResultsContainer
+            organizations={organizations}
+            onFilterChange={filters => handleFilterChange(filters)}
+          />
         </div>
         <div style={styles.columnContainer}>
           <Map

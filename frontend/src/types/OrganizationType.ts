@@ -10,14 +10,16 @@ export type OrganizationType = {
   phone: string;
   org_type: string;
   email: string;
-  is_dropoff_only: boolean;
+  is_dropoff: boolean;
+  is_pickup: boolean;
+  is_mail: boolean;
   instructions: string;
   zipcode?: string;
   lat?: string;
   lon?: string;
   auth_user_id: string;
-  pickup_date_times?: Array<Date>;
-  dropoff_date_times?: Array<Date>;
+  pickup_times?: string;
+  dropoff_times?: string;
   donation_requests: DonationRequestType[];
   donations: DonationType[];
 }
