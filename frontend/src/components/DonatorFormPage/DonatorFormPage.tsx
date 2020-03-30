@@ -135,7 +135,7 @@ export default function DonatorFormPage() {
   }
 
   function getTimesArrayFromString(timesStr) {
-    return timesStr ? timesStr.slice(1, -1).replace(/['"]+/g, '').replace(":", " ").split(",") : undefined;
+    return timesStr ? timesStr.slice(1, -1).replace(/['"]+/g, '').replace(/[:]+/g, " ").split(",") : undefined;
   }
 
   const categorizedItems = categorizeItems(organization);
