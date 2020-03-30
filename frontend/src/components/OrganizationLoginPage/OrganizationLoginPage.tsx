@@ -8,10 +8,10 @@ import DriveEtaOutlined from "@material-ui/icons/DriveEtaOutlined";
 import GoogleLogin from "react-google-login";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
-import { OrganizationType } from "../../types/OrganizationType";
-import { DonationType } from "../../types/DonationType";
-import { DonationRequestType } from "../../types/DonationRequestType";
+import { OrganizationType } from '../../types/OrganizationType';
+
 import Header from "../Header";
+import { convertDataToOrg } from '../../utils';
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -33,43 +33,6 @@ const styles: { [key: string]: React.CSSProperties } = {
   }
 };
 
-const convertDonations = (donations): DonationType[] => {
-  const ret: DonationType[] = [];
-  donations.forEach(d => {
-    const donation: DonationType = {
-      org: d.org,
-      name: d.name,
-      phone: d.phone,
-      email: d.email,
-      status: d.status,
-      item: d.item,
-      amount: d.amount,
-      created_at: d.created_at,
-      city: d.city,
-      pickup_address: d.pickup_address,
-      delivery_type: d.delivery_type,
-      pickup_or_dropoff_times: d.pickup_or_dropoff_times
-    };
-    ret.push(donation);
-  });
-  return ret;
-};
-
-const convertDonationRequests = (donationRequests): DonationRequestType[] => {
-  const ret: DonationRequestType[] = [];
-  donationRequests.forEach(dr => {
-    const donationRequest: DonationRequestType = {
-      org_id: dr.org,
-      item_type: dr.item_type,
-      item: dr.item,
-      amount_requested: dr.amount_requested,
-      amount_received: dr.amount_received
-    };
-    ret.push(donationRequest);
-  });
-  return ret;
-};
-
 export default function OrganizationSignUpPage() {
   const [navigateToProfile, setNavigateToProfile] = useState<boolean>(false);
   const [navigateToCreation, setNavigateToCreation] = useState<boolean>(false);
@@ -86,27 +49,7 @@ export default function OrganizationSignUpPage() {
       } else if (res.data.id === undefined) {
         setNavigateToCreation(true);
       } else {
-        const retrievedOrg: OrganizationType = {
-          id: res.data.id,
-          name: res.data.name,
-          url: res.data.url,
-          address: res.data.address,
-          description: res.data.description,
-          phone: res.data.phone,
-          org_type: res.data.org_type,
-          email: res.data.email,
-          is_dropoff: res.data.is_dropoff,
-          is_pickup: res.data.is_pickup,
-          is_mail: res.data.is_mail,
-          pickup_instructions: res.data.pickup_instructions,
-          dropoff_instructions: res.data.dropoff_instructions,
-          mail_instructions: res.data.mail_instructions,
-          auth_user_id: res.data.auth_user_id,
-          donation_requests: convertDonationRequests(
-            res.data.donation_requests
-          ),
-          donations: convertDonations(res.data.donations)
-        };
+        const retrievedOrg = convertDataToOrg(res.data);
         setOrganization(retrievedOrg);
         setNavigateToProfile(true);
       }

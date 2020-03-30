@@ -57,7 +57,7 @@ export default function OrganizationResultItem({
       <div style={styles.rowItem}>
         <Typography variant={"body1"}>{organization.address}</Typography>
       </div>
-      {organization.donation_requests.map(donation_request => (
+      {organization.donation_requests && organization.donation_requests.map(donation_request => (
         <>
           <div style={styles.rowItem}>
             <div style={styles.requestItem}>

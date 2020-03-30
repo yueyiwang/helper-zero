@@ -12,6 +12,7 @@ import DonationRequestForm from './Steps/DonationRequestForm';
 import DonationMethodForm from './Steps/DonationMethodForm';
 import ConfirmationPage from './Steps/ConfirmationPage';
 import Header from '../Header';
+import { convertDataToOrg } from '../../utils';
 
 import { DELIVERY_TYPE_DROP_OFF, DELIVERY_TYPE_PICK_UP, DELIVERY_TYPE_MAIL } from "../../constants";
 
@@ -30,7 +31,11 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     if (progress === 3) {
+<<<<<<< HEAD
       const organization: OrganizationType = {
+=======
+      axios.post('/api/organizations/', {
+>>>>>>> finish
         name: formData.organizationName,
         url: null, //not supported 
         address: formData.address,
@@ -55,6 +60,9 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
         if (resp.status != 200) {
           console.log(resp);
         }
+        console.log(resp);
+        const orgData = resp.data;
+        const organization = convertDataToOrg(orgData);
         setOrganization(organization);
         formData.donationSelected.forEach(donationType => {
           const dontations = formData[donationType];
@@ -92,7 +100,7 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
     <Redirect 
       to={{
         pathname: "/organization/confirmation",
-        state: { organization: organization }
+        state: { organization: organization, authToken: props.location.state.authToken }
       }}
       />
     )

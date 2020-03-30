@@ -33,8 +33,8 @@ const OrganizationProfilePage: React.FC<Props> = (props: Props) => {
     page === pageName ? "outlined" : undefined;
   const color = (pageName: string) =>
     page === pageName ? "primary" : undefined;
-  const pickups = (): DonationType[] =>
-    props.location.state.organization.donations.filter(donation => {
+  const pickups = () =>
+    props.location.state.organization.donations && props.location.state.organization.donations.filter(donation => {
       return donation.delivery_type === "pickup";
     });
 
@@ -77,13 +77,13 @@ const OrganizationProfilePage: React.FC<Props> = (props: Props) => {
           {page === "quick_view" && (
             <QuickView
               donationRequests={
-                props.location.state.organization.donation_requests
+                props.location.state.organization.donation_requests || []
               }
-              donations={props.location.state.organization.donations}
+              donations={props.location.state.organization.donations || []}
             />
           )}
           {page === "scheduled_pickups" && (
-            <ScheduledPickups pickups={pickups()} />
+            <ScheduledPickups pickups={pickups() || []} />
           )}
           {page === "settings" && (
             <Settings organization={props.location.state.organization} />
