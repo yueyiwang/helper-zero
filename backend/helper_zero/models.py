@@ -13,7 +13,7 @@ class User(models.Model):
 
 class Organization(models.Model):
   name = models.CharField(max_length=120)
-  url = models.CharField(max_length=120, null=True)
+  url = models.CharField(max_length=120, null=True, blank=True)
   address = models.CharField(max_length=120)
   description = models.CharField(max_length=120, null=True)
   phone = models.CharField(max_length=120)

@@ -125,8 +125,14 @@ export default function OrganizationSignUpPage() {
       />
     );
   } else if (navigateToCreation) {
-    // TODO: navigate to creation flow, pass auth token
-    return null;
+    return (
+    <Redirect
+      to={{
+        pathname: "/organization/signup",
+        state: { authToken: authToken }
+      }}
+    />
+    );
   }
   return (
     <>
