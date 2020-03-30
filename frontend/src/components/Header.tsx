@@ -42,21 +42,25 @@ export default function HeaderProps({
           <AddIcon
             style={{ color: isWhiteBackground ? "384555" : "#EFF6FF" }}
           />
-          <Typography
-            variant="h2"
-            style={{
-              margin: 0,
-              color: isWhiteBackground ? "384555" : "#EFF6FF"
-            }}
+          <Button
+            onClick={() => history.push("/")}
           >
-            Port.er
-          </Typography>
+            <Typography
+              variant="h2"
+              style={{
+                margin: 0,
+                color: isWhiteBackground ? "384555" : "#EFF6FF"
+              }}
+            >
+              Port.er
+            </Typography>
+          </Button>
         </span>
         <Button
           size="large"
           variant="text"
           color={"secondary"}
-          onClick={() => history.push("/organization/signup")}
+          onClick={() => history.push("/organization/login")}
         >
           Request Aid
         </Button>
