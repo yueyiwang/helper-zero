@@ -56,7 +56,7 @@ export default function DonatorFormPage() {
         setOrganization(ORGANIZATION_MOCKS[orgId] as any);
       } else {
         axios
-          .get(`/api/organizations/${orgId}`)
+          .get(`/api/organizations/${orgId}/`)
           .then(res => {
             setOrganization(res.data);
           })
