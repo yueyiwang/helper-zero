@@ -17,7 +17,7 @@ const checkboxForm: CheckboxData[] = [
   {label: "Receive mailed deliveries", value: DELIVERY_TYPE_MAIL}
 ];
 
-const DeliveryMethodForm = ({onNext, onBack}) => {
+const DROPOFFMethodForm = ({onNext, onBack}) => {
   return (
     <Form
       onSubmit={onNext}
@@ -30,7 +30,7 @@ const DeliveryMethodForm = ({onNext, onBack}) => {
       render={({ handleSubmit, values }) => (
         <form onSubmit={handleSubmit} noValidate>
           <Typography variant="h2">
-            Perferred Delivery Method
+            Perferred DROPOFF Method
           </Typography>
           <Typography variant="body1">
             How would you like to receive your donations?
@@ -44,14 +44,14 @@ const DeliveryMethodForm = ({onNext, onBack}) => {
             <>
               <Box mt={6}>
                 <Typography variant="h2">
-                  Delivery Details
+                  DROPOFF Details
                 </Typography>
               </Box>
               {/* 
                 // @ts-ignore */}
               {values.methods.includes(PICKUP) &&(
                 <Box mt={6}>
-                  <DeliveryInstruction 
+                  <DonationInstruction 
                     title={"Pick-Up Instructions"}
                     subtitle={"Leave your donators any instructions for how you will be picking up the donations."}
                     type={PICKUP}
@@ -61,9 +61,9 @@ const DeliveryMethodForm = ({onNext, onBack}) => {
               )}
               {/* 
                 // @ts-ignore */}
-              {values.methods.includes(DELIVERY) &&(
+              {values.methods.includes(DROPOFF) &&(
                 <Box mt={6}>
-                  <DeliveryInstruction 
+                  <DonationInstruction 
                     title={"Drop-off Instructions"}
                     subtitle={"Tell your donators how you would like them to drop off their donations."}
                     type={PICKUP}
@@ -75,7 +75,7 @@ const DeliveryMethodForm = ({onNext, onBack}) => {
                 // @ts-ignore */}
               {values.methods.includes(MAIL) &&(
                 <Box mt={6}>
-                  <DeliveryInstruction 
+                  <DonationInstruction 
                     title={"Mailing Instructions"}
                     subtitle={"Leave your donators the specific address of the mail room you would like the donations to be sent to."}
                     type={MAIL}
@@ -100,4 +100,4 @@ const DeliveryMethodForm = ({onNext, onBack}) => {
   )
 };
 
-export default DeliveryMethodForm;
+export default DROPOFFMethodForm;

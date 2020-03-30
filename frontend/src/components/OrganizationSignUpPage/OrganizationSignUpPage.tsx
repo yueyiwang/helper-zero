@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 
 import BasicInfoForm from './Steps/BasicInfoForm';
 import DonationRequestForm from './Steps/DonationRequestForm';
-import DeliveryMethodForm from './Steps/DeliveryMethodForm';
+import DonationMethodForm from './Steps/DonationMethodForm';
 import ConfirmationPage from './Steps/ConfirmationPage';
 
 const OrganizationSignUpPage = () => {
@@ -28,7 +28,6 @@ const OrganizationSignUpPage = () => {
   return (
     <>
       {/* TODO: add Header component */}
-      {JSON.stringify(formData)}
       <Container maxWidth="lg">
         <Box m={6}>
           <Typography variant="h1">
@@ -43,7 +42,7 @@ const OrganizationSignUpPage = () => {
             <DonationRequestForm onNext={handleNext} onBack={handleBack}/>
           )}
           {progress === 2 && (
-            <DeliveryMethodForm onNext={handleNext} onBack={handleBack}/>
+            <DonationMethodForm onNext={handleNext} onBack={handleBack}/>
           )}
           {progress === 3 && (
             <ConfirmationPage />

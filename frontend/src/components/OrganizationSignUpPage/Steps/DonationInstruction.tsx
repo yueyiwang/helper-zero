@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import { Field } from 'react-final-form';
 
 import SelectorWithPopover from './SelecterWithPopover';
-import { MAIL } from './DeliveryMethodForm';
+import { MAIL } from './DonationMethodForm';
 
 const styles: { [key: string]: React.CSSProperties } = {
   button: {
@@ -21,7 +21,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 
 const DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
-const DeliveryInstruction = ({title, subtitle, type, values}) => {
+const DonationInstruction = ({title, subtitle, type, values}) => {
   return (
     <>
       <Box mt={3}>
@@ -85,4 +85,4 @@ const DeliveryInstruction = ({title, subtitle, type, values}) => {
   )
 };
 
-export default DeliveryInstruction;
+export default DonationInstruction;
