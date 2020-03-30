@@ -64,7 +64,7 @@ export default function HomePage() {
     const { zipcode } = filters;
     if (!DEBUG) {
       if (zipcode) {
-        axios.put("/api/search/", { zipcode }).then(resp => {
+        axios.get("/api/search/", { params: { zipcode } }).then(resp => {
           console.log(resp);
           setOrganizations(resp.data);
         });
