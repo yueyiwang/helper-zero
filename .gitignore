@@ -1,4 +1,3 @@
-backend/helper_zero/migrations/*
 backend/db.sqlite3
 backend/helper_zero/__pycache__/*
 
