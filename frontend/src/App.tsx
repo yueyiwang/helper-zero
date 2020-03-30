@@ -6,8 +6,9 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import HomePage from "./components/HomePage/HomePage";
 import OrganizationsPage from "./components/OrganizationsPage";
 import OrganizationLoginPage from "./components/OrganizationLoginPage/OrganizationLoginPage";
-import OrganizationSignUpPage from './components/OrganizationSignUpPage/OrganizationSignUpPage';
+import OrganizationSignUpPage from "./components/OrganizationSignUpPage/OrganizationSignUpPage";
 import OrganizationProfilePage from "./components/OrganizationProfilePage/OrganizationProfilePage";
+import DonatorFormPage from "./components/DonatorFormPage/DonatorFormPage";
 
 // Material UI Overrides
 const theme = createMuiTheme({
@@ -26,7 +27,8 @@ const theme = createMuiTheme({
       main: "#F56767" //orange
     },
     text: {
-      primary: "#405CC0", // bright blue
+      // primary: "#405CC0", // bright blue
+      // secondary: "#FFFFFF" // white
     }
   },
   overrides: {
@@ -35,6 +37,9 @@ const theme = createMuiTheme({
         height: "56px",
         padding: "0px 40px",
         borderWidth: "2px"
+      },
+      containedSizeLarge: {
+        color: "#EFF6FF"
       }
     },
     MuiTypography: {
@@ -46,7 +51,7 @@ const theme = createMuiTheme({
         lineHeight: "54px",
         letterSpacing: "0.02em",
         color: "#212633",
-        marginBottom: "24px",
+        marginBottom: "24px"
       },
       h2: {
         fontStyle: "normal",
@@ -64,7 +69,7 @@ const theme = createMuiTheme({
         lineHeight: "27px",
         letterSpacing: "0.02em",
         color: "#384555",
-        marginBottom: "10px",
+        marginBottom: "10px"
       },
       h4: {
         fontStyle: "normal",
@@ -72,7 +77,7 @@ const theme = createMuiTheme({
         fontSize: "16px",
         lineHeight: "24px",
         letterSpacing: "0.02em",
-        color: "#384555",
+        color: "#384555"
       },
       body1: {
         fontStyle: "normal",
@@ -80,8 +85,8 @@ const theme = createMuiTheme({
         fontSize: "16px",
         lineHeight: "28px",
         letterSpacing: "0.02em",
-        color: "#384555",
-      },
+        color: "#384555"
+      }
     }
   }
 });
@@ -93,7 +98,12 @@ export default function App() {
         <Route path="/organizations" component={OrganizationsPage} />
         <Route path="/organization/login" component={OrganizationLoginPage} />
         <Route path="/organization/signup" component={OrganizationSignUpPage} />
-        <Route path="/organization/profile" component={OrganizationProfilePage} />
+        <Route
+          path="/organization/profile"
+          component={OrganizationProfilePage}
+        />
+        <Route path="/donator/:orgId" component={DonatorFormPage} />
+
         <Route path="/" component={HomePage} />
       </Switch>
     </MuiThemeProvider>

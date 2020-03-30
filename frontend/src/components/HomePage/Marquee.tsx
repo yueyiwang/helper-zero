@@ -1,9 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
 import { Typography } from "@material-ui/core";
-import Header from "../Header";
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {
@@ -51,10 +49,10 @@ export default function Marquee() {
   return (
     <div style={styles.container}>
       <div style={styles.contentContainer}>
-        <Typography variant="h1">Spread help.</Typography>
-        <Typography variant="h3" style={{ marginBottom: "24px" }}>
+        <span style={styles.title}>Spread help.</span>
+        <span style={styles.subTitle}>
           Donate resources to our city's shelters and hospitals.
-        </Typography>
+        </span>
         <span>
           <Button size="large" variant="outlined" color="secondary">
             Donate

@@ -28,7 +28,7 @@ pipenv shell
 pipenv install
 
 # spin up the backend
-pipenv manage.py runserver
+python manage.py runserver
 ```
 
 ### Database Migrations

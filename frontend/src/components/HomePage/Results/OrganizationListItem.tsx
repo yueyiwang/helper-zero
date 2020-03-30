@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 import { Typography, lighten } from "@material-ui/core";
 import LinkIcon from "@material-ui/icons/Link";
@@ -42,6 +43,7 @@ type OrganizationResultItemProps = {
 export default function OrganizationResultItem({
   organization
 }: OrganizationResultItemProps) {
+  const history = useHistory();
   return (
     <div style={styles.container}>
       <div style={styles.nameContainer}>
@@ -74,7 +76,12 @@ export default function OrganizationResultItem({
         </>
       ))}
       <span>
-        <Button size="medium" variant="outlined" color="secondary">
+        <Button
+          size="medium"
+          variant="outlined"
+          color="secondary"
+          onClick={() => history.push(`/donator/${organization.id}`)}
+        >
           Donate
         </Button>
       </span>

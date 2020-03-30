@@ -2,10 +2,15 @@
   {
     "id": 1,
     "name": "Airbnb",
-    "phone": null,
-    "org_type": null,
-    "email": null,
-    "is_dropoff_only": false,
+    "phone": "4087727374",
+    "auth_user_id": "skdjf",
+    "donations": [],
+    "org_type": "sdkfjs",
+    "email": "skdfsd",
+    "is_pickup": true,
+    "is_dropoff": true,
+    "is_mail": false,
+    "description": "SDKJFDS",
     "instructions": "",
     "point_of_contact": null,
     "zipcode": "",
@@ -15,12 +20,16 @@
     "address": "888 Brannan Street, San Francisco, CA 94110",
     "donation_requests": [
       {
-        "item_type": "Hand Sanitizer",
+        "org_id": 1,
+        "item": "Hand Sanitizer",
+        "item_type": "Medical",
         "amount_requested": 5000,
         "amount_received": 2000
       },
       {
-        "item_type": "Masks",
+        "org_id": 1,
+        "item": "Masks",
+        "item_type": "Medical",
         "amount_requested": 5000,
         "amount_received": 3000
       }
@@ -29,10 +38,15 @@
   {
     "id": 2,
     "name": "Yelp",
-    "phone": null,
-    "org_type": null,
-    "email": null,
-    "is_dropoff_only": false,
+    "phone": "4087727374",
+    "auth_user_id": "skdjf",
+    "donations": [],
+    "org_type": "sdkfjs",
+    "email": "skdfsd",
+    "is_pickup": false,
+    "is_dropoff": true,
+    "is_mail": false,
+    "description": "SDKJFDS",
     "instructions": "",
     "point_of_contact": null,
     "zipcode": "",
@@ -42,12 +56,16 @@
     "address": "140 New Montgomery Street San Francisco, CA 94105 USA",
     "donation_requests": [
       {
-        "item_type": "Hand Sanitizer",
+        "org_id": 2,
+        "item": "Hand Sanitizer",
+        "item_type": "Medical",
         "amount_requested": 5000,
         "amount_received": 1000
       },
       {
-        "item_type": "Masks",
+        "org_id": 2,
+        "item": "Masks",
+        "item_type": "Medical",
         "amount_requested": 5000,
         "amount_received": 4000
       }

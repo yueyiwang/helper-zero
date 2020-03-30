@@ -14,16 +14,19 @@ const contactInfoFields = [{
 }, {
   param: "phone",
   label: "Phone number",
+}, {
+  param: "email",
+  label: "Email",
 }]
 
 const organizationFields = [{
-  param: "organization_name",
+  param: "organizationName",
   label: "Organization Name",
 },{
-  param: "organization_type",
+  param: "organizationType",
   label: "Organization Type",
 },{
-  param: "street_address",
+  param: "address",
   label: "Street Address",
 },{
   param: "city",
