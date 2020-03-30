@@ -4,9 +4,11 @@ export type DonationType = {
   phone: string;
   email: string;
   status: string;
-  item_type: string;
+  item: string;
   amount: number;
   created_at: Date;
-  donation_time_start: Date;
-  donation_time_end: Date;
+  city: string;
+  pickup_address: string;
+  delivery_type: string;
+  pickup_or_dropoff_times: string;
 }

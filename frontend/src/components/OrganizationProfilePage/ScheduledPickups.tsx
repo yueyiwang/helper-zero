@@ -30,16 +30,15 @@ const ScheduledPickups: React.FC<Props> = (props: Props) => {
         {props.pickups.map((pickup: DonationType) => {
           <TableRow>
             <TableCell>{pickup.name}</TableCell>
-            <TableCell>{pickup.item_type}</TableCell>
+            <TableCell>{pickup.item}</TableCell>
             <TableCell>{pickup.amount}</TableCell>
-            <TableCell>{pickup.name}</TableCell>
-            <TableCell>{pickup.name}</TableCell>
-            <TableCell>{pickup.name}</TableCell>
+            <TableCell>{pickup.pickup_address}</TableCell>
+            <TableCell>{pickup.email}</TableCell>
+            <TableCell>{pickup.pickup_or_dropoff_times}</TableCell>
           </TableRow>
         })}
       </TableBody>
     </Table>
-
     </>
   )
 }
