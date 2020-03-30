@@ -6,6 +6,7 @@ from rest_framework.response import Response
 
 from google.oauth2 import id_token
 from google.auth.transport import requests
+from geopy.geocoders import Nominatim
 
 class OrganizationView(viewsets.ViewSet):
 
@@ -16,6 +17,10 @@ class OrganizationView(viewsets.ViewSet):
 
 	def create(self, request):
 		request_dict = request.data
+		# Frontend doesn't need to pass in lat/lon
+		request_dict['lat'] = ''
+		request_dict['lon'] = ''
+
 		serializer = OrganizationSerializer(data=request_dict)
 		if serializer.is_valid():
 			auth_token = request_dict["auth_token"]
@@ -27,6 +32,9 @@ class OrganizationView(viewsets.ViewSet):
 			if id_info['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
 				return Response(status=status.HTTP_401_UNAUTHORIZED)
 			user_id = id_info['sub']
+			geolocator = Nominatim(user_agent="porter")
+			# Example address: 140 New Montgomery San Francisco, CA 94105
+			location = geolocator.geocode(request_dict["address"])
 
 			org = Organization(
 				name=request_dict["name"],
@@ -41,8 +49,8 @@ class OrganizationView(viewsets.ViewSet):
 				is_mail=request_dict["is_mail"],
 				pickup_instructions=request_dict["pickup_instructions"],
 				zipcode=request_dict["zipcode"],
-				lat=request_dict["lat"],
-				lon=request_dict["lon"],
+				lat=location.latitude,
+				lon=location.longitude,
 				auth_user_id=user_id,
 				pickup_times=request_dict["pickup_times"],
 				dropoff_times=request_dict["dropoff_times"],

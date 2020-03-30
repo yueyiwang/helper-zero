@@ -1,7 +1,7 @@
 import logging
 
 from rest_framework import status, viewsets
-from backend.helper_zero.serializers import OrganizationSerializer, DonationRequestSerializer
+from backend.helper_zero.serializers import OrganizationSerializer
 from backend.helper_zero.models import Organization
 from backend.helper_zero.location_util import get_search_bounding_box
 from django.core.paginator import Paginator
