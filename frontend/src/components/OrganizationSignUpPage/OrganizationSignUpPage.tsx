@@ -13,11 +13,8 @@ import ConfirmationPage from "./Steps/ConfirmationPage";
 import Header from "../Header";
 import { convertDataToOrg } from "../../utils";
 
-import {
-  DELIVERY_TYPE_DROP_OFF,
-  DELIVERY_TYPE_PICK_UP,
-  DELIVERY_TYPE_MAIL
-} from "../../constants";
+import {OrganizationType} from '../../types/OrganizationType';
+import { DELIVERY_TYPE_DROP_OFF, DELIVERY_TYPE_PICK_UP, DELIVERY_TYPE_MAIL } from "../../constants";
 
 type Props = {
   location: {
@@ -68,8 +65,8 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
 
         const orgData = resp.data;
         const organization = convertDataToOrg(orgData);
-        setOrganization(organization);
 
+        let donationRequests = [];
         // dontaion request items
         formData.donationSelected.forEach(donationType => {
           const dontations = formData[donationType];
@@ -87,9 +84,11 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
                 if (resp.status != 200) {
                   console.log(resp);
                 }
-              });
+                donationRequests.append(donationRequest);
+              })
           });
         });
+        setOrganization({...organization, donation_requests: donationRequests});
       });
     } else {
       setFormData({ ...formData, ...data });
