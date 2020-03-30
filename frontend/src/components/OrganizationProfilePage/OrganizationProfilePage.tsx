@@ -40,7 +40,7 @@ const OrganizationProfilePage: React.FC<Props> = (props: Props) => {
 
   return (
     <>
-      <Header isWhiteBackground={true} />
+      <Header isWhiteBackground={true}/>
       <Container maxWidth="lg" style={styles.container}>
         <Box>
           <Typography variant="h1" color="primary">

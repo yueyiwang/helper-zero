@@ -71,7 +71,7 @@ const DonationRequest:React.FC<Props> = (props: Props) => {
   return (
     <Box style={styles.progressBox}>
       <Box style={{"paddingBottom": "10px"}}>
-        <Typography style={{"display": "inline-block"}} variant="h3" color="primary">Masks</Typography>
+        <Typography style={{"display": "inline-block"}} variant="h3" color="primary">{props.donationRequest.item}</Typography>
         <Typography
           style={{"paddingLeft": "20px", "display": "inline-block"}}
         >
@@ -79,12 +79,12 @@ const DonationRequest:React.FC<Props> = (props: Props) => {
             color="textPrimary"
             style={{"display": "inline-block", "marginRight": "5px"}} variant="h3"
           >
-            10
+            {props.donationRequest.amount_received}
           </Typography>
-          / 200 Received
+          / {props.donationRequest.amount_requested} Received
         </Typography>
       </Box>
-      {progressBar(10, 200)}
+      {progressBar(props.donationRequest.amount_received, props.donationRequest.amount_requested)}
       <Box style={styles.breakdownBox}>
         <MuiThemeProvider theme={theme}>
           <IconButton
