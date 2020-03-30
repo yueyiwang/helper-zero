@@ -37,8 +37,6 @@ const SelectorWithPopover = ({
   const open = Boolean(anchorEl);
   const id = open ? "open" : undefined;
 
-  console.log("EXTRA");
-  console.log(extraInfo);
   return (
     <>
       <Button variant="outlined" onClick={handleClick} style={styles.button}>
