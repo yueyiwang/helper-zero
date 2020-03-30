@@ -11,18 +11,6 @@ import {
 
 import SelectorWithPopover from './SelecterWithPopover';
 
-const styles: { [key: string]: React.CSSProperties } = {
-  button: {
-    marginRight: 10,
-    marginBottom: 10,
-  },
-  textarea: {
-    border: "1px solid #718AA8",
-    boxSizing: "border-box",
-    borderRadius: 6,
-  },
-};
-
 const MEDICALSUPPLIES = 'medical_supplies';
 const TOILETRIES = 'toiletries';
 const FOOD = 'food';
@@ -30,23 +18,23 @@ const FOOD = 'food';
 const DONATION_INFOS = {
   [MEDICALSUPPLIES]: {
     label: 'Medical Supplies',
-    requests: [{
-      label: 'Protective Gear',
-      requestTypes: ['n95 Respirators', 'Gloves', 'Goggles', 'Face Shields'],
+    donations: [{
+      dontationType: 'Protective Gear',
+      donationItems: ['n95 Respirators', 'Gloves', 'Goggles', 'Face Shields'],
     }]
   },
   [TOILETRIES]: {
     label: 'Toiletries',
-    requests: [{
-      label: 'Toiletries',
-      requestTypes: ['Toilet Paper'],
+    donations: [{
+      dontationType: 'Toiletries',
+      donationItems: ['Toilet Paper'],
     }]
   },
   [FOOD]: {
     label: 'Food',
-    requests: [{
-      label: 'Dry Food',
-      requestTypes: ['Ramen'],
+    donations: [{
+      dontationType: 'Dry Food',
+      donationItems: ['Ramen'],
     }]
   },
 };
@@ -62,7 +50,7 @@ const DonationRequestForm = ({onNext, onBack}) => {
     <Form
       onSubmit={onNext}
       initialValues={{
-        donationTypes: [],
+        donationSelected: [],
         [MEDICALSUPPLIES]: {},
         [TOILETRIES]: {},
         [FOOD]: {},
@@ -76,24 +64,24 @@ const DonationRequestForm = ({onNext, onBack}) => {
             What kind of donations would you like to request from the community?
           </Typography>
           <Checkboxes
-            name="donationTypes"
+            name="donationSelected"
             required={true}
             data={checkboxForm}
           />
-          {values.donationTypes.length > 0 && (
+          {values.donationSelected.length > 0 && (
             <>
-              {values.donationTypes.map(donationType => (
+              {values.donationSelected.map(donationSelect => (
                 <Box mt={3}>
                   <Typography variant="h3">
-                    {DONATION_INFOS[donationType]['label']}
+                    {DONATION_INFOS[donationSelect]['label']}
                   </Typography>
                   <Box pt={1}>
                     {/* 
                       // @ts-ignore */}
-                    {DONATION_INFOS[donationType]['requests'].map(request=> (
+                    {DONATION_INFOS[donationSelect]['donations'].map(donation=> (
                       <>
                         <Typography variant="h4">
-                          {request.label}
+                          {donation.dontationType}
                         </Typography>
                         {/* Selector Group */}
                         <Box pt={1}>
@@ -104,16 +92,16 @@ const DonationRequestForm = ({onNext, onBack}) => {
                             alignItems="flex-start"
                             spacing={1}
                           >
-                            {request.requestTypes.map(requestType => (
+                            {donation.donationItems.map(donationItem => (
                               <Grid item>
                                 <SelectorWithPopover 
-                                  key={`${donationType}-${requestType}`}
-                                  text={requestType}
-                                  extraInfo={values[donationType][requestType] ? values[donationType][requestType] : ''}
-                                  popoverTitle={requestType}
+                                  key={`${donationSelect}-${donationItem}`}
+                                  text={donationItem}
+                                  extraInfo={values[donationSelect][donationItem] ? values[donationSelect][donationItem] : ''}
+                                  popoverTitle={donationItem}
                                   popOverContentComponent={
                                     <TextField
-                                      name={`${donationType}.${requestType}`}
+                                      name={`${donationSelect}.${donationItem}`}
                                       helperText={'Request Details'}
                                       fullWidth
                                       margin="normal"

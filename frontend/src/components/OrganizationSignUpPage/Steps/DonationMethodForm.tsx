@@ -8,7 +8,7 @@ import {
   CheckboxData
 } from 'mui-rff';
 
-import DeliveryInstruction from './DeliveryInstruction';
+import DonationInstruction from './DonationInstruction';
 import { DELIVERY_TYPE_DROP_OFF, DELIVERY_TYPE_PICK_UP, DELIVERY_TYPE_MAIL } from "../../../constants";
 
 const checkboxForm: CheckboxData[] = [
@@ -54,7 +54,7 @@ const DROPOFFMethodForm = ({onNext, onBack}) => {
                   <DonationInstruction 
                     title={"Pick-Up Instructions"}
                     subtitle={"Leave your donators any instructions for how you will be picking up the donations."}
-                    type={PICKUP}
+                    type={DELIVERY_TYPE_PICK_UP}
                     values={values}
                   />
                 </Box>
@@ -66,7 +66,7 @@ const DROPOFFMethodForm = ({onNext, onBack}) => {
                   <DonationInstruction 
                     title={"Drop-off Instructions"}
                     subtitle={"Tell your donators how you would like them to drop off their donations."}
-                    type={PICKUP}
+                    type={DELIVERY_TYPE_DROP_OFF}
                     values={values}
                   />
                 </Box>
@@ -78,7 +78,7 @@ const DROPOFFMethodForm = ({onNext, onBack}) => {
                   <DonationInstruction 
                     title={"Mailing Instructions"}
                     subtitle={"Leave your donators the specific address of the mail room you would like the donations to be sent to."}
-                    type={MAIL}
+                    type={DELIVERY_TYPE_MAIL}
                     values={values}
                   />
                 </Box>
