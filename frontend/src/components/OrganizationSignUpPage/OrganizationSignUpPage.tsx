@@ -28,43 +28,48 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
   const [formData, setFormData] = useState({});
   const [progress, setProgress] = useState(0);
   const [organization, setOrganization] = useState<OrganizationType>();
-
-  useEffect(() => {
-    if (progress === 3) {
+  
+  const handleNext = async (data) => {
+    if (progress === 2) {
+      const finalFormData = {
+        ...formData, ...data
+      }
       const organization: OrganizationType = {
-        name: formData.organizationName,
+        name: finalFormData.organizationName,
         url: null, //not supported 
-        address: formData.address,
+        address: finalFormData.address,
         description: null, //not supported 
-        phone: formData.phone,
-        org_type: formData.organizationType,
-        email: formData.email,
-        is_pickup: formData.methods.indexOf(DELIVERY_TYPE_PICK_UP) > 0,
-        is_dropoff: formData.methods.indexOf(DELIVERY_TYPE_DROP_OFF) > 0,
-        is_mail: formData.methods.indexOf(DELIVERY_TYPE_MAIL) > 0,
-        pickup_instructions: formData[DELIVERY_TYPE_PICK_UP].instruction,
-        dropoff_instructions: formData[DELIVERY_TYPE_DROP_OFF].instruction,
-        mail_instructions: formData[DELIVERY_TYPE_MAIL].instruction,
+        phone: finalFormData.phone,
+        org_type: finalFormData.organizationType,
+        email: finalFormData.email,
+        is_pickup: finalFormData.methods.indexOf(DELIVERY_TYPE_PICK_UP) > 0,
+        is_dropoff: finalFormData.methods.indexOf(DELIVERY_TYPE_DROP_OFF) > 0,
+        is_mail: finalFormData.methods.indexOf(DELIVERY_TYPE_MAIL) > 0,
+        pickup_instructions: finalFormData[DELIVERY_TYPE_PICK_UP].instruction,
+        dropoff_instructions: finalFormData[DELIVERY_TYPE_DROP_OFF].instruction,
+        mail_instructions: finalFormData[DELIVERY_TYPE_MAIL].instruction,
         zipcode: "94114", //TODO: need address -> geocode
         lat: "1.3",
         lon: "2.0",
-        pickup_times: JSON.stringify(formData[DELIVERY_TYPE_MAIL].times),
-        dropoff_times: JSON.stringify(formData[DELIVERY_TYPE_DROP_OFF].times),
+        pickup_times: JSON.stringify(finalFormData[DELIVERY_TYPE_MAIL].times),
+        dropoff_times: JSON.stringify(finalFormData[DELIVERY_TYPE_DROP_OFF].times),
         auth_token: props.location.state.authToken,
       }
       axios.post('/api/organizations/', organization).then((resp) => {
         if (resp.status != 200) {
           console.log(resp);
         }
-        console.log(resp);
+
         const orgData = resp.data;
         const organization = convertDataToOrg(orgData);
         setOrganization(organization);
+
+        // dontaion request items
         formData.donationSelected.forEach(donationType => {
           const dontations = formData[donationType];
           Object.entries(dontations).forEach(([itemName, itemCount]) => {
             const donationRequest = {
-              org: 1, //TODO change org to real value
+              org: organization.id,
               item: itemName,
               item_type: donationType,
               amount_requested: Number(itemCount),
@@ -75,17 +80,15 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
                 if (resp.status != 200) {
                   console.log(resp);
                 }
-                setOrganization(convertDataToOrg(resp.data));
               })
           });
         })
       });
     }
-  }, [progress]);
-  
-  const handleNext = async (data) => {
-    setFormData({...formData, ...data});
-    setProgress(progress+1);
+    else {
+      setFormData({...formData, ...data});
+      setProgress(progress+1);
+    }
   }
 
   const handleBack = () => {
