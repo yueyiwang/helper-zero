@@ -14,6 +14,7 @@ django-heroku = "*"
 djangorestframework = "*"
 django-cors-headers = "*"
 google-api-python-client = "*"
+geopy = "*"
 
 [requires]
 python_version = "3.7"

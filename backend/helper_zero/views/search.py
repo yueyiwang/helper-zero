@@ -1,7 +1,7 @@
 import logging
 
 from rest_framework import status, viewsets
-from backend.helper_zero.serializers import OrganizationSerializer, DonationRequestSerializer
+from backend.helper_zero.serializers import OrganizationSerializer
 from backend.helper_zero.models import Organization
 from backend.helper_zero.location_util import get_search_bounding_box
 from django.core.paginator import Paginator
@@ -25,7 +25,7 @@ class SearchView(viewsets.ViewSet):
             org_search_results = _get_org_search_results(
                 location_params, org_filter_params, donation_request_filter_params, paging_params['offset']
             )
-            response = _filter_org_list_by_donation_requests(org_search_results, donation_request_filter_params.get('item_type'))
+            response = _filter_org_list_by_donation_requests(org_search_results, donation_request_filter_params.get('item'))
             return Response(response)
         except Exception as e:
             logging.error(e)
@@ -37,7 +37,7 @@ def _process_params(query_params):
     is_pickup = query_params.get('is_pickup')
     is_mail = query_params.get('is_mail')
     org_type = query_params.get('org_type')
-    item_type = query_params.get('item_type')
+    item = query_params.get('item')
     lat = query_params.get('lat')
     lon = query_params.get('lon')
     radius = query_params.get('radius', DEFAULT_RADIUS)
@@ -62,17 +62,17 @@ def _process_params(query_params):
     if is_mail:
         org_filter_params['is_mail'] = is_mail
     donation_request_filter_params = {}
-    if item_type:
-        donation_request_filter_params['item_type'] = item_type
+    if item:
+        donation_request_filter_params['item'] = item
 
     return paging_params, location_params, org_filter_params, donation_request_filter_params
 
 
-def _filter_org_list_by_donation_requests(org_search_results, item_type):
+def _filter_org_list_by_donation_requests(org_search_results, item):
     response = []
     for org in org_search_results:
-        if item_type:
-            org['donation_requests'] = list(filter(lambda x: (x['item_type'] == item_type), org['donation_requests']))
+        if item:
+            org['donation_requests'] = list(filter(lambda x: (x['item'] == item), org['donation_requests']))
         org['donation_requests'] = list(filter(lambda x: (x['amount_requested'] != x['amount_received']), org['donation_requests']))
         response += [org] if org['donation_requests'] else []
     return response
@@ -111,10 +111,10 @@ def _get_org_search_results(
 
 
 def _process_zipcode_query(zipcode, org_filter_params, donation_request_filter_params):
-    if donation_request_filter_params.get('item_type'):
+    if donation_request_filter_params.get('item'):
         org_query_set = Organization.objects.filter(
             zipcode=zipcode,
-            donation_requests__item_type=donation_request_filter_params['item_type'],
+            donation_requests__item=donation_request_filter_params['item'],
             **org_filter_params,
         )
     else:
@@ -131,13 +131,13 @@ def _process_lat_lon_query(lat, lon, radius, org_filter_params, donation_request
         lon,
         radius,
     )
-    if donation_request_filter_params.get('item_type'):
+    if donation_request_filter_params.get('item'):
         org_query_set = Organization.objects.filter(
             lat__lte=tl_lat,
             lat__gte=br_lat,
             lon__lte=tl_lon,
             lon__gte=br_lon,
-            donation_requests__item_type=donation_request_filter_params['item_type'],
+            donation_requests__item=donation_request_filter_params['item'],
             **org_filter_params
         )
     else:
@@ -152,10 +152,10 @@ def _process_lat_lon_query(lat, lon, radius, org_filter_params, donation_request
 
 
 def _process_default_query(org_filter_params, donation_request_filter_params):
-    if donation_request_filter_params.get('item_type'):
+    if donation_request_filter_params.get('item'):
         org_query_set = Organization.objects.filter(
             donation_requests__isnull=False,
-            donation_requests__item_type=donation_request_filter_params['item_type'],
+            donation_requests__item=donation_request_filter_params['item'],
             **org_filter_params
         ).order_by("name")
     else:
