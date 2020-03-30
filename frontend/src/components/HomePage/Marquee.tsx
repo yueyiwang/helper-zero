@@ -51,10 +51,10 @@ export default function Marquee() {
   return (
     <div style={styles.container}>
       <div style={styles.contentContainer}>
-        <Typography variant="h1">Spread help.</Typography>
-        <Typography variant="h3" style={{ marginBottom: "24px" }}>
+        <span style={styles.title}>Spread help.</span>
+        <span style={styles.subTitle}>
           Donate resources to our city's shelters and hospitals.
-        </Typography>
+        </span>
         <span>
           <Button size="large" variant="outlined" color="secondary">
             Donate

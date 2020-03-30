@@ -11,7 +11,7 @@ const styles: { [key: string]: React.CSSProperties } = {
   },
   header: {
     display: "flex",
-    padding: "48px",
+    padding: "48px 48px 24px 48px",
     alignItems: "center",
     justifyContent: "space-between"
   },
@@ -31,23 +31,32 @@ export default function HeaderProps({
 }: HeaderProps) {
   let history = useHistory();
   return (
-    <div style={styles.container}>
+    <div
+      style={{
+        ...styles.container,
+        borderBottom: isWhiteBackground ? "1px solid #D4DBEE" : "none"
+      }}
+    >
       <div style={styles.header}>
         <span style={styles.logo}>
-          <AddIcon />
+          <AddIcon
+            style={{ color: isWhiteBackground ? "384555" : "#EFF6FF" }}
+          />
           <Typography
             variant="h2"
-            color={isWhiteBackground ? "primary" : "textSecondary"}
-            style={{ margin: 0 }}
+            style={{
+              margin: 0,
+              color: isWhiteBackground ? "384555" : "#EFF6FF"
+            }}
           >
-            Helper Zero
+            Port.er
           </Typography>
         </span>
         <Button
           size="large"
           variant="text"
           color={"secondary"}
-          onClick={() => history.push("/receiver/signup")}
+          onClick={() => history.push("/organization/signup")}
         >
           Request Aid
         </Button>

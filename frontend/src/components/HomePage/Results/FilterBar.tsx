@@ -1,7 +1,5 @@
-import React, { useState } from "react";
-import results from "../../../mocks/organizations.json";
-import OrganizationResultItem from "./OrganizationListItem";
-import { Divider, TextField, Button } from "@material-ui/core";
+import React from "react";
+import { TextField } from "@material-ui/core";
 
 const styles: { [key: string]: React.CSSProperties } = {};
 
@@ -18,7 +16,7 @@ export default function FilterBar({
       <TextField
         id="standard-basic"
         label="Zip Code"
-        onBlur={e => onFilterChange(...filters, { zipcode: e.target.value })}
+        onBlur={e => onFilterChange({ ...filters, zipcode: e.target.value, })}
       />
     </div>
   );
