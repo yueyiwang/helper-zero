@@ -119,6 +119,7 @@ const DonationRequest:React.FC<Props> = (props: Props) => {
               <TableBody>
                 <TableRow>
                   <TableCell component="th" scope="row">
+                    {/* TODO: replace with props */}
                     Person
                   </TableCell>
                   <TableCell align="right">100</TableCell>

@@ -35,11 +35,40 @@ const styles: { [key: string]: React.CSSProperties } = {
 };
 
 const convertDonations = (donations): DonationType[] => {
-  return []
+  const ret: DonationType[] = [];
+  donations.forEach((d) => {
+    const donation: DonationType = {
+      org_id: d.org,
+      name: d.name,
+      phone: d.phone,
+      email: d.email,
+      status: d.status,
+      item: d.item,
+      amount: d.amount,
+      created_at: d.created_at,
+      city: d.city,
+      pickup_address: d.pickup_address,
+      delivery_type: d.delivery_type,
+      pickup_or_dropoff_times: d.pickup_or_dropoff_times
+    }
+    ret.push(donation);
+  })
+  return ret;
 }
 
-const convertDonationRequests = (donationTypes): DonationRequestType[] => {
-  return []
+const convertDonationRequests = (donationRequests): DonationRequestType[] => {
+  const ret: DonationRequestType[] = [];
+  donationRequests.forEach((dr) => {
+    const donationRequest: DonationRequestType = {
+      org_id: dr.org,
+      item_type: dr.item_type,
+      item: dr.item,
+      amount_requested: dr.amount_requested,
+      amount_received: dr.amount_received,
+    }
+    ret.push(donationRequest)
+  })
+  return ret;
 }
 
 export default function OrganizationSignUpPage() {
@@ -52,11 +81,11 @@ export default function OrganizationSignUpPage() {
   const onSuccess = (response) => {
     const authToken = response.uc.id_token;
     setAuthToken(authToken);
-    console.log(authToken);
-    axios.get(`/api/login?auth_token=${authToken}`).then(res => {
+    axios.get(`/api/login/?auth_token=${authToken}`).then(res => {
+      console.log(res);
       if (res.status !== 200) {
         setError(true);
-      } else if (res.data.length === undefined) {
+      } else if (res.data.id === undefined) {
         setNavigateToCreation(true);
       } else {
           const retrievedOrg: OrganizationType = {
