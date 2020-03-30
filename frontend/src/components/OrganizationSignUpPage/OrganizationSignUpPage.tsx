@@ -90,7 +90,7 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
                 if (resp.status != 200) {
                   console.log(resp);
                 }
-                donationRequests.append(donationRequest);
+                donationRequests.push(donationRequest);
               })
           });
         });
