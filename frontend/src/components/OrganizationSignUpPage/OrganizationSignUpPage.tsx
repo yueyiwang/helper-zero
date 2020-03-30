@@ -14,7 +14,11 @@ import Header from "../Header";
 import { convertDataToOrg } from "../../utils";
 
 import {OrganizationType} from '../../types/OrganizationType';
-import { DELIVERY_TYPE_DROP_OFF, DELIVERY_TYPE_PICK_UP, DELIVERY_TYPE_MAIL } from "../../constants";
+import {
+  DELIVERY_TYPE_DROP_OFF,
+  DELIVERY_TYPE_PICK_UP,
+  DELIVERY_TYPE_MAIL
+} from "../../constants";
 
 type Props = {
   location: {
@@ -52,7 +56,9 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
         zipcode: "94114", //TODO: need address -> geocode
         lat: "1.3",
         lon: "2.0",
-        pickup_times: JSON.stringify(finalFormData[DELIVERY_TYPE_MAIL].times),
+        pickup_times: JSON.stringify(
+          finalFormData[DELIVERY_TYPE_PICK_UP].times
+        ),
         dropoff_times: JSON.stringify(
           finalFormData[DELIVERY_TYPE_DROP_OFF].times
         ),
