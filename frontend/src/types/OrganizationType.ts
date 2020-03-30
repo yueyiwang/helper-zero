@@ -22,6 +22,6 @@ export type OrganizationType = {
   auth_user_id: string;
   pickup_times?: string;
   dropoff_times?: string;
-  donation_requests: DonationRequestType[];
-  donations: DonationType[];
+  donation_requests?: DonationRequestType[];
+  donations?: DonationType[];
 }

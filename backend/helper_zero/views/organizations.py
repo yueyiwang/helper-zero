@@ -6,6 +6,7 @@ from rest_framework import status, viewsets
 from backend.helper_zero.serializers import OrganizationSerializer
 from backend.helper_zero.models import Organization
 from rest_framework.response import Response
+from django.forms.models import model_to_dict
 
 from google.oauth2 import id_token
 from google.auth.transport import requests
@@ -70,6 +71,7 @@ class OrganizationView(viewsets.ViewSet):
 				mail_instructions=request_dict["mail_instructions"]
 			)
 			org.save()
-			return Response(serializer.data)
+			org_obj = model_to_dict(org)
+			return Response(org_obj)
 		else:
 			return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

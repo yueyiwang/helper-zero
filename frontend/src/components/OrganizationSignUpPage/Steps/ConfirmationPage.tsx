@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import { Button } from '@material-ui/core';
@@ -20,14 +20,15 @@ const styles: { [key: string]: React.CSSProperties } = {
 
 
 const ConfirmationPage = (props) => {
-
   const [redirect, setRedirect] = useState<boolean>(false);
+  const [organization, setOrganization] = useState<OrganizationType>(props.location.state.organization);
+  
   if (redirect) {
     return (
       <Redirect 
       to={{
         pathname: "/organization/profile",
-        state: { organization: props.location.state.organization }
+        state: { organization: organization}
       }}
     />
     )
@@ -41,7 +42,7 @@ const ConfirmationPage = (props) => {
           <Typography variant="h2">
             Thank you for your request, {props.location.state.organization.name}.
             Go to your 
-            <Button style={{"marginTop": "12px", "paddingLeft": "0", "paddingRight": "0"}}onClick={() => setRedirect(true)}><Typography variant="h2" color="secondary">profile</Typography></Button>.
+            <Button style={{"marginTop": "12px", "paddingRight": "0"}}onClick={() => setRedirect(true)}><Typography variant="h2" color="secondary">profile</Typography></Button>.
           </Typography>
           {/* TODO */}
           <Typography variant="body1">
