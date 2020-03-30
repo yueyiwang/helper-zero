@@ -38,9 +38,9 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
         phone: formData.phone,
         org_type: formData.organizationType,
         email: formData.email,
-        is_pickup: formData.methods.indexOf(DELIVERY_TYPE_PICK_UP) > 1,
-        is_dropoff: formData.methods.indexOf(DELIVERY_TYPE_DROP_OFF)  > 1,
-        is_mail: formData.methods.indexOf(DELIVERY_TYPE_MAIL)  > 1,
+        is_pickup: formData.methods.indexOf(DELIVERY_TYPE_PICK_UP) > 0,
+        is_dropoff: formData.methods.indexOf(DELIVERY_TYPE_DROP_OFF)  > 0,
+        is_mail: formData.methods.indexOf(DELIVERY_TYPE_MAIL)  > 0,
         pickup_instructions: formData[DELIVERY_TYPE_PICK_UP].instruction,
         dropoff_instructions: formData[DELIVERY_TYPE_DROP_OFF].instruction,
         mail_instructions: formData[DELIVERY_TYPE_MAIL].instruction,
@@ -101,7 +101,6 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
   return (
     <>
       <Header isWhiteBackground={true} />
-      {JSON.stringify(formData)}
       <Container maxWidth="lg" style={{"padding": "100px"}}>
         <Box m={6}>
           <Typography variant="h1">
