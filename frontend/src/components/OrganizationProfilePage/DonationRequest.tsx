@@ -120,17 +120,17 @@ const DonationRequest:React.FC<Props> = (props: Props) => {
                 <TableRow>
                   <TableCell component="th" scope="row">
                     {/* TODO: replace with props */}
-                    Person
+                    Alice
                   </TableCell>
                   <TableCell align="right">100</TableCell>
                   <TableCell align="right">Saturday 2pm</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
-                    Person
+                    Bob
                   </TableCell>
-                  <TableCell align="right">100</TableCell>
-                  <TableCell align="right">Saturday 2pm</TableCell>
+                  <TableCell align="right">50</TableCell>
+                  <TableCell align="right">Friday 1pm</TableCell>
                 </TableRow>
               </TableBody>
             </Table>

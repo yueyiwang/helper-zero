@@ -82,7 +82,6 @@ export default function OrganizationSignUpPage() {
     const authToken = response.uc.id_token;
     setAuthToken(authToken);
     axios.get(`/api/login/?auth_token=${authToken}`).then(res => {
-      console.log(res);
       if (res.status !== 200) {
         setError(true);
       } else if (res.data.id === undefined) {
