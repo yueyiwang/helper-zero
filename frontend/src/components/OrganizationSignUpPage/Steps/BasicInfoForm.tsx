@@ -26,7 +26,7 @@ const organizationFields = [{
   param: "organizationType",
   label: "Organization Type",
 },{
-  param: "addresss",
+  param: "address",
   label: "Street Address",
 },{
   param: "city",
