@@ -53,9 +53,9 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
         pickup_instructions: finalFormData[DELIVERY_TYPE_PICK_UP].instruction,
         dropoff_instructions: finalFormData[DELIVERY_TYPE_DROP_OFF].instruction,
         mail_instructions: finalFormData[DELIVERY_TYPE_MAIL].instruction,
-        zipcode: "94114", //TODO: need address -> geocode
-        lat: "1.3",
-        lon: "2.0",
+        zipcode: finalFormData.zipcode,
+        lat: "1.3", //TODO: need address -> lat
+        lon: "2.0", //TODO: need address -> lon
         pickup_times: JSON.stringify(
           finalFormData[DELIVERY_TYPE_PICK_UP].times
         ),
