@@ -20,7 +20,7 @@ import {
   DELIVERY_TYPE_PICK_UP,
   DONATION_STATUS_TYPE_INCOMPLETE
 } from "../../constants";
-import axios, {AxiosResponse} from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const DEBUG = false;
 
@@ -135,7 +135,7 @@ export default function DonatorFormPage() {
   }
 
   function getTimesArrayFromString(timesStr) {
-    return timesStr ? timesStr.split(",") : undefined;
+    return timesStr ? timesStr.slice(1, -1).split(",") : undefined;
   }
 
   const categorizedItems = categorizeItems(organization);
