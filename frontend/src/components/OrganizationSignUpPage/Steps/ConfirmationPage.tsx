@@ -20,7 +20,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 
 
 const ConfirmationPage = (props) => {
-  console.log(props);
+
   const [redirect, setRedirect] = useState<boolean>(false);
   if (redirect) {
     return (
@@ -40,9 +40,13 @@ const ConfirmationPage = (props) => {
       <Grid item xs lg={5}>
           <Typography variant="h2">
             Thank you for your request, {props.location.state.organization.name}.
-            Go to your <Button style={{"marginTop": "12px", "paddingLeft": "0", "paddingRight": "0"}}onClick={() => setRedirect(true)}><Typography variant="h2" color="secondary">profile</Typography></Button>.
+            Go to your 
+            <Button style={{"marginTop": "12px", "paddingLeft": "0", "paddingRight": "0"}}onClick={() => setRedirect(true)}><Typography variant="h2" color="secondary">profile</Typography></Button>.
           </Typography>
           {/* TODO */}
+          <Typography variant="body1">
+            We are working quickly to review your request and will make your profile live. In the meanwhile, please confirm your contact by verifying your account by through the activation email we sent you (?).
+          </Typography>
       </Grid>
     </Grid>
     </>

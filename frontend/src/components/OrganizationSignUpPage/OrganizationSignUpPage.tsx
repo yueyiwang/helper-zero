@@ -51,31 +51,29 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
         dropoff_times: JSON.stringify(formData[DELIVERY_TYPE_DROP_OFF].times),
         auth_token: props.location.state.authToken,
       }
-      axios.post('/api/organizations/', {
-        name: formData.organizationName,
-        url: null, //not supported 
-        address: formData.address,
-        description: null, //not supported 
-        phone: formData.phone,
-        org_type: formData.organizationType,
-        email: formData.email,
-        is_pickup: formData.methods.indexOf(DELIVERY_TYPE_PICK_UP) > 1,
-        is_dropoff: formData.methods.indexOf(DELIVERY_TYPE_DROP_OFF)  > 1,
-        is_mail: formData.methods.indexOf(DELIVERY_TYPE_MAIL)  > 1,
-        pickup_instructions: formData[DELIVERY_TYPE_PICK_UP].instruction,
-        dropoff_instructions: formData[DELIVERY_TYPE_DROP_OFF].instruction,
-        mail_instructions: formData[DELIVERY_TYPE_MAIL].instruction,
-        zipcode: "94114", //TODO: need address -> geocode
-        lat: "1.3",
-        lon: "2.0",
-        pickup_times: JSON.stringify(formData[DELIVERY_TYPE_MAIL].times),
-        dropoff_times: JSON.stringify(formData[DELIVERY_TYPE_DROP_OFF].times),
-        auth_token: props.location.state.authToken
-      }).then((resp) => {
+      axios.post('/api/organizations/', organization).then((resp) => {
         if (resp.status != 200) {
           console.log(resp);
         }
         setOrganization(organization);
+        formData.donationSelected.forEach(donationType => {
+          const dontations = formData[donationType];
+          Object.entries(dontations).forEach(([itemName, itemCount]) => {
+            const donationRequest = {
+              org: 1, //TODO change org to real value
+              item: itemName,
+              item_type: donationType,
+              amount_requested: Number(itemCount),
+              amount_received: 0,
+            };
+            axios.post('/api/donation_requests/', donationRequest)
+              .then((resp) => {
+                if (resp.status != 200) {
+                  console.log(resp);
+                }
+              })
+          });
+        })
       });
     }
   }, [progress]);
@@ -103,6 +101,7 @@ const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
   return (
     <>
       <Header isWhiteBackground={true} />
+      {JSON.stringify(formData)}
       <Container maxWidth="lg" style={{"padding": "100px"}}>
         <Box m={6}>
           <Typography variant="h1">

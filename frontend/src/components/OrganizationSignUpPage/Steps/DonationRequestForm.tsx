@@ -102,7 +102,7 @@ const DonationRequestForm = ({onNext, onBack}) => {
                                   popOverContentComponent={
                                     <TextField
                                       name={`${donationSelect}.${donationItem}`}
-                                      helperText={'Request Details'}
+                                      helperText={'Request Count'}
                                       fullWidth
                                       margin="normal"
                                     />
@@ -123,10 +123,10 @@ const DonationRequestForm = ({onNext, onBack}) => {
             <Button type="submit" size="large" variant="outlined" color="primary">
               Next
             </Button>
-            {' '}
-            <Button size="large" variant="outlined" color="primary" onClick={onBack}>
+            {/* TODO: support back button */}
+            {/* <Button size="large" variant="outlined" color="primary" onClick={onBack}>
               Back
-            </Button>
+            </Button> */}
           </Box>
         </form>
       )}
