@@ -48,6 +48,8 @@ class OrganizationSerializer(serializers.ModelSerializer):
               'dropoff_instructions', 'mail_instructions', 'auth_token')
 
 class HashToDonationSerializer(serializers.ModelSerializer):
+  donation = DonationSerializer(many=False, required=True)
+
   class Meta:
     model = HashToDonation
     fields = ('id', 'donation', 'hash_key')

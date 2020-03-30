@@ -42,8 +42,8 @@ class DonationView(viewsets.ModelViewSet):
                 donation.save()
 
                 # Hash donation and store it in the relevant table
-                uuid = uuid.uuid4().hex
-                hash_key = hashlib.sha256(uuid.encode()).hexdigest()
+                obj_uuid = uuid.uuid4().hex
+                hash_key = hashlib.sha256(obj_uuid.encode()).hexdigest()
                 print("Hash key: %s" % hash_key)
                 hashToDonation = HashToDonation(
                     donation=donation,
@@ -87,7 +87,7 @@ def _send_user_confirmation_text (params):
 def _send_user_confirmation_email (params):
     msg = ("Welcome to port.er! This email is a confirmation of your "
            "donation. You are donating %d %s. We look forward to receiving "
-           "your donation!" % (params["amount"], params["item_type"]))
+           "your donation!" % (params["amount"], params["item"]))
     try:
         sender.send_email(params["email"], msg)
     except Exception as e:
