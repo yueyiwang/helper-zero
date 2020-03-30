@@ -10,6 +10,7 @@ import OrganizationSignUpPage from "./components/OrganizationSignUpPage/Organiza
 import OrganizationProfilePage from "./components/OrganizationProfilePage/OrganizationProfilePage";
 import DonatorFormPage from "./components/DonatorFormPage/DonatorFormPage";
 import ConfirmationPage from "./components/OrganizationSignUpPage/Steps/ConfirmationPage";
+import DonatorConfirmationPage from "./components/DonatorFormPage/DonatorConfirmationPage";
 
 // Material UI Overrides
 const theme = createMuiTheme({
@@ -103,6 +104,10 @@ export default function App() {
         <Route
           path="/organization/profile"
           component={OrganizationProfilePage}
+        />
+        <Route
+          path="/donator/confirmation"
+          component={DonatorConfirmationPage}
         />
         <Route path="/donator/:orgId" component={DonatorFormPage} />
 
