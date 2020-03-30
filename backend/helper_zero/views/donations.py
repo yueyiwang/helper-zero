@@ -1,4 +1,6 @@
 import logging
+import uuid
+import hashlib
 
 from datetime import date, datetime, timedelta
 from rest_framework import viewsets
@@ -6,7 +8,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from backend.helper_zero.serializers import DonationSerializer
-from backend.helper_zero.models import Donation, Organization
+from backend.helper_zero.models import Donation, Organization, HashToDonation
 from backend.helper_zero.sms.messages import message_sender as sender 
 from backend.helper_zero.sms.errors import TwilioInvalidKeyError, TwilioSendError
 from backend.helper_zero.scheduler.scheduler import scheduler
@@ -35,6 +37,16 @@ class DonationView(viewsets.ModelViewSet):
             try:
                 donation.save()
 
+                # Hash donation and store it in the relevant table
+                uuid = uuid.uuid4().hex
+                hash_key = hashlib.sha256(uuid.encode()).hexdigest()
+                print("Hash key: %s" % hash_key)
+                hashToDonation = HashToDonation(
+                    donation=donation,
+                    hash_key=hash_key
+                )
+                hashToDonation.save()
+
                 # Send an email confirming the donation that was just made
                 # _send_user_confirmation_email(request_dict)
 
@@ -45,10 +57,6 @@ class DonationView(viewsets.ModelViewSet):
                 #     datetime.now() + timedelta(days=7),
                 #     request_dict
                 # )
-
-                # Create a hash of this donation and store it in the
-                # HashToDonation table
-                # print(donation.__hash__())
 
                 return Response(serializer.data)
             except TwilioInvalidKeyError:
