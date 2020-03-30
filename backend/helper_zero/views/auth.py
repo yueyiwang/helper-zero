@@ -19,8 +19,9 @@ class AuthView(viewsets.ViewSet):
       return Response(status=status.HTTP_401_UNAUTHORIZED)
     user_id = id_info['sub']
     org_list = Organization.objects.filter(auth_user_id=user_id)
-    if len(org_list) != 1:
-      return Response(status=status.HTTP_400_BAD_REQUEST)
+    # TODO: uncomment when not testing with local data
+    # if len(org_list) != 1:
+    #   return Response(status=status.HTTP_400_BAD_REQUEST)
     org = org_list.first()
     if org == None:
       return Response({})

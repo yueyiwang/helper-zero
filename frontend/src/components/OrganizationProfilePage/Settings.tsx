@@ -34,8 +34,13 @@ type Props = {
 }
 
 const OrganizationSettings: React.FC<Props> = (props: Props) => {
+  const instructions: string = 
+    `Pickup Instructions: ${props.organization.pickup_instructions}\n
+    Dropoff Instructions: ${props.organization.dropoff_instructions}\n
+    Mail Instructions: ${props.organization.mail_instructions}`
+  
   const [editingRequest, setEditingRequest] = useState<boolean>(false);
-  const [donationRequest, setDonationRequest] = useState<string>(props.organization.instructions);
+  const [donationRequest, setDonationRequest] = useState<string>(instructions);
   
   const handleChange = (event) => {
     setDonationRequest(event.target.value);
