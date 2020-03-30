@@ -1,9 +1,7 @@
 import React from "react";
 import { useHistory } from "react-router-dom";
 import Button from "@material-ui/core/Button";
-import AddIcon from "@material-ui/icons/Add";
 import { Typography } from "@material-ui/core";
-import Header from "../Header";
 
 const styles: { [key: string]: React.CSSProperties } = {
   container: {

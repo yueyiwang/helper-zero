@@ -27,8 +27,13 @@ const theme = createMuiTheme({
       main: "#F56767" //orange
     },
     text: {
+<<<<<<< HEAD
       // primary: "#405CC0" // bright blue
       // secondary: "#EFF6FF" // white-ish
+=======
+      primary: "#405CC0", // bright blue
+      secondary: "#FFFFFF" // white
+>>>>>>> fixing colors
     }
   },
   overrides: {
