@@ -44,7 +44,10 @@ class OrganizationView(viewsets.ViewSet):
 			user_id = id_info['sub']
 			geolocator = Nominatim(user_agent="porter")
 			# Example address: 140 New Montgomery San Francisco, CA 94105
-			location = geolocator.geocode(request_dict["address"])
+			street = request_dict["address"]
+			city = request_dict["city"]
+			address = street + " " + city
+			location = geolocator.geocode(address)
 			if not location:
 				logging.error("Invalid location")
 				return Response(status=status.HTTP_400_BAD_REQUEST)

@@ -31,6 +31,7 @@ class OrganizationSerializer(serializers.ModelSerializer):
   donation_requests = DonationRequestSerializer(many=True, required=False)
   donations = DonationSerializer(many=True, required=False)
   auth_token = serializers.CharField(write_only=True)
+  city = serializers.CharField(write_only=True)
 
   email = serializers.CharField(required=False)
   auth_user_id = serializers.CharField(required=False)
@@ -45,7 +46,7 @@ class OrganizationSerializer(serializers.ModelSerializer):
               'org_type', 'email', 'is_dropoff', 'is_pickup', 'is_mail',
               'pickup_instructions', 'zipcode', 'lat', 'lon', 'auth_user_id',
               'pickup_times', 'dropoff_times', 'donation_requests', 'donations',
-              'dropoff_instructions', 'mail_instructions', 'auth_token')
+              'dropoff_instructions', 'mail_instructions', 'auth_token', 'city')
 
 class HashToDonationSerializer(serializers.ModelSerializer):
   donation = DonationSerializer(many=False, required=True)
