@@ -1,5 +1,5 @@
 export type DonationType = {
-  org_id: number;
+  org: number;
   name: string;
   phone: string;
   email: string;
