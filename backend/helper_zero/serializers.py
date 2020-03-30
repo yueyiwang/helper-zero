@@ -37,6 +37,8 @@ class OrganizationSerializer(serializers.ModelSerializer):
     pickup_instructions = serializers.CharField(allow_null=True, required=False)
     dropoff_instructions = serializers.CharField(allow_null=True, required=False)
     mail_instructions = serializers.CharField(allow_null=True, required=False)
+    url = serializers.CharField(required=False, allow_null=True)
+    description = serializers.CharField(required=False, allow_null=True)
     class Meta:
         model = Organization
         fields = ('id', 'name', 'url', 'address', 'description', 'phone',

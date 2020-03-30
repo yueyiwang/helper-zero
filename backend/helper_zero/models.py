@@ -13,9 +13,9 @@ class User(models.Model):
 
 class Organization(models.Model):
   name = models.CharField(max_length=120)
-  url = models.CharField(max_length=120)
+  url = models.CharField(max_length=120, null=True)
   address = models.CharField(max_length=120)
-  description = models.CharField(max_length=120)
+  description = models.CharField(max_length=120, null=True)
   phone = models.CharField(max_length=120)
   org_type = models.CharField(max_length=120)
   email = models.EmailField()
