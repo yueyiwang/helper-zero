@@ -1,7 +1,11 @@
+import os
 from rest_framework import status, viewsets
 from backend.helper_zero.serializers import OrganizationSerializer
 from backend.helper_zero.models import Organization
 from rest_framework.response import Response
+
+from google.oauth2 import id_token
+from google.auth.transport import requests
 
 class OrganizationView(viewsets.ViewSet):
 
@@ -14,6 +18,16 @@ class OrganizationView(viewsets.ViewSet):
 		request_dict = request.data
 		serializer = OrganizationSerializer(data=request_dict)
 		if serializer.is_valid():
+			auth_token = request_dict["auth_token"]
+			id_info = id_token.verify_oauth2_token(
+				auth_token,
+				requests.Request(),
+				os.environ['GOOGLE_CLIENT_ID']
+			)
+			if id_info['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
+				return Response(status=status.HTTP_401_UNAUTHORIZED)
+			user_id = id_info['sub']
+
 			org = Organization(
 				name=request_dict["name"],
 				url=request_dict["url"],
@@ -29,7 +43,7 @@ class OrganizationView(viewsets.ViewSet):
 				zipcode=request_dict["zipcode"],
 				lat=request_dict["lat"],
 				lon=request_dict["lon"],
-				auth_user_id=request_dict["auth_user_id"],
+				auth_user_id=user_id,
 				pickup_times=request_dict["pickup_times"],
 				dropoff_times=request_dict["dropoff_times"],
 				dropoff_instructions=request_dict["dropoff_instructions"],
