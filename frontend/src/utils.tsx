@@ -7,7 +7,7 @@ const convertDonations = (donations): DonationType[] => {
   const ret: DonationType[] = [];
   donations.forEach((d) => {
     const donation: DonationType = {
-      org_id: d.org,
+      org: d.org,
       name: d.name,
       phone: d.phone,
       email: d.email,
