@@ -46,7 +46,7 @@ class OrganizationView(viewsets.ViewSet):
 			# Example address: 140 New Montgomery San Francisco, CA 94105
 			street = request_dict["address"]
 			city = request_dict["city"]
-			address = street + city
+			address = street + " " + city
 			location = geolocator.geocode(address)
 			if not location:
 				logging.error("Invalid location")
