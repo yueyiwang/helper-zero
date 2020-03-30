@@ -1,67 +1,49 @@
 // @ts-nocheck
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import axios from "axios";
 
 import BasicInfoForm from './Steps/BasicInfoForm';
 import DonationRequestForm from './Steps/DonationRequestForm';
 import DonationMethodForm from './Steps/DonationMethodForm';
 import ConfirmationPage from './Steps/ConfirmationPage';
 
-const OrganizationSignUpPage = ({authToken}) => {
-  const [formData, setFormData] = React.useState({});
-  const [progress, setProgress] = React.useState(2);
+import { DELIVERY_TYPE_DROP_OFF, DELIVERY_TYPE_PICK_UP, DELIVERY_TYPE_MAIL } from "../../constants";
 
-  const handleNext = (data) => {
-    setFormData({...formData, ...data});
-    // url = models.CharField(max_length=120)
-    // address = models.CharField(max_length=120)
-    // description = models.CharField(max_length=120)
-    // phone = models.CharField(max_length=120)
-    // org_type = models.CharField(max_length=120)
-    // email = models.EmailField()
-    // is_dropoff = models.BooleanField()
-    // is_pickup = models.BooleanField()
-    // is_mail = models.BooleanField()
-    // instructions = models.TextField(blank=True)
-    // zipcode = models.CharField(blank=True, null=True, max_length=120)
-    // lat = models.CharField(blank=True, null=True, max_length=120)
-    // lon = models.CharField(blank=True, null=True, max_length=120)
-    // auth_user_id=models.CharField(max_length=120)
-    // pickup_times = models.TextField(blank=True, null=True)
-    // dropoff_times = models.TextField(blank=True, null=True)
-  
-    if (progress === 2) {
-      console.log("test")
-      fetch('https://localhost:8000/api/organizations/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': 'no-cors',
-        },
-        body: JSON.stringify({
-          url: "",
-          address: formData.addresss,
-          description: "",
-          phone: formData.phone,
-          org_type: formData.organizationType,
-          email: formData.email,
-          is_dropoff: false,
-          is_pickup: false,
-          is_mail: false,
-          instructions: "",
-          zipcode: "",
-          lat: "",
-          lon: "",
-          auth_user_id: "test",
-          pickup_times: "",
-          dropoff_times: "",
-       })
-      })
-        .then(response => response.json())
-        .then(data => console.log(data));
+const OrganizationSignUpPage = ({authToken}) => {
+  const [formData, setFormData] = useState({});
+  const [progress, setProgress] = useState(0);
+
+  useEffect(() => {
+    if (progress === 3) {
+      axios.post('/api/organizations/', {
+        name: formData.organizationName,
+        url: null, //not supported 
+        address: formData.address,
+        description: null, //not supported 
+        phone: formData.phone,
+        org_type: formData.organizationType,
+        email: formData.email,
+        is_pickup: formData.methods.indexOf(DELIVERY_TYPE_PICK_UP) > 1,
+        is_dropoff: formData.methods.indexOf(DELIVERY_TYPE_DROP_OFF)  > 1,
+        is_mail: formData.methods.indexOf(DELIVERY_TYPE_MAIL)  > 1,
+        pickup_instructions: formData[DELIVERY_TYPE_PICK_UP].instruction,
+        dropoff_instructions: formData[DELIVERY_TYPE_DROP_OFF].instruction,
+        mail_instructions: formData[DELIVERY_TYPE_MAIL].instruction,
+        zipcode: "94114", //TODO: need address -> geocode
+        lat: "1.3",
+        lon: "2.0",
+        pickup_times: JSON.stringify(formData[DELIVERY_TYPE_MAIL].times),
+        dropoff_times: JSON.stringify(formData[DELIVERY_TYPE_DROP_OFF].times),
+        auth_token: authToken,
+      });
     }
+  }, [progress]);
+  
+  const handleNext = async (data) => {
+    setFormData({...formData, ...data});
     setProgress(progress+1);
   }
 

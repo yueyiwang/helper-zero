@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import { Field } from 'react-final-form';
 
 import SelectorWithPopover from './SelecterWithPopover';
-import { MAIL } from './DonationMethodForm';
+import { DELIVERY_TYPE_MAIL } from "../../../constants";
 
 const styles: { [key: string]: React.CSSProperties } = {
   button: {
@@ -40,7 +40,7 @@ const DonationInstruction = ({title, subtitle, type, values}) => {
           />
         </Box>
       </Box>
-      {type !== MAIL && (
+      {type !== DELIVERY_TYPE_MAIL && (
         <Box mt={4}>
           <Typography variant="body1">
             Create a windows for when you want donators to donations. 
@@ -67,7 +67,7 @@ const DonationInstruction = ({title, subtitle, type, values}) => {
                       popoverTitle="Add Times"
                       popOverContentComponent={
                         <Field
-                          name={`${type}.${day}`}
+                          name={`${type}.times.${day}`}
                           render={({ input }) => (
                             <textarea rows={5} cols={30} style={styles.textarea} onChange={v => input.onChange(v)}/>
                           )}

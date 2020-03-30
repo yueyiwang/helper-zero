@@ -17,15 +17,24 @@ const checkboxForm: CheckboxData[] = [
   {label: "Receive mailed deliveries", value: DELIVERY_TYPE_MAIL}
 ];
 
-const DROPOFFMethodForm = ({onNext, onBack}) => {
+const DonationMethodForm = ({onNext, onBack}) => {
   return (
     <Form
       onSubmit={onNext}
       initialValues={{
         methods: [],
-        [DELIVERY_TYPE_PICK_UP]: {},
-        [DELIVERY_TYPE_DROP_OFF]: {},
-        [DELIVERY_TYPE_MAIL]: {},
+        [DELIVERY_TYPE_PICK_UP]: {
+          instruction: null,
+          times: {}
+        },
+        [DELIVERY_TYPE_DROP_OFF]: {
+          instruction: null,
+          times: {}
+        },
+        [DELIVERY_TYPE_MAIL]: {
+          instruction: null,
+          times: {}
+        },
       }}
       render={({ handleSubmit, values }) => (
         <form onSubmit={handleSubmit} noValidate>
@@ -49,7 +58,7 @@ const DROPOFFMethodForm = ({onNext, onBack}) => {
               </Box>
               {/* 
                 // @ts-ignore */}
-              {values.methods.includes(PICKUP) &&(
+              {values.methods.includes(DELIVERY_TYPE_PICK_UP) &&(
                 <Box mt={6}>
                   <DonationInstruction 
                     title={"Pick-Up Instructions"}
@@ -61,7 +70,7 @@ const DROPOFFMethodForm = ({onNext, onBack}) => {
               )}
               {/* 
                 // @ts-ignore */}
-              {values.methods.includes(DROPOFF) &&(
+              {values.methods.includes(DELIVERY_TYPE_DROP_OFF) &&(
                 <Box mt={6}>
                   <DonationInstruction 
                     title={"Drop-off Instructions"}
@@ -73,7 +82,7 @@ const DROPOFFMethodForm = ({onNext, onBack}) => {
               )}
               {/* 
                 // @ts-ignore */}
-              {values.methods.includes(MAIL) &&(
+              {values.methods.includes(DELIVERY_TYPE_MAIL) &&(
                 <Box mt={6}>
                   <DonationInstruction 
                     title={"Mailing Instructions"}
@@ -100,4 +109,4 @@ const DROPOFFMethodForm = ({onNext, onBack}) => {
   )
 };
 
-export default DROPOFFMethodForm;
+export default DonationMethodForm;
