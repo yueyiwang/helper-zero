@@ -19,6 +19,7 @@ class DonationRequestSerializer(serializers.ModelSerializer):
 class DonationSerializer(serializers.ModelSerializer):
     status = serializers.CharField(allow_null=True)
     pickup_address = serializers.CharField(allow_null=True)
+    created_at = serializers.DateTimeField(allow_null=True, required=False)
 
     class Meta:
         model = Donation
