@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 import { Button, CircularProgress, MenuItem } from "@material-ui/core";
 import { Form, Field } from "react-final-form";
@@ -15,8 +15,12 @@ import ORGANIZATION_MOCKS from "../../mocks/organizations.json";
 import Header from "../Header";
 import SelectorWithPopover from "../OrganizationSignUpPage/Steps/SelecterWithPopover";
 import { DonationType } from "../../types/DonationType";
-import { DELIVERY_TYPE_DROP_OFF, DELIVERY_TYPE_PICK_UP } from "../../constants";
-import axios from "axios";
+import {
+  DELIVERY_TYPE_DROP_OFF,
+  DELIVERY_TYPE_PICK_UP,
+  DONATION_STATUS_TYPE_INCOMPLETE
+} from "../../constants";
+import axios, {AxiosResponse} from "axios";
 
 const DEBUG = false;
 
@@ -49,6 +53,7 @@ const styles: { [key: string]: React.CSSProperties } = {
 export default function DonatorFormPage() {
   let { orgId } = useParams();
   const [organization, setOrganization] = useState<OrganizationType>();
+  const history = useHistory();
 
   useEffect(() => {
     if (orgId) {
@@ -78,18 +83,20 @@ export default function DonatorFormPage() {
       email,
       pickup_address,
       city,
+      // TODO: BUG: somehow this gets saved as "true" instead of the actual value when there's only one choice
       pickup_or_dropoff_times,
       delivery_type
     } = values;
 
     Object.keys(values.items).forEach(item => {
       const data: DonationType = {
-        org_id: orgId,
+        org: Number(orgId),
         name,
         phone,
         email,
         pickup_address,
         city,
+        status: DONATION_STATUS_TYPE_INCOMPLETE,
         item,
         delivery_type,
         amount: values.items[item].amount,
@@ -103,14 +110,18 @@ export default function DonatorFormPage() {
   // Need to send out a separate request for every item that the user selected
   function handleSubmit(values) {
     const donations_data = formatAndGetDonationRequestData(values);
-    donations_data.forEach(donation_data => {
-      if (!DEBUG) {
-        axios
-          .post(`/api/donation_requests/`, donation_data)
-          .then(res => console.log("SUCCESS"))
-          .catch(e => console.log(e));
-      }
-    });
+    const promises: Promise<AxiosResponse<any>>[] = [];
+
+    if (!DEBUG) {
+      donations_data.forEach(donation_data => {
+        promises.push(axios.post(`/api/donations/`, donation_data));
+      });
+
+      axios
+        .all(promises)
+        .then(resp => history.push("/donator/confirmation"))
+        .catch(e => console.log(e));
+    }
   }
 
   function categorizeItems(organization) {
