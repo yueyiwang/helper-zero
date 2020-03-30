@@ -1,15 +1,15 @@
 import logging
 
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from rest_framework import viewsets
 from rest_framework import status
 from rest_framework.response import Response
 
 from backend.helper_zero.serializers import DonationSerializer
 from backend.helper_zero.models import Donation, Organization
-
 from backend.helper_zero.sms.messages import message_sender as sender 
 from backend.helper_zero.sms.errors import TwilioInvalidKeyError, TwilioSendError
+from backend.helper_zero.scheduler.scheduler import scheduler
 
 class DonationView(viewsets.ModelViewSet):
     serializer_class = DonationSerializer
@@ -33,8 +33,18 @@ class DonationView(viewsets.ModelViewSet):
                 donation_time_end=request_dict["donation_time_end"]
             )
             try:
-                _send_user_confirmation_email(request_dict)
                 donation.save()
+
+                # Send an email confirming the donation that was just made
+                # _send_user_confirmation_email(request_dict)
+
+                # Schedule an email for some time in the future, setting
+                # it to a short time from now for testing purposes
+                scheduler.add_job_with_datetime(
+                    _send_donation_confirmation_email,
+                    datetime.now() + timedelta(days=7),
+                    request_dict
+                )
                 return Response(serializer.data)
             except TwilioInvalidKeyError:
                 logging.error("Twilio environment variables not properly configured")
@@ -61,6 +71,15 @@ def _send_user_confirmation_email (params):
     msg = ("Welcome to port.er! This email is a confirmation of your "
            "donation. You are donating %d %s. We look forward to receiving "
            "your donation!" % (params["amount"], params["item_type"]))
+    try:
+        sender.send_email(params["email"], msg)
+    except Exception as e:
+        raise
+
+def _send_donation_confirmation_email (params):
+    msg = ("Hey %s, was your donation successful? Please click "
+           "on the below link to help us update our "
+           "donation information!" % (params["name"]))
     try:
         sender.send_email(params["email"], msg)
     except Exception as e:
