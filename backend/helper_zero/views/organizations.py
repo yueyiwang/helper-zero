@@ -25,13 +25,15 @@ class OrganizationView(viewsets.ViewSet):
 				is_dropoff=request_dict["is_dropoff"],
 				is_pickup=request_dict["is_pickup"],
 				is_mail=request_dict["is_mail"],
-				instructions=request_dict["instructions"],
+				pickup_instructions=request_dict["pickup_instructions"],
 				zipcode=request_dict["zipcode"],
 				lat=request_dict["lat"],
 				lon=request_dict["lon"],
 				auth_user_id=request_dict["auth_user_id"],
 				pickup_times=request_dict["pickup_times"],
 				dropoff_times=request_dict["dropoff_times"],
+				dropoff_instructions=request_dict["dropoff_instructions"],
+				mail_instructions=request_dict["mail_instructions"]
 			)
 			org.save()
 			return Response(serializer.data)

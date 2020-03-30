@@ -29,9 +29,14 @@ class DonationSerializer(serializers.ModelSerializer):
 class OrganizationSerializer(serializers.ModelSerializer):
     donation_requests = DonationRequestSerializer(many=True, required=False)
     donations = DonationSerializer(many=True, required=False)
+
+    pickup_instructions = serializers.CharField(allow_null=True)
+    dropoff_instructions = serializers.CharField(allow_null=True)
+    mail_instructions = serializers.CharField(allow_null=True)
     class Meta:
         model = Organization
         fields = ('id', 'name', 'url', 'address', 'description', 'phone',
                   'org_type', 'email', 'is_dropoff', 'is_pickup', 'is_mail',
-                  'instructions', 'zipcode', 'lat', 'lon', 'auth_user_id',
-                  'pickup_times', 'dropoff_times', 'donation_requests', 'donations')
+                  'pickup_instructions', 'zipcode', 'lat', 'lon', 'auth_user_id',
+                  'pickup_times', 'dropoff_times', 'donation_requests', 'donations',
+                  'dropoff_instructions', 'mail_instructions')
