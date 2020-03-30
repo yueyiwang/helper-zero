@@ -4,20 +4,53 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import axios from "axios";
+import { Redirect } from "react-router-dom";
+
 
 import BasicInfoForm from './Steps/BasicInfoForm';
 import DonationRequestForm from './Steps/DonationRequestForm';
 import DonationMethodForm from './Steps/DonationMethodForm';
 import ConfirmationPage from './Steps/ConfirmationPage';
+import Header from '../Header';
 
 import { DELIVERY_TYPE_DROP_OFF, DELIVERY_TYPE_PICK_UP, DELIVERY_TYPE_MAIL } from "../../constants";
 
-const OrganizationSignUpPage = ({authToken}) => {
+type Props = {
+  location: {
+    state: {
+      authToken: string;
+    };
+  };
+};
+
+const OrganizationSignUpPage: React.FC<Props> = (props: Props) => {
   const [formData, setFormData] = useState({});
   const [progress, setProgress] = useState(0);
+  const [organization, setOrganization] = useState<OrganizationType>();
 
   useEffect(() => {
     if (progress === 3) {
+      const organization: OrganizationType = {
+        name: formData.organizationName,
+        url: null, //not supported 
+        address: formData.address,
+        description: null, //not supported 
+        phone: formData.phone,
+        org_type: formData.organizationType,
+        email: formData.email,
+        is_pickup: formData.methods.indexOf(DELIVERY_TYPE_PICK_UP) > 1,
+        is_dropoff: formData.methods.indexOf(DELIVERY_TYPE_DROP_OFF)  > 1,
+        is_mail: formData.methods.indexOf(DELIVERY_TYPE_MAIL)  > 1,
+        pickup_instructions: formData[DELIVERY_TYPE_PICK_UP].instruction,
+        dropoff_instructions: formData[DELIVERY_TYPE_DROP_OFF].instruction,
+        mail_instructions: formData[DELIVERY_TYPE_MAIL].instruction,
+        zipcode: "94114", //TODO: need address -> geocode
+        lat: "1.3",
+        lon: "2.0",
+        pickup_times: JSON.stringify(formData[DELIVERY_TYPE_MAIL].times),
+        dropoff_times: JSON.stringify(formData[DELIVERY_TYPE_DROP_OFF].times),
+        auth_token: props.location.state.authToken,
+      }
       axios.post('/api/organizations/', {
         name: formData.organizationName,
         url: null, //not supported 
@@ -37,7 +70,12 @@ const OrganizationSignUpPage = ({authToken}) => {
         lon: "2.0",
         pickup_times: JSON.stringify(formData[DELIVERY_TYPE_MAIL].times),
         dropoff_times: JSON.stringify(formData[DELIVERY_TYPE_DROP_OFF].times),
-        auth_token: authToken,
+        auth_token: props.location.state.authToken
+      }).then((resp) => {
+        if (resp.status != 200) {
+          console.log(resp);
+        }
+        setOrganization(organization);
       });
     }
   }, [progress]);
@@ -51,10 +89,21 @@ const OrganizationSignUpPage = ({authToken}) => {
     setProgress(progress-1);
   }
 
+  if (organization != undefined) {
+    return (
+    <Redirect 
+      to={{
+        pathname: "/organization/confirmation",
+        state: { organization: organization }
+      }}
+      />
+    )
+  }
+
   return (
     <>
-      {/* TODO: add Header component */}
-      <Container maxWidth="lg">
+      <Header isWhiteBackground={true} />
+      <Container maxWidth="lg" style={{"padding": "100px"}}>
         <Box m={6}>
           <Typography variant="h1">
             Create Profile
@@ -69,9 +118,6 @@ const OrganizationSignUpPage = ({authToken}) => {
           )}
           {progress === 2 && (
             <DonationMethodForm onNext={handleNext} onBack={handleBack}/>
-          )}
-          {progress === 3 && (
-            <ConfirmationPage />
           )}
         </Box>
       </Container>

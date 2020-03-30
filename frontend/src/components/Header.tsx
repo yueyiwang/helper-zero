@@ -24,10 +24,12 @@ const styles: { [key: string]: React.CSSProperties } = {
 
 type HeaderProps = {
   isWhiteBackground?: boolean;
+  signedIn?: boolean
 };
 
 export default function HeaderProps({
-  isWhiteBackground = false
+  isWhiteBackground = false,
+  signedIn = false,
 }: HeaderProps) {
   let history = useHistory();
   return (
