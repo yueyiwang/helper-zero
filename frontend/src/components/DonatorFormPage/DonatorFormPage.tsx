@@ -156,13 +156,13 @@ export default function DonatorFormPage() {
     if (organization.is_pickup) {
       radioButtonData.push({
         label: `${organization.name} comes pick up`,
-        value: DELIVERY_TYPE_DROP_OFF
+        value: DELIVERY_TYPE_PICK_UP
       });
     }
     if (organization.is_dropoff) {
       radioButtonData.push({
         label: `Drop off donations at ${organization.name}`,
-        value: DELIVERY_TYPE_PICK_UP
+        value: DELIVERY_TYPE_DROP_OFF
       });
     }
     return radioButtonData;
