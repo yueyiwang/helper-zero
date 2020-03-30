@@ -17,7 +17,7 @@ const DONATION_INFOS = {
     donations: [
       {
         dontationType: "Protective Gear",
-        donationItems: ["n95 Respirators", "Gloves", "Goggles", "Face Shields"]
+        donationItems: ["Masks", "Gloves", "Goggles", "Face Shields"]
       }
     ]
   },
@@ -26,7 +26,7 @@ const DONATION_INFOS = {
     donations: [
       {
         dontationType: "Toiletries",
-        donationItems: ["Toilet Paper"]
+        donationItems: ["Toilet Paper", "Paper Towels"]
       }
     ]
   },
@@ -35,7 +35,7 @@ const DONATION_INFOS = {
     donations: [
       {
         dontationType: "Dry Food",
-        donationItems: ["Ramen"]
+        donationItems: ["Ramen", "Canned Goods"]
       }
     ]
   }

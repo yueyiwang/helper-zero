@@ -135,7 +135,13 @@ export default function DonatorFormPage() {
   }
 
   function getTimesArrayFromString(timesStr) {
-    return timesStr ? timesStr.slice(1, -1).replace(/['"]+/g, '').replace(/[:]+/g, " ").split(",") : undefined;
+    return timesStr
+      ? timesStr
+          .slice(1, -1)
+          .replace(/['"]+/g, "")
+          .replace(/[:]+/g, " ")
+          .split(",")
+      : undefined;
   }
 
   const categorizedItems = categorizeItems(organization);
@@ -147,13 +153,13 @@ export default function DonatorFormPage() {
     }
 
     const radioButtonData: RadioData[] = [];
-    if (organization.is_dropoff) {
+    if (organization.is_pickup) {
       radioButtonData.push({
         label: `${organization.name} comes pick up`,
         value: DELIVERY_TYPE_DROP_OFF
       });
     }
-    if (organization.is_pickup) {
+    if (organization.is_dropoff) {
       radioButtonData.push({
         label: `Drop off donations at ${organization.name}`,
         value: DELIVERY_TYPE_PICK_UP
@@ -249,8 +255,14 @@ export default function DonatorFormPage() {
                   </Typography>
                   {Object.keys(categorizedItems).map(item_type => (
                     <>
-                      <Typography variant="h4" style={styles.h4Texts}>
-                        {item_type}
+                      <Typography
+                        variant="h4"
+                        style={{
+                          ...styles.h4Texts,
+                          textTransform: "capitalize"
+                        }}
+                      >
+                        {item_type.replace("_", " ")}
                       </Typography>
                       {categorizedItems[item_type].map(item => (
                         <SelectorWithPopover

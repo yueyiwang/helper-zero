@@ -57,24 +57,30 @@ export default function OrganizationResultItem({
       <div style={styles.rowItem}>
         <Typography variant={"body1"}>{organization.address}</Typography>
       </div>
-      {organization.donation_requests && organization.donation_requests.map(donation_request => (
-        <>
-          <div style={styles.rowItem}>
-            <div style={styles.requestItem}>
-              <Typography variant="h4">{donation_request.item_type}</Typography>
-              <Typography variant="body1">{`${donation_request.amount_received}/${donation_request.amount_requested} asked`}</Typography>
+      {organization.donation_requests &&
+        organization.donation_requests.map(donation_request => (
+          <>
+            <div style={styles.rowItem}>
+              <div style={styles.requestItem}>
+                <Typography
+                  variant="h4"
+                  style={{ textTransform: "capitalize" }}
+                >
+                  {donation_request.item.replace("_", " ")}
+                </Typography>
+                <Typography variant="body1">{`${donation_request.amount_received}/${donation_request.amount_requested} asked`}</Typography>
+              </div>
+              <ProgressBar
+                variant="determinate"
+                value={
+                  (donation_request.amount_received /
+                    donation_request.amount_requested) *
+                  100
+                }
+              />
             </div>
-            <ProgressBar
-              variant="determinate"
-              value={
-                (donation_request.amount_received /
-                  donation_request.amount_requested) *
-                100
-              }
-            />
-          </div>
-        </>
-      ))}
+          </>
+        ))}
       <span>
         <Button
           size="medium"

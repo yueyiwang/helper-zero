@@ -39,7 +39,7 @@ const DonationMethodForm = ({onNext, onBack}) => {
       render={({ handleSubmit, values }) => (
         <form onSubmit={handleSubmit} noValidate>
           <Typography variant="h2">
-            Perferred DROPOFF Method
+            Preferred DROPOFF Method
           </Typography>
           <Typography variant="body1">
             How would you like to receive your donations?
