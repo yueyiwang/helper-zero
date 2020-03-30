@@ -1,3 +1,6 @@
+![] (frontend/assets/banner.png)
+
+
 # Port.er
 Porter is a service that allows users to donate spare supplies to local organizations that are affected by COVID-19.
 
