@@ -1,4 +1,5 @@
 import os
+import logging
 from django.shortcuts import get_object_or_404
 
 from rest_framework import status, viewsets
@@ -43,6 +44,9 @@ class OrganizationView(viewsets.ViewSet):
 			geolocator = Nominatim(user_agent="porter")
 			# Example address: 140 New Montgomery San Francisco, CA 94105
 			location = geolocator.geocode(request_dict["address"])
+			if not location:
+				logging.error("Invalid location")
+				return Response(status=status.HTTP_400_BAD_REQUEST)
 
 			org = Organization(
 				name=request_dict["name"],
